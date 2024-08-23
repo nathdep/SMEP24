@@ -9,7 +9,9 @@ library(SMEP24)
 # "empiricalAlpha" (λ_i > 0)
 # "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
 
-list2env(twopl(I=75, P=500, method="base"), envir=.GlobalEnv)
+env <- twopl(I=75, P=500, method="base")
+
+list2env(env, envir=.GlobalEnv)
 
 modrun <- modstan$sample(
   iter_warmup=2000,
