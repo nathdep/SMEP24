@@ -41,7 +41,7 @@ bifactor <- function(..., P, I, method, nDim=3, seed=NULL, coefHyper=5, sdHyper=
         Y[p,i] <- rbinom(n=1, size=1, prob=plogis(logits[p,i]))
       }
     }
-    bifactorModelData <- mget(x=ls(envir=env))
+    ModelData <- mget(x=ls(envir=env))
     modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_", method, ".stan"))
   })
   return(as.list(env))
