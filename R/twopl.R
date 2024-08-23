@@ -13,11 +13,12 @@ twopl <- function(..., P, I, method, seed=NULL){
     tau <- runif(n=I, min=-3, max=3)
     # SIMULATION OF LATENT TRAIT MEASUREMENTS
     theta <- rnorm(n=P, mean=0, sd=1)
-    logits <- outer(theta,lambda) + outer(rep(1,P), tau)
     # GENERATING DICHOTOMIZED ITEM RESPONSE DATA
+    logits <- matrix(data=NA, nrow=P, ncol=I)
     Y <- matrix(data=NA, nrow=P, ncol=I)
     for(p in 1:P){
       for(i in 1:I){
+        logits[p,i] <- theta[p]*lambda[i] + tau[i]
         Y[p,i] <- rbinom(n=1, size=1, prob=plogis(logits[p,i]))
       }
     }

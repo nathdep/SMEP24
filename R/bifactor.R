@@ -34,9 +34,10 @@ bifactor <- function(..., P, I, method, nDim=3, seed=NULL, coefHyper=5, sdHyper=
     Qmat <- cbind(rep(1, I), model.matrix(data=data.frame(x=as.factor(QmatLong)), ~-1+x)) # Q matrix of item loadings (first column is general factor)
     lambdaQ <- Qmat*lambdaMat
     # GENERATING DICHOTOMIZED ITEM RESPONSE DATA
-    logits <- thetaMat%*%t(lambdaQ) + outer(rep(1,P), tau)
     Y <- matrix(data=NA, nrow=P, ncol=I) # storing dichotomized item responses
+    logits <- matrix(data=NA, nrow=P, ncol=I)
     for(i in 1:I){
+      logits[,i] <- thetaMat%*%lambdaQ[i,] + tau[i]
       for(p in 1:P){
         Y[p,i] <- rbinom(n=1, size=1, prob=plogis(logits[p,i]))
       }
