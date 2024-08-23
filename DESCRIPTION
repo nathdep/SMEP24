@@ -10,7 +10,7 @@ Encoding: UTF-8
 LazyData: true
 Suggests: 
     testthat (>= 3.0.0)
-Requires:
+Imports:
     bayesplot
     ggplot2
     pander
