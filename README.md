@@ -26,13 +26,15 @@
 ```r
 library(SMEP24)
 
+seed <- sample(x=c(1:1e6),size=1)
+
 # METHODS (available for twopl and bifactor models):
 # "base" (all inits randomly drawn)
 # "empiricalPos (μ_λ > 0)
 # "empiricalAlpha" (λ_i > α)
 # "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
 
-env <- twopl(I=75, P=500, method="base")
+env <- twopl(seed=seed, I=75, P=500, method="base")
 
 list2env(env, envir=.GlobalEnv)
 
