@@ -38,7 +38,20 @@ env <- twopl(seed=seed, I=75, P=500, method="base")
 
 list2env(env, envir=.GlobalEnv)
 
-if(!("advi" %in% env$method)){
+ModelData <- list(
+  P=nrow(Y),
+  I=ncol(Y),
+  Y=Y,
+  coefHyper=5,
+  sdHyper=.1
+)
+
+if(grepl("bifactor", model)){
+  ModelData$nDim <- ncol(lambdaQ)
+  ModelData$Qmat <- Qmat
+}
+
+if(!grepl("advi", method)){
 
   modrun <- modstan$sample(
     iter_warmup=2000,
@@ -53,26 +66,26 @@ if(!("advi" %in% env$method)){
 
 }
 
-if("advi" %in% env$method){
+if(grepl("advi", method)){
 
-    advirun <- modstan$variational(
-      data=ModelData,
-      seed=seed
-    )
+  advirun <- modstan$variational(
+    data=ModelData,
+    seed=seed
+  )
 
-    inits <- getInits(advirun$summary())
+  inits <- getInits(advirun$summary())
 
-    modrun <- modstan$sample(
-      iter_warmup=2000,
-      iter_sampling=2000,
-      seed=seed,
-      data=ModelData,
-      chains=4,
-      parallel_chains=4,
-      init=function()inits
-    )
+  modrun <- modstan$sample(
+    iter_warmup=2000,
+    iter_sampling=2000,
+    seed=seed,
+    data=ModelData,
+    chains=4,
+    parallel_chains=4,
+    init=function()inits
+  )
 
-    modsum <- modrun$summary()
+  modsum <- modrun$summary()
 
 }
 
