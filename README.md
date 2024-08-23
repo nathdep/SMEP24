@@ -28,7 +28,7 @@ library(SMEP24)
 
 seed <- sample(x=c(1:1e6),size=1)
 
-# METHODS (available for twopl and bifactor models):
+# METHODS (available for 2PL and bifactor models):
 # "base" (all inits randomly drawn)
 # "empiricalPos (μ_λ > 0)
 # "empiricalAlpha" (λ_i > α)
