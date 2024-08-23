@@ -1,6 +1,6 @@
 # Example
 
-```{R}
+```r
 library(SMEP24)
 
 list2env(twopl(I=75, P=500, method="base"), envir=.GlobalEnv)
