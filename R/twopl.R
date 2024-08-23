@@ -2,6 +2,9 @@ twopl <- function(..., P, I, method, seed=NULL){
   env <- new.env()
   with(env, {
 
+    P=P
+    I=I
+
     if(is.null(seed)){
       seed <- sample(x=c(1:1e6), size=1)
     }
