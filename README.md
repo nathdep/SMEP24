@@ -1,8 +1,8 @@
 # Simulation Files
 
-  - [**2PL .R syntax**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/R/bifactor.R)
+  - [**2PL .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/twopl.R)
 
-  - [**Bifactor .R syntax**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/R/bifactor.R)
+  - [**Bifactor .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/bifactor.R)
 
 -----------------
 
@@ -10,16 +10,16 @@
 
 ## Bifactor Model
 
-  - [**Base**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/bifactor_base.stan)
-  - [**ADVI**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/bifactor_advi.stan)
+  - [**Base**](https://github.com/nathdep/SMEP24/blob/Stan/bifactor_base.stan)
+  - [**ADVI**](https://github.com/nathdep/SMEP24/blob/Stan/bifactor_advi.stan)
   - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalAlpha.stan)
-  - [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/bifactor_empiricalPos.stan)
+  - [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/Stan/bifactor_empiricalPos.stan)
 
 ## 2PL Model
-  - [**Base**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/twopl_base.stan)
-  - [**ADVI**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/twopl_advi.stan)
+  - [**Base**](https://github.com/nathdep/SMEP24/blob/Stan/twopl_base.stan)
+  - [**ADVI**](https://github.com/nathdep/SMEP24/blob/Stan/twopl_advi.stan)
   - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalAlpha.stan)
-  - [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/twopl_empiricalPos.stan)
+  - [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/Stan/twopl_empiricalPos.stan)
 
 # Example
 
