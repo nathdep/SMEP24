@@ -1,12 +1,15 @@
 twopl <- function(..., P, I, method, seed=NULL){
   env <- new.env()
   with(env, {
+
     if(is.null(seed)){
       seed <- sample(x=c(1:1e6), size=1)
     }
+
     if("alpha" %in% method){
       alpha=alpha
     }
+
     set.seed(seed)
     # SIMULATION OF DISCRIMINATION PARAMETERS
     lambda <- runif(n=I, min=-3, max=3)
