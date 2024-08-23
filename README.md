@@ -13,13 +13,13 @@
   - [**Base**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/bifactor_base.stan)
   - [**ADVI**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/bifactor_advi.stan)
   - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalAlpha.stan)
-  - [**Empirical Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/bifactor_empiricalPos.stan)
+  - [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/bifactor_empiricalPos.stan)
 
 ## 2PL Model
   - [**Base**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/twopl_base.stan)
   - [**ADVI**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/twopl_advi.stan)
   - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalAlpha.stan)
-  - [**Empirical Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/twopl_empiricalPos.stan)
+  - [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/twopl_empiricalPos.stan)
 
 # Example
 
@@ -30,7 +30,7 @@ seed <- sample(x=c(1:1e6),size=1)
 
 # METHODS (available for 2PL and bifactor models):
 # "base" (all inits randomly drawn)
-# "empiricalPos (μ_λ > 0)
+# "empiricalPos" (μ_λ > 0)
 # "empiricalAlpha" (λ_i > α)
 # "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
 
