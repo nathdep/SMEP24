@@ -1,0 +1,19 @@
+Package: SMEP24
+Type: Package
+Title: SMEP 2024 Project
+Version: 0.1.0
+Author: Nathan DePuy and Jonathan Templin
+Maintainer: Nathan DePuy <depy@uiowa.edu>
+Description: Contains files for the 2024 SMEP project
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Requires:
+    bayesplot
+    ggplot2
+    pander
+    jtools
+    cmdstanr
+Config/testthat/edition: 3
