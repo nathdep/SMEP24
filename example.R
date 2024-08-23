@@ -1,14 +1,51 @@
 library(SMEP24)
 
-list2env(twopl(I=75, P=500, method="empiricalAlpha"), envir=.GlobalEnv)
+seed <- sample(x=c(1:1e6),size=1)
 
-modrun <- modstan$sample(
-  iter_warmup=2000,
-  iter_sampling=2000,
-  seed=seed,
-  data=bifactorModelData,
-  chains=4,
-  parallel_chains=4
-)
+# METHODS (available for 2PL and bifactor models):
+# "base" (all inits randomly drawn)
+# "empiricalPos" (μ_λ > 0)
+# "empiricalAlpha" (λ_i > α)
+# "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
 
-modsum <- modrun$summary()
+env <- twopl(seed=seed, I=75, P=500, method="base")
+
+list2env(env, envir=.GlobalEnv)
+
+if(!("advi" %in% env$method)){
+
+  modrun <- modstan$sample(
+    iter_warmup=2000,
+    iter_sampling=2000,
+    seed=seed,
+    data=ModelData,
+    chains=4,
+    parallel_chains=4
+  )
+
+  modsum <- modrun$summary()
+
+}
+
+if("advi" %in% env$method){
+
+  advirun <- modstan$variational(
+    data=ModelData,
+    seed=seed
+  )
+
+  inits <- getInits(advirun$summary())
+
+  modrun <- modstan$sample(
+    iter_warmup=2000,
+    iter_sampling=2000,
+    seed=seed,
+    data=ModelData,
+    chains=4,
+    parallel_chains=4,
+    init=function()inits
+  )
+
+  modsum <- modrun$summary()
+
+}
