@@ -1,12 +1,15 @@
 bifactor <- function(..., P, I, method, nDim=3, seed=NULL, coefHyper=5, sdHyper=.1){
   env <- new.env()
   with(env, {
+
     if(is.null(seed)){
       seed <- sample(x=c(1:1e6), size=1)
     }
+
     if("alpha" %in% method){
       alpha=alpha
     }
+
     set.seed(seed)
     method=method
     P=P
