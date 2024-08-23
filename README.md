@@ -29,7 +29,7 @@ library(SMEP24)
 # METHODS (available for twopl and bifactor models):
 # "base" (all inits randomly drawn)
 # "empiricalPos (μ_λ > 0)
-# "empiricalAlpha" (λ_i > 0)
+# "empiricalAlpha" (λ_i > α)
 # "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
 
 env <- twopl(I=75, P=500, method="base")
