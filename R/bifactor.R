@@ -6,7 +6,7 @@ bifactor <- function(..., P, I, method, nDim=3, seed=NULL, coefHyper=5, sdHyper=
       seed <- sample(x=c(1:1e6), size=1)
     }
 
-    if("alpha" %in% method){
+    if("Alpha" %in% method){
       alpha=alpha
     }
 
