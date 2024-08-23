@@ -66,7 +66,8 @@ if("advi" %in% env$method){
       seed=seed,
       data=ModelData,
       chains=4,
-      parallel_chains=4
+      parallel_chains=4,
+      init=function()inits
     )
 
     modsum <- modrun$summary()
