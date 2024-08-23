@@ -72,7 +72,7 @@ if(!grepl("advi", method)){
 
 if(grepl("advi", method)){
 
-  ModelData$SumScore <- getStdSumScore(resps)
+  ModelData$StdSumScore <- getStdSumScore(resps)
 
   advirun <- modstan$variational(
     data=ModelData,
