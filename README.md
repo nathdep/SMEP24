@@ -51,6 +51,10 @@ if(grepl("bifactor", model)){
   ModelData$Qmat <- Qmat
 }
 
+if(grepl("Alpha", method)){
+  ModelData$alpha <- -.25
+}
+
 if(!grepl("advi", method)){
 
   modrun <- modstan$sample(
