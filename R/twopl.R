@@ -26,7 +26,7 @@ twopl <- function(..., P, I, method, seed=NULL){
       }
     }
     modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_", method, ".stan"))
-    modelData <- mget(x=ls(envir=env))
+    ModelData <- mget(x=ls(envir=env))
   })
   return(as.list(env))
 }
