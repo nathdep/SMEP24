@@ -46,6 +46,8 @@ if(!grepl("advi", method)){
 
 if(grepl("advi", method)){
 
+  ModelData$SumScore <- getStdSumScore(resps)
+
   advirun <- modstan$variational(
     data=ModelData,
     seed=seed
