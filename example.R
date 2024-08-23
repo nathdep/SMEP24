@@ -8,11 +8,24 @@ seed <- sample(x=c(1:1e6),size=1)
 # "empiricalAlpha" (λ_i > α)
 # "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
 
-env <- twopl(seed=seed, I=75, P=500, method="base")
+env <- bifactor(seed=seed, I=75, P=500, method="base")
 
 list2env(env, envir=.GlobalEnv)
 
-if(!("advi" %in% env$method)){
+ModelData <- list(
+  P=nrow(Y),
+  I=ncol(Y),
+  Y=Y,
+  coefHyper=5,
+  sdHyper=.1
+)
+
+if(grepl("bifactor", model)){
+  ModelData$nDim <- ncol(lambdaQ)
+  ModelData$Qmat <- Qmat
+}
+
+if(!grepl("advi", method)){
 
   modrun <- modstan$sample(
     iter_warmup=2000,
@@ -27,7 +40,7 @@ if(!("advi" %in% env$method)){
 
 }
 
-if("advi" %in% env$method){
+if(grepl("advi", method)){
 
   advirun <- modstan$variational(
     data=ModelData,

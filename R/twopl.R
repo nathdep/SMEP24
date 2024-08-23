@@ -2,8 +2,11 @@ twopl <- function(..., P, I, method, seed=NULL){
   env <- new.env()
   with(env, {
 
+    method=method
     P=P
     I=I
+
+    model="twopl"
 
     if(is.null(seed)){
       seed <- sample(x=c(1:1e6), size=1)
@@ -29,7 +32,6 @@ twopl <- function(..., P, I, method, seed=NULL){
       }
     }
     modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_", method, ".stan"))
-    ModelData <- mget(x=ls(envir=env))
   })
   return(as.list(env))
 }

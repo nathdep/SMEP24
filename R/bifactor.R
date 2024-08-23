@@ -10,8 +10,10 @@ bifactor <- function(..., P, I, method, nDim=3, seed=NULL, coefHyper=5, sdHyper=
       alpha=alpha
     }
 
-    set.seed(seed)
     method=method
+    model="bifactor"
+
+    set.seed(seed)
     P=P
     I=I
     nDim=nDim
@@ -45,7 +47,6 @@ bifactor <- function(..., P, I, method, nDim=3, seed=NULL, coefHyper=5, sdHyper=
         Y[p,i] <- rbinom(n=1, size=1, prob=plogis(logits[p,i]))
       }
     }
-    ModelData <- mget(x=ls(envir=env))
     modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_", method, ".stan"))
   })
   return(as.list(env))
