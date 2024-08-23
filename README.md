@@ -4,6 +4,8 @@
 
   - [**Bifactor .R syntax**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/R/bifactor.R)
 
+-----------------
+
 # Stan Files for Label-Switching Approaches
 
 ## Bifactor Models
