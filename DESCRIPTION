@@ -11,9 +11,7 @@ LazyData: true
 Suggests: 
     testthat (>= 3.0.0)
 Imports:
-    bayesplot
+    bayesplot,
+    cmdstanr,
     ggplot2
-    pander
-    jtools
-    cmdstanr
 Config/testthat/edition: 3
