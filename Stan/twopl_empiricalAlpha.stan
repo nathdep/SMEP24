@@ -5,17 +5,16 @@ data{
   array[P,I] int Y;
   real<lower=0> coefHyper;
   real<lower=0> sdHyper;
+  real alpha;
 }
 parameters{
   vector[P] theta;
   row_vector[I] tau;
-  real alpha;
   real<lower=alpha> mu_lambda;
   vector<lower=alpha>[I] lambda;
   real<lower=0> sigma_lambda;
 }
 model{
-  alpha ~ normal(0, coefHyper);
   mu_lambda ~ normal(1, coefHyper)T[alpha,];
   sigma_lambda ~ gamma(1, sdHyper);
   theta ~ std_normal();
