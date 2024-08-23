@@ -13,13 +13,13 @@
   - [**Base**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/bifactor_base.stan)
   - [**ADVI**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/bifactor_advi.stan)
   - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalAlpha.stan)
-  - [**Empirical Bounded μ**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/bifactor_empiricalPos.stan)
+  - [**Empirical Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/bifactor_empiricalPos.stan)
 
 ## 2PL Model
   - [**Base**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/twopl_base.stan)
   - [**ADVI**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/twopl_advi.stan)
   - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalAlpha.stan)
-  - [**Empirical Bounded μ**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/twopl_empiricalPos.stan)
+  - [**Empirical Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/67105e3d233d0aea5dd0b0050c515af1a78e73b2/Stan/twopl_empiricalPos.stan)
 
 # Example
 
