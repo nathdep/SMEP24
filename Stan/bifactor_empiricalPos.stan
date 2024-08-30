@@ -10,7 +10,7 @@ data{
 }
 parameters{
   matrix[P, nDim] theta;
-  vector[I] lambdaG;
+  vector<lower=0>[I] lambdaG;
   matrix[I, nDim-1] lambdag;
   row_vector[I] tau;
   real<lower=0> mu_lambdaG;
@@ -24,7 +24,7 @@ model{
   mu_lambdaG ~ normal(1, coefHyper)T[0,];
   sigma_lambdag ~ gamma(1, sdHyper);
   sigma_lambdaG ~ gamma(1, sdHyper);
-  lambdaG ~ normal(mu_lambdaG, sigma_lambdaG);
+  lambdaG ~ lognormal(mu_lambdaG, sigma_lambdaG);
   to_vector(lambdag) ~ normal(mu_lambdag, sigma_lambdag);
   tau ~ normal(0, coefHyper);
   matrix[I, nDim] lambdaQ = append_col(lambdaG, lambdag).*Qmat;
