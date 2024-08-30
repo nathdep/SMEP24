@@ -42,8 +42,8 @@ bifactor <- function(...){
     theta_g2 <- rnorm(n=P, mean=0, sd=1) # Latent trait measurements of g2
     thetaMat <- cbind(theta_G, theta_g1, theta_g2)
     # GENERATING Q MATRIX
-    QmatLong <- sample(x=c(1:2), size=I, replace=TRUE) # Indices of dimension loading by item
-    Qmat <- cbind(rep(1, I), model.matrix(data=data.frame(x=as.factor(QmatLong)), ~-1+x)) # Q matrix of item loadings (first column is general factor)
+    QmatLong <- sample(x=c(1:3), size=I, replace=TRUE) # Indices of dimension loading by item
+    Qmat <- model.matrix(data=data.frame(x=as.factor(QmatLong)), ~x) # Q matrix of item loadings (first column is general factor)
     lambdaQ <- Qmat*lambdaMat
     # GENERATING DICHOTOMIZED ITEM RESPONSE DATA
     Y <- matrix(data=NA, nrow=P, ncol=I) # storing dichotomized item responses
