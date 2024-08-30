@@ -1,4 +1,4 @@
-bifactor <- function(..., P, I, method, nDim=3, seed=NULL, coefHyper=5, sdHyper=.1){
+bifactor <- function(...){
   env <- new.env(parent=.GlobalEnv)
   with(env, {
 
@@ -28,7 +28,7 @@ bifactor <- function(..., P, I, method, nDim=3, seed=NULL, coefHyper=5, sdHyper=
     if(method=="advi"){
       # If using ADVI inits method, flip signs of two lambdas at random
       negInd <- sample(x=c(1:I), size=2, replace=FALSE)
-      lambdag[negInd] <- -lambdag[negInd]
+      lambda_g12[negInd] <- -lambda_g12[negInd]
     }
 
     lambdaMat <- matrix(data=NA, nrow=I, ncol=nDim)
