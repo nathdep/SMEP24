@@ -1,12 +1,12 @@
 bifactor <- function(..., P, I, method, nDim=3, seed=NULL, coefHyper=5, sdHyper=.1){
-  env <- new.env()
+  env <- new.env(parent=.GlobalEnv)
   with(env, {
 
     if(is.null(seed)){
       seed <- sample(x=c(1:1e6), size=1)
     }
 
-    if("Alpha" %in% method){
+    if("alpha" %in% method){
       alpha=alpha
     }
 
@@ -22,8 +22,15 @@ bifactor <- function(..., P, I, method, nDim=3, seed=NULL, coefHyper=5, sdHyper=
     # SIMULATION OF ITEM INTERCEPTS
     tau <- runif(n=I, min=-3, max=3)
     # SIMULATION OF DISCRIMINATION PARAMETERS
-    lambda_G <- runif(n=I, min=-3, max=3) # loadings on general factor
-    lambda_g12 <- cbind(runif(n=I, min=-3, max=3)) # loadings on dimensions/sub-factors
+    lambda_G <- runif(n=I, min=0, max=3) # loadings on general factor
+    lambda_g12 <- cbind(runif(n=I, min=0, max=3)) # loadings on dimensions/sub-factors
+
+    if(method=="advi"){
+      # If using ADVI inits method, flip signs of two lambdas at random
+      negInd <- sample(x=c(1:I), size=2, replace=FALSE)
+      lambdag[negInd] <- -lambdag[negInd]
+    }
+
     lambdaMat <- matrix(data=NA, nrow=I, ncol=nDim)
     lambdaMat[,1] <- lambda_G
     for(dim in 1:(nDim-1)){
