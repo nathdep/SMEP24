@@ -14,14 +14,15 @@ parameters{
   matrix[I, nDim-1] lambdag;
   row_vector[I] tau;
   real<lower=0> mu_lambdaG;
-  vector<lower=0>[nDim-1] mu_lambdag;
+  // vector<lower=0>[nDim-1] mu_lambdag;
+  real<lower=0> mu_lambdag12;
   real<lower=0> sigma_lambdag;
   real<lower=0> sigma_lambdaG;
 }
 model{
   to_vector(theta) ~ std_normal();
-  mu_lambdag ~ normal(1, coefHyper)T[0,];
-  mu_lambdaG ~ normal(1, coefHyper)T[0,];
+  mu_lambdag ~ normal(0, coefHyper)T[0,];
+  mu_lambdaG ~ normal(0, coefHyper)T[0,];
   sigma_lambdag ~ gamma(1, sdHyper);
   sigma_lambdaG ~ gamma(1, sdHyper);
   lambdaG ~ lognormal(mu_lambdaG, sigma_lambdaG);

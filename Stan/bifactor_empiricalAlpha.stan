@@ -14,7 +14,7 @@ parameters{
   vector<lower=0>[I] lambdaG;
   real<lower=0> mu_lambdaG;
   real<lower=0> sigma_lambdaG;
-  array[nDim-1] vector<lower=alpha>[I] lambdag;
+  vector<lower=alpha>[I] lambdag12;
   vector<lower=alpha>[nDim-1] mu_lambdag;
   real<lower=0> sigma_lambdag;
   row_vector[I] tau;
@@ -25,7 +25,8 @@ model{
   mu_lambdag ~ normal(1, coefHyper)T[alpha,];
   sigma_lambdag ~ gamma(1, sdHyper);
   sigma_lambdaG ~ gamma(1, sdHyper);
-  lambdaG ~ normal(mu_lambdaG, sigma_lambdaG)T[alpha,];
+  lambdaG ~ lognormal(mu_lambdaG, sigma_lambdaG);
+  lambdag12 ~ normal(1, coefHyper);
   tau ~ normal(0, coefHyper);
 
   matrix[I, nDim] lambdaQ = rep_matrix(1.0, I, nDim).*Qmat;

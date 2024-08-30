@@ -16,7 +16,7 @@ parameters{
 model{
   to_vector(theta) ~ std_normal();
   lambdaG ~ lognormal(1, coefHyper);
-  lambdag12 ~ normal(1, coefHyper);
+  lambdag12 ~ normal(0, coefHyper);
   tau ~ normal(0, coefHyper);
   matrix[I, nDim] lambdaQ = append_col(lambdaG, rep_matrix(lambdag12,2)).*Qmat;
   for(i in 1:I){

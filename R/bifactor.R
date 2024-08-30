@@ -6,7 +6,7 @@ bifactor <- function(...){
       seed <- sample(x=c(1:1e6), size=1)
     }
 
-    if("alpha" %in% method){
+    if(grepl("alpha", method)){
       alpha=alpha
     }
 
