@@ -9,12 +9,12 @@ data{
   matrix[P, nDim] StdSumScore;
 }
 parameters{
-  vector[I] lambdaG;
+  vector<lower=0>[I] lambdaG;
   matrix[I, nDim-1] lambdag;
   row_vector[I] tau;
 }
 model{
-  lambdaG ~ normal(1, coefHyper);
+  lambdaG ~ lognormal(1, coefHyper);
   to_vector(lambdag) ~ normal(1, coefHyper);
   tau ~ normal(0, coefHyper);
   matrix[I, nDim] lambdaQ = append_col(lambdaG, lambdag).*Qmat;
