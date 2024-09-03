@@ -12,14 +12,32 @@ alpha=-.25 # lower bound (for empirical bound (α) method)
 # "empiricalAlpha" (λ_i > α)
 # "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
 
-method="base"
+method="advi"
 
 coefHyper=5 # Hyperprior for unbounded/continuous/normal parameters
 sdHyper=.1 # Hyperprior for positive bounded/gamma parameters
 
-env <- twopl()
+env <- bifactor()
 
 list2env(env, envir=.GlobalEnv)
+
+if(method == "advi"){
+  advirun <- modstan$variational(
+    data=ModelData,
+    seed=seed
+  )
+  advisum <-  advirun$summary()
+  inits <- getInits(advisum)
+  modrun <- basemod$sample(
+    iter_warmup=2000,
+    iter_sampling=2000,
+    seed=seed,
+    data=ModelData,
+    chains=4,
+    parallel_chains=4,
+    init=function()inits
+  )
+}
 
 modrun <- modstan$sample(
   iter_warmup=2000,

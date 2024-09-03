@@ -54,6 +54,11 @@ bifactor <- function(...){
       sdHyper=.1
     )
 
+    if(method == "advi"){
+      basemod <- cmdstan_model(stan_file="/Stan/bifactor_base.stan")
+      ModelData$StdSumScore <- getStdSumScore(Y)
+    }
+
   })
   return(as.list(env))
 }
