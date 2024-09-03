@@ -13,13 +13,13 @@
 - [**Base**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_base.stan)
 - [**ADVI**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_advi.stan)
 - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalAlpha.stan)
-- [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalPos.stan)
+- [**Empirical Positively Bounded μ<sub>λ</sub>**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalPos.stan)
 
 ## 2PL Model
 - [**Base**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_base.stan)
 - [**ADVI**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_advi.stan)
 - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalAlpha.stan)
-- [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalPos.stan)
+- [**Empirical Positively Bounded μ<sub>λ</sub>**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalPos.stan)
 
 # Example
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to access the example `.R` file displayed below.
