@@ -26,9 +26,8 @@
 ```r
 library(SMEP24)
 
-library(SMEP24)
-
-seed <- sample(x=c(1:1e6),size=1)
+seed <- sample(x=c(1:1e6),size=1) # Generate integer for seed
+set.seed(seed) # set seed (for replicability)
 
 P=500 # Number of examinees
 I=75 # Number of items
