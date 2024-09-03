@@ -19,6 +19,10 @@ bifactor <- function(...){
     lambda_G <- runif(n=I, min=0, max=3) # loadings on general factor
     lambda_g12 <- cbind(runif(n=I, min=0, max=3)) # loadings on dimensions/sub-factors
 
+    if(method != "base"){
+      lambda_g12 <- makeNeg(lambda_g12, numNeg=2) # if selected model is not "base", negate given number of sub-factor lambdas at random
+    }
+
     lambdaMat <- matrix(data=NA, nrow=I, ncol=3)
     lambdaMat[,1] <- lambda_G
     for(dim in 1:2){
@@ -61,6 +65,11 @@ bifactor <- function(...){
         StdSumScore[,i] <- getStdSumScore(Y[,which(Qmat[,i] == 1)])
       }
       ModelData$StdSumScore = StdSumScore
+    }
+
+    if(method == "empiricalAlpha"){
+      ModelData$alpha = min(lambda_g12) - 1 # assigning α using min(lambda_g12) - 1
+      ModelData$QmatInd = rowSums(Qmat[,2:3]) + 1
     }
 
   })

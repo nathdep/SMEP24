@@ -5,14 +5,6 @@ library(SMEP24)
 seed <- sample(x=c(1:1e6),size=1) # Generate integer for seed
 set.seed(seed) # set seed (for reproducibility)
 
-if(!interactive()){
-  methodInd <- as.numeric(commandArgs(trailingOnly=TRUE)) # For Argon jobs (selection of model + method combos based on task ID)
-}
-
-if(interactive()){
-  method="base" # Debugging
-}
-
 # METHODS (available for 2PL and bifactor models):
 # "base" (all inits randomly drawn)
 # "empiricalPos" (μ_λ > 0)
@@ -22,14 +14,28 @@ if(interactive()){
 methods <- c("empiricalPos", "empiricalAlpha", "advi")
 models <- c("twopl", "bifactor")
 
+if(!interactive()){
+  methodInd <- as.numeric(commandArgs(trailingOnly=TRUE)) # For Argon jobs (selection of model + method combos based on task ID)
+}
+
+if(interactive()){
+  method="empiricalAlpha" # Debugging
+  model="bifactor"
+}
+
 P=500 # Number of examinees
 I=75 # Number of items
-alpha=-.25 # lower bound (for empirical bound (α) method)
 
 coefHyper=5 # Hyperprior for unbounded/continuous/normal parameters
 sdHyper=.1 # Hyperprior for positive bounded/gamma parameters
 
-env <- bifactor() # create bifactor simulation environment/list
+if(model == "bifactor"){
+  env <- bifactor() # create bifactor simulation environment/list
+}
+
+if(model == "twopl"){
+  env <- twopl() # create 2PL simulation environment/list
+}
 
 list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
 

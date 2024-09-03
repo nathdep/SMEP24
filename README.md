@@ -50,7 +50,6 @@ models <- c("twopl", "bifactor")
 
 P=500 # Number of examinees
 I=75 # Number of items
-alpha=-.25 # lower bound (for empirical bound (α) method)
 
 coefHyper=5 # Hyperprior for unbounded/continuous/normal parameters
 sdHyper=.1 # Hyperprior for positive bounded/gamma parameters

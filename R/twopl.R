@@ -11,6 +11,11 @@ twopl <- function(...){
     set.seed(seed)
     # SIMULATION OF DISCRIMINATION PARAMETERS
     lambda <- runif(n=I, min=-3, max=3)
+
+    if(method != "base"){
+      lambda <- makeNeg(lambda, numNeg=2) # if selected model is not "base", negate given number of lambdas at random
+    }
+
     tau <- runif(n=I, min=-3, max=3)
     # SIMULATION OF LATENT TRAIT MEASUREMENTS
     theta <- rnorm(n=P, mean=0, sd=1)
@@ -32,6 +37,10 @@ twopl <- function(...){
       coefHyper=5,
       sdHyper=.1
     )
+
+    if(method == "alpha"){
+      ModelData$alpha = min(lambda) - 1 # assigning α using min(lambda) - 1
+    }
 
   })
   return(as.list(env))

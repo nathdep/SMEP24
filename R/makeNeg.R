@@ -1,4 +1,5 @@
 makeNeg <- function(lambda, numNeg=2){
+  newLambda <- lambda
   if(!all(lambda > 0)){
     stop("Ensure that all lambda values are > 0.")
   }

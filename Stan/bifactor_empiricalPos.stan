@@ -34,7 +34,7 @@ model{
   lambdaG ~ lognormal(mu_lambdaG, sigma_lambdaG);
   lambdag12 ~ normal(mu_lambdag12, sigma_lambdag12);
 
-  matrix[I, nDim] lambdaQ = append_col(lambdaG, lambdag12).*Qmat;
+  matrix[I, nDim] lambdaQ = append_col(lambdaG, rep_matrix(lambdag12,2)).*Qmat;
 
   for(i in 1:I){
     Y[,i] ~ bernoulli_logit(theta*lambdaQ[i,]' + tau[i]);
