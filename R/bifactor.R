@@ -56,7 +56,11 @@ bifactor <- function(...){
 
     if(method == "advi"){
       basemod <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_base.stan"))
-      ModelData$StdSumScore <- getStdSumScore(Y)
+      StdSumScore <- array(data=NA, dim=c(P,3))
+      for(i in 1:ncol(Qmat)){
+        StdSumScore[,i] <- getStdSumScore(Y[,which(Qmat[,i] == 1)])
+      }
+      ModelData$StdSumScore = StdSumScore
     }
 
   })
