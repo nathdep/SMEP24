@@ -1,5 +1,7 @@
 library(SMEP24)
 
+# !TO DO! add other methods
+
 seed <- sample(x=c(1:1e6),size=1) # Generate integer for seed
 set.seed(seed) # set seed (for reproducibility)
 
@@ -7,15 +9,14 @@ if(!interactive()){
   methodInd <- as.numeric(commandArgs(trailingOnly=TRUE))
 }
 
-methods <- c("base", "empiricalPos", "empiricalAlpha", "advi")
-
 # METHODS (available for 2PL and bifactor models):
 # "base" (all inits randomly drawn)
 # "empiricalPos" (μ_λ > 0)
 # "empiricalAlpha" (λ_i > α)
 # "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
 
-method <- methods[methodInd]
+methods <- c("empiricalPos", "empiricalAlpha", "advi")
+models <- c("twopl", "bifactor")
 
 P=500 # Number of examinees
 I=75 # Number of items
