@@ -30,9 +30,9 @@ if(method == "advi"){
     seed=seed
   )
 
-  advisum <-  advirun$summary() # Calculate descriptive stats using draws from approximated posteriors
+  advisum <- advirun$summary() # Calculate descriptive stats using draws from approximated posteriors
 
-  inits <- getInits(advisum) # Create a list of initial values using EAP extracted from advisum (to pass to NUTS in next step)
+  inits <- getInits(stansum=advisum) # Create a list of initial values using EAP extracted from advisum (to pass to NUTS in next step)
 
   modrun <- basemod$sample( # run NUTS sampler initialized on EAPs from previous step
     iter_warmup=2000,
