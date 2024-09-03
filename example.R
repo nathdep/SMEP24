@@ -6,7 +6,11 @@ seed <- sample(x=c(1:1e6),size=1) # Generate integer for seed
 set.seed(seed) # set seed (for reproducibility)
 
 if(!interactive()){
-  methodInd <- as.numeric(commandArgs(trailingOnly=TRUE))
+  methodInd <- as.numeric(commandArgs(trailingOnly=TRUE)) # For Argon jobs (selection of model + method combos based on task ID)
+}
+
+if(interactive()){
+  method="base" # Debugging
 }
 
 # METHODS (available for 2PL and bifactor models):
