@@ -4,6 +4,7 @@ seed <- sample(x=c(1:1e6),size=1)
 
 P=500 # Number of examinees
 I=75 # Number of items
+alpha=-.25 # lower bound (for empirical bound (α) method)
 
 # METHODS (available for 2PL and bifactor models):
 # "base" (all inits randomly drawn)
