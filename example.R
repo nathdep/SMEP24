@@ -22,12 +22,16 @@ env <- bifactor()
 list2env(env, envir=.GlobalEnv)
 
 if(method == "advi"){
+
   advirun <- modstan$variational(
     data=ModelData,
     seed=seed
   )
+
   advisum <-  advirun$summary()
+
   inits <- getInits(advisum)
+
   modrun <- basemod$sample(
     iter_warmup=2000,
     iter_sampling=2000,
