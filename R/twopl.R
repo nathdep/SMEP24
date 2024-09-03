@@ -1,5 +1,5 @@
-twopl <- function(..., P, I, method, seed=NULL){
-  env <- new.env()
+twopl <- function(...){
+  env <- new.env(parent=.GlobalEnv)
   with(env, {
 
     method=method
@@ -7,14 +7,6 @@ twopl <- function(..., P, I, method, seed=NULL){
     I=I
 
     model="twopl"
-
-    if(is.null(seed)){
-      seed <- sample(x=c(1:1e6), size=1)
-    }
-
-    if("alpha" %in% method){
-      alpha=alpha
-    }
 
     set.seed(seed)
     # SIMULATION OF DISCRIMINATION PARAMETERS
@@ -32,6 +24,15 @@ twopl <- function(..., P, I, method, seed=NULL){
       }
     }
     modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_", method, ".stan"))
+
+    ModelData <- list(
+      P=nrow(Y),
+      I=ncol(Y),
+      Y=Y,
+      coefHyper=5,
+      sdHyper=.1
+    )
+
   })
   return(as.list(env))
 }

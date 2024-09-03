@@ -17,7 +17,7 @@ method="base"
 coefHyper=5 # Hyperprior for unbounded/continuous/normal parameters
 sdHyper=.1 # Hyperprior for positive bounded/gamma parameters
 
-env <- bifactor()
+env <- twopl()
 
 list2env(env, envir=.GlobalEnv)
 
