@@ -27,11 +27,13 @@
 library(SMEP24)
 
 seed <- sample(x=c(1:1e6),size=1) # Generate integer for seed
-set.seed(seed) # set seed (for replicability)
+set.seed(seed) # set seed (for reproducibility)
 
-P=500 # Number of examinees
-I=75 # Number of items
-alpha=-.25 # lower bound (for empirical bound (α) method)
+if(!interactive()){
+  methodInd <- as.numeric(commandArgs(trailingOnly=TRUE))
+}
+
+methods <- c("base", "empiricalPos", "empiricalAlpha", "advi")
 
 # METHODS (available for 2PL and bifactor models):
 # "base" (all inits randomly drawn)
@@ -39,7 +41,11 @@ alpha=-.25 # lower bound (for empirical bound (α) method)
 # "empiricalAlpha" (λ_i > α)
 # "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
 
-method="advi"
+method <- methods[methodInd]
+
+P=500 # Number of examinees
+I=75 # Number of items
+alpha=-.25 # lower bound (for empirical bound (α) method)
 
 coefHyper=5 # Hyperprior for unbounded/continuous/normal parameters
 sdHyper=.1 # Hyperprior for positive bounded/gamma parameters
@@ -55,9 +61,17 @@ if(method == "advi"){
     seed=seed
   )
 
-  advisum <-  advirun$summary() # Calculate descriptive stats using draws from approximated posteriors
+  advisum <- advirun$summary() # Calculate descriptive stats using draws from approximated posteriors
 
-  inits <- getInits(advisum) # Create a list of initial values using EAP extracted from advisum (to pass to NUTS in next step)
+  inits <- getInits(stansum=advisum) # Create a list of initial values using EAP extracted from advisum (to pass to NUTS in next step)
+
+  initDims <- lapply(names(inits), getDims) # get dimensions for parameter matrices from global environment (i.e., theta in bifactor model)
+
+  for(i in 1:length(initDims)){ # reshape initial values to account for matrix dimensions in previous step (if applicable)
+    if(!is.null(initDims[[i]])){
+      dim(inits[[i]]) <- initDims[[i]]
+    }
+  }
 
   modrun <- basemod$sample( # run NUTS sampler initialized on EAPs from previous step
     iter_warmup=2000,
@@ -68,10 +82,11 @@ if(method == "advi"){
     parallel_chains=4,
     init=function()inits
   )
+
 }
 
 if(!(method == "advi")){
-  modrun <- modstan$sample( # run NUTS sampler (for methods other than ADVI)
+  modrun <- modstan$sample( # run NUTS sampler (for methods other than )
     iter_warmup=2000,
     iter_sampling=2000,
     seed=seed,
@@ -79,10 +94,13 @@ if(!(method == "advi")){
     chains=4,
     parallel_chains=4
   )
+
+  modsum <- modrun$summary()
+
 }
 
-modsum <- modrun$summary()
+nBadRhats <- countRhat(modsum, rHatThreshold = 1.05) # Indicator for Rhats > 1.05
 
-nBadRhats <- countRhat(modsum)
+
 
 ```

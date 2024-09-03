@@ -28,7 +28,7 @@ bifactor <- function(...){
     theta_G <- rnorm(n=P, mean=0, sd=1) # Latent trait measurements of general factor
     theta_g1 <- rnorm(n=P, mean=0, sd=1) # Latent trait measurements of g1
     theta_g2 <- rnorm(n=P, mean=0, sd=1) # Latent trait measurements of g2
-    thetaMat <- cbind(theta_G, theta_g1, theta_g2)
+    theta <- cbind(theta_G, theta_g1, theta_g2)
     # GENERATING Q MATRIX
     QmatLong <- sample(x=c(1:3), size=I, replace=TRUE) # Indices of dimension loading by item
     Qmat <- model.matrix(data=data.frame(x=as.factor(QmatLong)), ~x) # Q matrix of item loadings (first column is general factor)
@@ -37,7 +37,7 @@ bifactor <- function(...){
     Y <- matrix(data=NA, nrow=P, ncol=I) # storing dichotomized item responses
     logits <- matrix(data=NA, nrow=P, ncol=I)
     for(i in 1:I){
-      logits[,i] <- thetaMat%*%lambdaQ[i,] + tau[i]
+      logits[,i] <- theta%*%lambdaQ[i,] + tau[i]
       for(p in 1:P){
         Y[p,i] <- rbinom(n=1, size=1, prob=plogis(logits[p,i]))
       }
