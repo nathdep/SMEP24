@@ -10,6 +10,7 @@ I=75 # Number of items
 # "empiricalPos" (μ_λ > 0)
 # "empiricalAlpha" (λ_i > α)
 # "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
+
 method="base"
 
 coefHyper=5 # Hyperprior for unbounded/continuous/normal parameters
@@ -19,42 +20,15 @@ env <- bifactor()
 
 list2env(env, envir=.GlobalEnv)
 
-if(!grepl("advi", method)){
+modrun <- modstan$sample(
+  iter_warmup=2000,
+  iter_sampling=2000,
+  seed=seed,
+  data=ModelData,
+  chains=4,
+  parallel_chains=4
+)
 
-  modrun <- modstan$sample(
-    iter_warmup=2000,
-    iter_sampling=2000,
-    seed=seed,
-    data=ModelData,
-    chains=4,
-    parallel_chains=4
-  )
+modsum <- modrun$summary()
 
-  modsum <- modrun$summary()
-
-}
-
-if(grepl("advi", method)){
-
-  ModelData$StdSumScore <- getStdSumScore(resps)
-
-  advirun <- modstan$variational(
-    data=ModelData,
-    seed=seed
-  )
-
-  inits <- getInits(advirun$summary())
-
-  modrun <- modstan$sample(
-    iter_warmup=2000,
-    iter_sampling=2000,
-    seed=seed,
-    data=ModelData,
-    chains=4,
-    parallel_chains=4,
-    init=function()inits
-  )
-
-  modsum <- modrun$summary()
-
-}
+nBadRhats <- countRhat(modsum)
