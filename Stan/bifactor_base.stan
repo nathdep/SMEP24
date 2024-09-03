@@ -10,7 +10,7 @@ data{
 parameters{
   matrix[P, nDim] theta;
   vector<lower=0>[I] lambdaG;
-  row_vector[I] lambdag12;
+  vector[I] lambdag12;
   row_vector[I] tau;
 }
 model{

@@ -11,23 +11,29 @@ data{
 }
 parameters{
   matrix[P, nDim] theta;
-  vector<lower=0>[I] lambdaG;
-  real<lower=0> mu_lambdaG;
-  real<lower=0> sigma_lambdaG;
-  vector<lower=alpha>[I] lambdag12;
-  vector<lower=alpha>[nDim-1] mu_lambdag;
-  real<lower=0> sigma_lambdag;
   row_vector[I] tau;
+
+  real<lower=0> sigma_lambdaG;
+  real<lower=0> sigma_lambdag12;
+
+  real<lower=0> mu_lambdaG;
+  vector<lower=0>[nDim-1] mu_lambdag12;
+
+  vector<lower=0>[I] lambdaG;
+  vector<lower=alpha>[I] lambdag12;
 }
 model{
   to_vector(theta) ~ std_normal();
-  mu_lambdaG ~ lognormal(1, coefHyper);
-  mu_lambdag ~ normal(1, coefHyper)T[alpha,];
-  sigma_lambdag ~ gamma(1, sdHyper);
-  sigma_lambdaG ~ gamma(1, sdHyper);
-  lambdaG ~ lognormal(mu_lambdaG, sigma_lambdaG);
-  lambdag12 ~ normal(1, coefHyper);
   tau ~ normal(0, coefHyper);
+
+  sigma_lambdaG ~ gamma(1, sdHyper);
+  sigma_lambdag12 ~ gamma(1, sdHyper);
+
+  mu_lambdaG ~ lognormal(1, coefHyper);
+  mu_lambdag12 ~ normal(0, coefHyper)T[alpha,];
+
+  lambdaG ~ lognormal(mu_lambdaG, sigma_lambdaG);
+  lambdag12 ~ normal(mu_lambdag12, sigma_lambdag12);
 
   matrix[I, nDim] lambdaQ = rep_matrix(1.0, I, nDim).*Qmat;
   lambdaQ[,1] += lambdaG;

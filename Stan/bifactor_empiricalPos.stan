@@ -10,25 +10,32 @@ data{
 }
 parameters{
   matrix[P, nDim] theta;
-  vector<lower=0>[I] lambdaG;
-  matrix[I, nDim-1] lambdag;
   row_vector[I] tau;
-  real<lower=0> mu_lambdaG;
-  // vector<lower=0>[nDim-1] mu_lambdag;
-  real<lower=0> mu_lambdag12;
-  real<lower=0> sigma_lambdag;
+
   real<lower=0> sigma_lambdaG;
+  real<lower=0> sigma_lambdag12;
+
+  real<lower=0> mu_lambdaG;
+  real<lower=0> mu_lambdag12;
+
+  vector<lower=0>[I] lambdaG;
+  matrix[I, nDim-1] lambdag12;
 }
 model{
   to_vector(theta) ~ std_normal();
-  mu_lambdag ~ normal(0, coefHyper)T[0,];
-  mu_lambdaG ~ normal(0, coefHyper)T[0,];
-  sigma_lambdag ~ gamma(1, sdHyper);
-  sigma_lambdaG ~ gamma(1, sdHyper);
-  lambdaG ~ lognormal(mu_lambdaG, sigma_lambdaG);
-  to_vector(lambdag) ~ normal(mu_lambdag, sigma_lambdag);
   tau ~ normal(0, coefHyper);
+
+  sigma_lambdaG ~ gamma(1, sdHyper);
+  sigma_lambdag12 ~ gamma(1, sdHyper);
+
+  mu_lambdaG ~ normal(0, coefHyper)T[0,];
+  mu_lambdag12 ~ normal(0, coefHyper)T[0,];
+
+  lambdaG ~ lognormal(mu_lambdaG, sigma_lambdaG);
+  to_vector(lambdag12) ~ normal(mu_lambdag, sigma_lambdag);
+
   matrix[I, nDim] lambdaQ = append_col(lambdaG, lambdag).*Qmat;
+
   for(i in 1:I){
     Y[,i] ~ bernoulli_logit(theta*lambdaQ[i,]' + tau[i]);
   }

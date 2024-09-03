@@ -6,17 +6,11 @@ bifactor <- function(...){
       seed <- sample(x=c(1:1e6), size=1)
     }
 
-    if(grepl("alpha", method)){
-      alpha=alpha
-    }
-
-    method=method
     model="bifactor"
 
     set.seed(seed)
     P=P
     I=I
-    nDim=nDim
     coefHyper=coefHyper
     sdHyper=sdHyper
     # SIMULATION OF ITEM INTERCEPTS
@@ -25,15 +19,9 @@ bifactor <- function(...){
     lambda_G <- runif(n=I, min=0, max=3) # loadings on general factor
     lambda_g12 <- cbind(runif(n=I, min=0, max=3)) # loadings on dimensions/sub-factors
 
-    if(method=="advi"){
-      # If using ADVI inits method, flip signs of two lambdas at random
-      negInd <- sample(x=c(1:I), size=2, replace=FALSE)
-      lambda_g12[negInd] <- -lambda_g12[negInd]
-    }
-
-    lambdaMat <- matrix(data=NA, nrow=I, ncol=nDim)
+    lambdaMat <- matrix(data=NA, nrow=I, ncol=3)
     lambdaMat[,1] <- lambda_G
-    for(dim in 1:(nDim-1)){
+    for(dim in 1:2){
       lambdaMat[,dim+1] <- lambda_g12
     }
     # SIMULATION OF LATENT TRAIT MEASUREMENTS
@@ -55,6 +43,17 @@ bifactor <- function(...){
       }
     }
     modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_", method, ".stan"))
+
+    ModelData <- list(
+      P=nrow(Y),
+      I=ncol(Y),
+      Y=Y,
+      nDim=3,
+      Qmat=Qmat,
+      coefHyper=5,
+      sdHyper=.1
+    )
+
   })
   return(as.list(env))
 }
