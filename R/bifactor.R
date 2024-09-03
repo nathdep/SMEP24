@@ -55,7 +55,7 @@ bifactor <- function(...){
     )
 
     if(method == "advi"){
-      basemod <- cmdstan_model(stan_file="/Stan/bifactor_base.stan")
+      basemod <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_base.stan"))
       ModelData$StdSumScore <- getStdSumScore(Y)
     }
 
