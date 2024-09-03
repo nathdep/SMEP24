@@ -86,6 +86,4 @@ modsum <- modrun$summary()
 
 nBadRhats <- countRhat(modsum)
 
-
-
 ```

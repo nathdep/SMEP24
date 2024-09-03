@@ -55,7 +55,6 @@ if(!(method == "advi")){
     parallel_chains=4
   )
 
-
   modsum <- modrun$summary()
 
 }
