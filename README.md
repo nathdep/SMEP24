@@ -1,8 +1,8 @@
 # Simulation Files
 
-  - [**2PL .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/twopl.R)
+- [**2PL .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/twopl.R)
 
-  - [**Bifactor .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/bifactor.R)
+- [**Bifactor .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/bifactor.R)
 
 -----------------
 
@@ -10,16 +10,16 @@
 
 ## Bifactor Model
 
-  - [**Base**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_base.stan)
-  - [**ADVI**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_advi.stan)
-  - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalAlpha.stan)
-  - [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalPos.stan)
+- [**Base**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_base.stan)
+- [**ADVI**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_advi.stan)
+- [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalAlpha.stan)
+- [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalPos.stan)
 
 ## 2PL Model
-  - [**Base**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_base.stan)
-  - [**ADVI**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_advi.stan)
-  - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalAlpha.stan)
-  - [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalPos.stan)
+- [**Base**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_base.stan)
+- [**ADVI**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_advi.stan)
+- [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalAlpha.stan)
+- [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalPos.stan)
 
 # Example
 
@@ -45,22 +45,22 @@ method="advi"
 coefHyper=5 # Hyperprior for unbounded/continuous/normal parameters
 sdHyper=.1 # Hyperprior for positive bounded/gamma parameters
 
-env <- bifactor()
+env <- bifactor() # create bifactor simulation environment/list
 
-list2env(env, envir=.GlobalEnv)
+list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
 
 if(method == "advi"){
 
-  advirun <- modstan$variational(
+  advirun <- modstan$variational(  # Run variational inference via ADVI
     data=ModelData,
     seed=seed
   )
 
-  advisum <-  advirun$summary()
+  advisum <-  advirun$summary() # Calculate descriptive stats using draws from approximated posteriors
 
-  inits <- getInits(advisum)
+  inits <- getInits(advisum) # Create a list of initial values using EAP extracted from advisum (to pass to NUTS in next step)
 
-  modrun <- basemod$sample(
+  modrun <- basemod$sample( # run NUTS sampler initialized on EAPs from previous step
     iter_warmup=2000,
     iter_sampling=2000,
     seed=seed,
@@ -71,18 +71,21 @@ if(method == "advi"){
   )
 }
 
-modrun <- modstan$sample(
-  iter_warmup=2000,
-  iter_sampling=2000,
-  seed=seed,
-  data=ModelData,
-  chains=4,
-  parallel_chains=4
-)
+if(!(method == "advi")){
+  modrun <- modstan$sample( # run NUTS sampler (for methods other than ADVI)
+    iter_warmup=2000,
+    iter_sampling=2000,
+    seed=seed,
+    data=ModelData,
+    chains=4,
+    parallel_chains=4
+  )
+}
 
 modsum <- modrun$summary()
 
 nBadRhats <- countRhat(modsum)
+
 
 
 ```
