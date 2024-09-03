@@ -6,7 +6,7 @@
 
 -----------------
 
-# Stan Files for Label-Switching Approaches
+# Stan Files for Label-Switching Methods
 
 ## Bifactor Model
 
