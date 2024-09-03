@@ -22,7 +22,7 @@
 - [**Empirical Positively Bounded μ_λ**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalPos.stan)
 
 # Example
-
+Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to access the example `.R` file displayed below.
 ```r
 library(SMEP24)
 
