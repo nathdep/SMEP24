@@ -56,7 +56,7 @@ set.seed(seed) # set seed (for reproducibility)
 
 P=500 # Number of examinees
 I=75 # Number of items
-rHatThreshold=1.05 # Threshold for deteriming chain convergence
+rHatThreshold=1.05 # Threshold for determining chain convergence
 
 coefHyper=5 # Hyperparameter for unbounded/continuous/normal parameters
 sdHyper=.1 # Hyperparameter for positive bounded/gamma parameters
@@ -69,7 +69,7 @@ if(model == "twopl"){
   env <- twopl() # create 2PL simulation environment/list
 }
 
-list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
+list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into the global environment
 
 if(method == "advi"){
 
@@ -103,7 +103,7 @@ if(method == "advi"){
 }
 
 if(!(method == "advi")){
-  modrun <- modstan$sample( # run NUTS sampler (for methods other than )
+  modrun <- modstan$sample( # run NUTS sampler (for methods other than "advi")
     iter_warmup=2000,
     iter_sampling=2000,
     seed=seed,
