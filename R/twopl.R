@@ -1,5 +1,7 @@
 twopl <- function(...){
+
   env <- new.env(parent=.GlobalEnv)
+
   with(env, {
 
     method=method

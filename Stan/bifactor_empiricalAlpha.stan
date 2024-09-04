@@ -1,5 +1,6 @@
 
 data{
+
   int<lower=0> P; // Number of examinees
   int<lower=0> I; // Number of items
   int<lower=0> nDim; // Number of total factor dimensions (3 = 1G + 2g)
@@ -9,8 +10,10 @@ data{
   real<lower=0> coefHyper; // Hyperparameter for unbounded/continuous/normal parameters
   real<lower=0> sdHyper; // Hyperparameter for positive bounded/gamma parameters
   real alpha; // TruncNorm lower bound
+
 }
 parameters{
+
   matrix[P, nDim] theta; // latent factor scores
   row_vector[I] tau; // item intercepts (easiness)
 
@@ -46,4 +49,5 @@ model{
   for(i in 1:I){
     Y[,i] ~ bernoulli_logit(theta*lambdaQ[i,]' + tau[i]);
   }
+
 }
