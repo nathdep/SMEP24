@@ -18,8 +18,8 @@ if(!interactive()){
 
 if(interactive()){
   seed <- sample(x=c(1:1e6), size=1) # Randomly draw integer for seed
-  method="empiricalAlpha" # Debugging
-  model="bifactor"
+  method="empiricalPos" # Debugging
+  model="twopl"
 }
 
 set.seed(seed) # set seed (for reproducibility)

@@ -22,7 +22,7 @@ bifactor <- function(...){
     lambda_g12 <- cbind(runif(n=I, min=0, max=3)) # loadings on dimensions/sub-factors
 
     if(method != "base"){
-      lambda_g12 <- makeNeg(lambda_g12, numNeg=2) # if selected model is not "base", negate given number of sub-factor lambdas at random
+      lambda_g12 <- makeNeg(lambda_g12, numNeg=2) # if selected model is not "base", negate I/4 (rounded down) sub-factor (g) lambdas at random
     }
 
     lambdaMat <- matrix(data=NA, nrow=I, ncol=3)
@@ -71,7 +71,7 @@ bifactor <- function(...){
 
     if(method == "empiricalAlpha"){
       ModelData$alpha = min(lambda_g12) - 1 # assigning α using min(lambda_g12) - 1
-      ModelData$QmatInd = rowSums(Qmat[,2:3]) + 1
+      ModelData$QmatInd <- max.col(Qmat[,2:3])
     }
 
   })

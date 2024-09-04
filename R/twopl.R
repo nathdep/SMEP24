@@ -12,10 +12,10 @@ twopl <- function(...){
 
     set.seed(seed)
     # SIMULATION OF DISCRIMINATION PARAMETERS
-    lambda <- runif(n=I, min=-3, max=3)
+    lambda <- runif(n=I, min=0, max=3)
 
     if(method != "base"){
-      lambda <- makeNeg(lambda, numNeg=2) # if selected model is not "base", negate given number of lambdas at random
+      lambda <- makeNeg(lambda, numNeg=floor(I/4)) # if selected model is not "base", negate I/4 (rounded down) lambdas at random
     }
 
     tau <- runif(n=I, min=-3, max=3)
