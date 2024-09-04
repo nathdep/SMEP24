@@ -7,9 +7,9 @@
 countRhat(modsum, rHatThreshold = 1.05)
 }
 \arguments{
-\item{rHatThreshold}{maximum tolerance for indicated convergence based on Rhat values}
+\item{modsum}{object generated from `$summary()` method on a `cmdstanr` model environment}
 
-\item{modum}{`data.frame` object generated from `$summary()` method on a `cmdstanr` model environment}
+\item{rHatThreshold}{maximum tolerance for indicated convergence based on Rhat values}
 }
 \value{
 count of Rhat > threshold

@@ -80,7 +80,7 @@ if(method == "advi"){
 
   advisum <- advirun$summary() # Calculate descriptive stats using draws from approximated posteriors
 
-  inits <- getInits(stansum=advisum) # Create a list of initial values using EAP extracted from advisum (to pass to NUTS in next step)
+  inits <- getInits(advisum) # Create a list of initial values using EAP extracted from advisum (to pass to NUTS in next step)
 
   initDims <- lapply(names(inits), getDims) # get dimensions for parameter matrices from global environment (i.e., theta in bifactor model)
 

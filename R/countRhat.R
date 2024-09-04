@@ -1,5 +1,5 @@
 #' Rhat Convergence Indicator Function
-#' @param modum `data.frame` object generated from `$summary()` method on a `cmdstanr` model environment
+#' @param modsum  object generated from `$summary()` method on a `cmdstanr` model environment
 #' @param rHatThreshold maximum tolerance for indicated convergence based on Rhat values
 #' @returns count of Rhat > threshold
 #' @export
