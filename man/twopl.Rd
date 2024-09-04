@@ -10,7 +10,7 @@ twopl(...)
 \item{...}{objects inherited from parent}
 }
 \value{
-an environment stored to a list object of the bifactor simulation environment
+an environment stored to a list object of the 2PL simulation environment
 }
 \description{
 Generate a 2-Parameter Logistic (2PL) IRT Simulation Environment
