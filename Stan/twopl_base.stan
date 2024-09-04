@@ -13,7 +13,7 @@ parameters{
 model{
   theta ~ std_normal();
   tau ~ normal(0, coefHyper);
-  lambda ~ normal(1, coefHyper);
+  lambda ~ normal(0, coefHyper);
   for(i in 1:I){
     Y[,i] ~ bernoulli_logit(theta*lambda[i] + tau[i]);
   }

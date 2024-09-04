@@ -15,7 +15,7 @@ parameters{
   real<lower=0> sigma_lambda;
 }
 model{
-  mu_lambda ~ normal(1, coefHyper)T[alpha,];
+  mu_lambda ~ normal(0, coefHyper)T[alpha,];
   sigma_lambda ~ gamma(1, sdHyper);
   theta ~ std_normal();
   tau ~ normal(0, coefHyper);
