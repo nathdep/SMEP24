@@ -56,8 +56,8 @@ bifactor <- function(...){
       Y=Y,
       nDim=3,
       Qmat=Qmat,
-      coefHyper=5,
-      sdHyper=.1
+      coefHyper=coefHyper,
+      sdHyper=sdHyper
     )
 
     if(method == "advi"){

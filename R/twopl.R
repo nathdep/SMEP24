@@ -36,8 +36,8 @@ twopl <- function(...){
       P=nrow(Y),
       I=ncol(Y),
       Y=Y,
-      coefHyper=5,
-      sdHyper=.1
+      coefHyper=coefHyper,
+      sdHyper=sdHyper
     )
 
     if(method == "alpha"){
