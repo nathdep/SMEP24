@@ -1,3 +1,8 @@
+#' Rhat Convergence Indicator Function
+#' @param modum `data.frame` object generated from `$summary()` method on a `cmdstanr` model environment
+#' @param rHatThreshold maximum tolerance for indicated convergence based on Rhat values
+#' @returns count of Rhat > threshold
+#' @export
 countRhat <- function(modsum, rHatThreshold=1.05){
   rHats <- modsum$rhat
   counter <- 0

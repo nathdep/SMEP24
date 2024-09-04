@@ -1,3 +1,7 @@
+#' Generate a 2-Parameter Logistic (2PL) IRT Simulation Environment
+#' @param ... objects inherited from parent
+#' @returns an environment stored to a list object of the bifactor simulation environment
+#' @export
 twopl <- function(...){
 
   env <- new.env(parent=.GlobalEnv)
