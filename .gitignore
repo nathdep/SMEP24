@@ -6,3 +6,4 @@ Stan/twopl_base.exe
 Stan/bifactor_advi.exe
 Stan/bifactor_advi.exe
 *.exe
+*.csv
