@@ -6,7 +6,7 @@ bifactor <- function(...){
       seed <- sample(x=c(1:1e6), size=1)
     }
 
-    method=metod
+    method=method
     model="bifactor"
 
     set.seed(seed)
