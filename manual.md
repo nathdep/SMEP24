@@ -141,5 +141,5 @@ twopl(...)
 
 ## Value
 
-an environment stored to a list object of the bifactor simulation environment
+an environment stored to a list object of the 2PL simulation environment
 
