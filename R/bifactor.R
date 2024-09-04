@@ -74,9 +74,13 @@ bifactor <- function(...){
       ModelData$StdSumScore = StdSumScore
     }
 
+    if(method == "empiricalPos"){
+      ModelData$QmatInd <- max.col(Qmat[,2:3]) # creating integer indices for mean of sub-factor loadings
+    }
+
     if(method == "empiricalAlpha"){
       ModelData$alpha = min(lambda_g12) - 1 # assigning α using min(lambda_g12) - 1
-      ModelData$QmatInd <- max.col(Qmat[,2:3])
+
     }
 
   })
