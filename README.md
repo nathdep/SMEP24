@@ -1,3 +1,7 @@
+# Function Index
+
+- Click [**here**](https://github.com/nathdep/SMEP24/wiki/INDEX) to view an online index of the package's functions.
+
 # Simulation Files
 
 - [**2PL .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/twopl.R)
