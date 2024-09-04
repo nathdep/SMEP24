@@ -1,14 +1,14 @@
 # Function Index
 
 - Click [**here**](https://github.com/nathdep/SMEP24/wiki/INDEX) to view an online index of the package's functions.
-
+***
 # Simulation Files
 
 - [**2PL .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/twopl.R)
 
 - [**Bifactor .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/bifactor.R)
 
------------------
+***
 
 # Stan Files for Label-Switching Methods
 
@@ -25,7 +25,7 @@
 - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalAlpha.stan)
 - [**Empirical Positively Bounded μ<sub>λ</sub>**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalPos.stan)
 
-# Example
+# Example Replication
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to access the example `.R` file displayed below.
 ```r
 library(SMEP24)
