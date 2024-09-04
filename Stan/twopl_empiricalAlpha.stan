@@ -10,16 +10,12 @@ data{
 parameters{
   vector[P] theta;
   row_vector[I] tau;
-  real<lower=alpha> mu_lambda;
-  vector<lower=alpha>[I] lambda;
-  real<lower=0> sigma_lambda;
+  row_vector<lower=0>[I] lambda;
 }
 model{
-  mu_lambda ~ normal(0, coefHyper)T[alpha,];
-  sigma_lambda ~ gamma(1, sdHyper);
   theta ~ std_normal();
   tau ~ normal(0, coefHyper);
-  lambda ~ normal(mu_lambda, sigma_lambda)T[alpha,];
+  lambda ~ normal(0, coefHyper)T[alpha,];
   for(i in 1:I){
     Y[,i] ~ bernoulli_logit(theta*lambda[i] + tau[i]);
   }
