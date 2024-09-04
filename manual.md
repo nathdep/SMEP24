@@ -55,8 +55,8 @@ countRhat(modsum, rHatThreshold = 1.05)
 
 ## Arguments
 
+* `modsum`: object generated from `$summary()` method on a `cmdstanr` model environment
 * `rHatThreshold`: maximum tolerance for indicated convergence based on Rhat values
-* `modum`: `data.frame` object generated from `$summary()` method on a `cmdstanr` model environment
 
 ## Value
 
@@ -81,6 +81,26 @@ getDims(name)
 ## Value
 
 integer of object's total dimensions
+
+# `getInits`: Get Parameter Values for Initializing NUTS
+
+## Description
+
+Get Parameter Values for Initializing NUTS
+
+## Usage
+
+```r
+getInits(modsum)
+```
+
+## Arguments
+
+* `modsum`: object generated from `$summary()` method on a `cmdstanr` model environment
+
+## Value
+
+a named list object containing *expected a prior* from ADVI-approximated posterior draws
 
 # `getStdSumScore`: Calculate Standardized Sum Scores
 
