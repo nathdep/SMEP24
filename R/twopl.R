@@ -44,7 +44,7 @@ twopl <- function(...){
       sdHyper=sdHyper
     )
 
-    if(method == "alpha"){
+    if(method == "empiricalAlpha"){
       ModelData$alpha = min(lambda) - 1 # assigning α using min(lambda) - 1
     }
 
