@@ -35,7 +35,7 @@ twopl <- function(...){
     )
 
     if(empiricalMethod == "empiricalAlpha"){
-      ModelData$alpha = min(lambda) - 1 # assigning α using min(lambda) - 1
+      ModelData$alpha = -6 # assigning α
     }
 
     if(startingMethod == "advi"){
@@ -61,13 +61,13 @@ twopl <- function(...){
 
     if(startingMethod == "allRand"){
       inits <- list(
-        theta = runif(n=I, min=-6, max=6),
+        theta = runif(n=P, min=-6, max=6),
         lambda = runif(n=I, min=-6, max=6),
         tau = runif(n=I,min=-6, max=6)
       )
     }
 
-    if(startingMethod == "stdSumScore"){
+    if(startingMethod == "StdSumScore"){
       inits <- list(
         theta = getStdSumScore(Y),
         lambda=runif(n=I, min=-6, max=6),

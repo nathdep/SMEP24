@@ -60,7 +60,7 @@ bifactor <- function(...){
     }
 
     if(empiricalMethod == "empiricalAlpha"){
-      ModelData$alpha = min(lambda_g12) - 1 # assigning α using min(lambda_g12) - 1
+      ModelData$alpha = -6 # assigning α
     }
 
     if(startingMethod == "advi"){
@@ -96,7 +96,7 @@ bifactor <- function(...){
       )
     }
 
-    if(startingMethod == "stdSumScore"){
+    if(startingMethod == "StdSumScore"){
       StdSumScore <- array(data=NA, dim=c(P,3))
       for(i in 1:ncol(Qmat)){
         StdSumScore[,i] <- getStdSumScore(Y[,which(Qmat[,i] == 1)])

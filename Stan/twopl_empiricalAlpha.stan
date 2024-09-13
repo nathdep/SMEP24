@@ -10,7 +10,7 @@ data{
 parameters{
   vector[P] theta;
   row_vector[I] tau;
-  row_vector<lower=0>[I] lambda;
+  row_vector<lower=alpha>[I] lambda;
 }
 model{
   theta ~ std_normal();
