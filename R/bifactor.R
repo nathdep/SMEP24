@@ -8,13 +8,6 @@ bifactor <- function(...){
   env <- new.env(parent=.GlobalEnv)
   with(env, {
 
-    if(is.null(seed)){
-      seed <- sample(x=c(1:1e6), size=1)
-    }
-
-    method=method
-    model="bifactor"
-
     set.seed(seed)
     P=P
     I=I
@@ -24,11 +17,7 @@ bifactor <- function(...){
     tau <- runif(n=I, min=-3, max=3)
     # SIMULATION OF DISCRIMINATION PARAMETERS
     lambda_G <- runif(n=I, min=0, max=3) # loadings on general factor
-    lambda_g12 <- cbind(runif(n=I, min=0, max=3)) # loadings on dimensions/sub-factors
-
-    if(method != "base"){
-      lambda_g12 <- makeNeg(lambda_g12, numNeg=2) # if selected model is not "base", negate I/4 (rounded down) sub-factor (g) lambdas at random
-    }
+    lambda_g12 <- makeNeg(cbind(runif(n=I, min=0, max=3)), numNeg=2) # negate I/4 (rounded down) sub-factor (g) lambdas at random
 
     lambdaMat <- matrix(data=NA, nrow=I, ncol=3)
     lambdaMat[,1] <- lambda_G
@@ -53,7 +42,8 @@ bifactor <- function(...){
         Y[p,i] <- rbinom(n=1, size=1, prob=plogis(logits[p,i]))
       }
     }
-    modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_", method, ".stan"))
+
+    modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_", empiricalMethod, ".stan"))
 
     ModelData <- list(
       P=nrow(Y),

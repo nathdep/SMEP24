@@ -8,19 +8,9 @@ twopl <- function(...){
 
   with(env, {
 
-    method=method
-    P=P
-    I=I
-
-    model="twopl"
-
     set.seed(seed)
     # SIMULATION OF DISCRIMINATION PARAMETERS
-    lambda <- runif(n=I, min=0, max=3)
-
-    if(method != "base"){
-      lambda <- makeNeg(lambda, numNeg=floor(I/4)) # if selected model is not "base", negate I/4 (rounded down) lambdas at random
-    }
+    lambda <- makeNeg(runif(n=I, min=0, max=3), numNeg=floor(I/4)) # negate I/4 (rounded down) lambdas at random
 
     tau <- runif(n=I, min=-3, max=3)
     # SIMULATION OF LATENT TRAIT MEASUREMENTS
