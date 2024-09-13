@@ -30,8 +30,8 @@ if(!interactive()){
 
 if(interactive()){
   seed <- sample(x=c(1:1e6), size=1) # Randomly draw integer for seed
-  startingMethod="allRand" # Debugging
-  empiricalMethod="empiricalPos"
+  startingMethod="advi" # Debugging
+  empiricalMethod="base"
   model="bifactor"
 }
 
@@ -70,23 +70,23 @@ nBadRhats <- countRhat(modsum, rHatThreshold = rHatThreshold) # Indicator for Rh
 
 if(nBadRhats > 0 && !interactive()){
 
-    badRhatModsum <- modsum[which(modsum$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
-    write.csv(badRhatModsum, paste0("BadRhatModsum_", seed, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
-    rHatNames <- badRhatModsum$variable # extract bad Rhat names
-    dropind_rHat <- sub("\\[.*\\]", "", rHatNames) # drop indices ([,])
-    unique_rHatNames <- unique(dropind_rHat) # eliminate repeats in names
-    unique_rHatNames <- unique_rHatNames[-which(unique_rHatNames == "lp__")] # drop lp__ (log posterior)
+  badRhatModsum <- modsum[which(modsum$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
+  write.csv(badRhatModsum, paste0("BadRhatModsum_", seed, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
+  rHatNames <- badRhatModsum$variable # extract bad Rhat names
+  dropind_rHat <- sub("\\[.*\\]", "", rHatNames) # drop indices ([,])
+  unique_rHatNames <- unique(dropind_rHat) # eliminate repeats in names
+  unique_rHatNames <- unique_rHatNames[-which(unique_rHatNames == "lp__")] # drop lp__ (log posterior)
 
-    sink(paste0(getwd(), "/", model,"_", method,"_", "badCount.txt"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
-    cat(paste0(nBadRhats,",")) # write result
-    sink() # close connection
+  sink(paste0(getwd(), "/", model,"_", method,"_", "badCount.txt"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
+  cat(paste0(nBadRhats,",")) # write result
+  sink() # close connection
 
-    sink(paste0(getwd(), "/", model,"_", method,"_", "badNames.txt"), append=TRUE) # begin appending <model>_<method>_badNames.csv file
-    for(i in 1:length(unique_rHatNames)){
-      cat(paste0(unique_rHatNames[i], ",", "\n"))
-    }
-    sink() # close connection
-
+  sink(paste0(getwd(), "/", model,"_", method,"_", "badNames.txt"), append=TRUE) # begin appending <model>_<method>_badNames.csv file
+  for(i in 1:length(unique_rHatNames)){
+    cat(paste0(unique_rHatNames[i], ",", "\n"))
   }
+  sink() # close connection
+
 }
+
 

@@ -55,8 +55,15 @@ bifactor <- function(...){
       sdHyper=sdHyper
     )
 
+    if(empiricalMethod == "empiricalPos"){
+      ModelData$QmatInd <- max.col(Qmat[,2:3]) # creating integer indices for mean of sub-factor loadings
+    }
+
+    if(empiricalMethod == "empiricalAlpha"){
+      ModelData$alpha = min(lambda_g12) - 1 # assigning α using min(lambda_g12) - 1
+    }
+
     if(startingMethod == "advi"){
-      basemod <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_base.stan"))
       StdSumScore <- array(data=NA, dim=c(P,3))
       for(i in 1:ncol(Qmat)){
         StdSumScore[,i] <- getStdSumScore(Y[,which(Qmat[,i] == 1)])
@@ -71,7 +78,7 @@ bifactor <- function(...){
 
       inits <- getInits(advisum) # Create a list of initial values using EAP extracted from advisum (to pass to NUTS in next step)
 
-      initDims <- lapply(names(inits), getDims) # get dimensions for parameter matrices from global environment (i.e., theta in bifactor model)
+      initDims <- lapply(names(inits), function(name)getDims(name=name, envir=parent.env(environment()))) # get dimensions for parameter matrices from global environment (i.e., theta in bifactor model)
 
       for(i in 1:length(initDims)){ # reshape initial values to account for matrix dimensions in previous step (if applicable)
         if(!is.null(initDims[[i]])){
@@ -100,14 +107,6 @@ bifactor <- function(...){
         lambdaG=runif(n=I, min=.75, max=3),
         tau=runif(n=I, min=-6, max=6)
       )
-    }
-
-    if(empiricalMethod == "empiricalPos"){
-      ModelData$QmatInd <- max.col(Qmat[,2:3]) # creating integer indices for mean of sub-factor loadings
-    }
-
-    if(empiricalMethod == "empiricalAlpha"){
-      ModelData$alpha = min(lambda_g12) - 1 # assigning α using min(lambda_g12) - 1
     }
 
   })

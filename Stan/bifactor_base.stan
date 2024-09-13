@@ -18,7 +18,7 @@ model{
   lambdaG ~ lognormal(1, coefHyper);
   lambdag12 ~ normal(0, coefHyper);
   tau ~ normal(0, coefHyper);
-  matrix[I, nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag12,2)).*Qmat;
+  matrix[I, nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag12,2))'.*Qmat;
   for(i in 1:I){
     Y[,i] ~ bernoulli_logit(theta*lambdaQ[i,]' + tau[i]);
   }

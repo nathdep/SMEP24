@@ -24,7 +24,7 @@ twopl <- function(...){
         Y[p,i] <- rbinom(n=1, size=1, prob=plogis(logits[p,i]))
       }
     }
-    modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_", method, ".stan"))
+    modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_", empiricalMethod, ".stan"))
 
     ModelData <- list(
       P=nrow(Y),
@@ -36,6 +36,27 @@ twopl <- function(...){
 
     if(empiricalMethod == "empiricalAlpha"){
       ModelData$alpha = min(lambda) - 1 # assigning α using min(lambda) - 1
+    }
+
+    if(startingMethod == "advi"){
+      StdSumScore <- getStdSumScore(Y)
+      ModelData$StdSumScore = StdSumScore
+      advirun <- modstan$variational(  # Run variational inference via ADVI
+        data=ModelData,
+        seed=seed
+      )
+
+      advisum <- advirun$summary() # Calculate descriptive stats using draws from approximated posteriors
+
+      inits <- getInits(advisum) # Create a list of initial values using EAP extracted from advisum (to pass to NUTS in next step)
+
+      initDims <- lapply(names(inits), function(name)getDims(name,envir=parent.env(environment()))) # get dimensions for parameter matrices from global environment (i.e., theta in bifactor model)
+
+      for(i in 1:length(initDims)){ # reshape initial values to account for matrix dimensions in previous step (if applicable)
+        if(!is.null(initDims[[i]])){
+          dim(inits[[i]]) <- initDims[[i]]
+        }
+      }
     }
 
     if(startingMethod == "allRand"){
