@@ -96,9 +96,9 @@ RoxygenNote: 7.3.2</code></pre>
 <div class="section level2">
 <h2 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h2>
 <ul><li>
-<code>rHatThreshold</code>: maximum tolerance for indicated convergence based on Rhat values</li>
+<code>modsum</code>: object generated from <code>$summary()</code> method on a <code>cmdstanr</code> model environment</li>
 <li>
-<code>modum</code>: <code>data.frame</code> object generated from <code>$summary()</code> method on a <code>cmdstanr</code> model environment</li>
+<code>rHatThreshold</code>: maximum tolerance for indicated convergence based on Rhat values</li>
 </ul></div>
 <div class="section level2">
 <h2 id="value-1">Value<a class="anchor" aria-label="anchor" href="#value-1"></a></h2>
@@ -128,24 +128,46 @@ RoxygenNote: 7.3.2</code></pre>
 </div>
 </div>
 <div class="section level1">
-<h1 id="getstdsumscore-calculate-standardized-sum-scores">
-<code>getStdSumScore</code>: Calculate Standardized Sum Scores<a class="anchor" aria-label="anchor" href="#getstdsumscore-calculate-standardized-sum-scores"></a></h1>
+<h1 id="getinits-get-parameter-values-for-initializing-nuts">
+<code>getInits</code>: Get Parameter Values for Initializing NUTS<a class="anchor" aria-label="anchor" href="#getinits-get-parameter-values-for-initializing-nuts"></a></h1>
 <div class="section level2">
 <h2 id="description-4">Description<a class="anchor" aria-label="anchor" href="#description-4"></a></h2>
-<p>Calculate Standardized Sum Scores</p>
+<p>Get Parameter Values for Initializing NUTS</p>
 </div>
 <div class="section level2">
 <h2 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/getStdSumScore.html">getStdSumScore</a></span><span class="op">(</span><span class="va">resps</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/getInits.html">getInits</a></span><span class="op">(</span><span class="va">modsum</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h2>
 <ul><li>
-<code>resps</code>: matrix of dichotomized (0/1) item response data</li>
+<code>modsum</code>: object generated from <code>$summary()</code> method on a <code>cmdstanr</code> model environment</li>
 </ul></div>
 <div class="section level2">
 <h2 id="value-3">Value<a class="anchor" aria-label="anchor" href="#value-3"></a></h2>
+<p>a named list object containing <em>expected a prior</em> from ADVI-approximated posterior draws</p>
+</div>
+</div>
+<div class="section level1">
+<h1 id="getstdsumscore-calculate-standardized-sum-scores">
+<code>getStdSumScore</code>: Calculate Standardized Sum Scores<a class="anchor" aria-label="anchor" href="#getstdsumscore-calculate-standardized-sum-scores"></a></h1>
+<div class="section level2">
+<h2 id="description-5">Description<a class="anchor" aria-label="anchor" href="#description-5"></a></h2>
+<p>Calculate Standardized Sum Scores</p>
+</div>
+<div class="section level2">
+<h2 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/getStdSumScore.html">getStdSumScore</a></span><span class="op">(</span><span class="va">resps</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h2>
+<ul><li>
+<code>resps</code>: matrix of dichotomized (0/1) item response data</li>
+</ul></div>
+<div class="section level2">
+<h2 id="value-4">Value<a class="anchor" aria-label="anchor" href="#value-4"></a></h2>
 <p>a vector of standardized sum scores of the measured latent trait</p>
 </div>
 </div>
@@ -153,23 +175,23 @@ RoxygenNote: 7.3.2</code></pre>
 <h1 id="makeneg-negative-lambda-indicator-function">
 <code>makeNeg</code>: Negative Lambda Indicator Function<a class="anchor" aria-label="anchor" href="#makeneg-negative-lambda-indicator-function"></a></h1>
 <div class="section level2">
-<h2 id="description-5">Description<a class="anchor" aria-label="anchor" href="#description-5"></a></h2>
+<h2 id="description-6">Description<a class="anchor" aria-label="anchor" href="#description-6"></a></h2>
 <p>Negative Lambda Indicator Function</p>
 </div>
 <div class="section level2">
-<h2 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<h2 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h2>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/makeNeg.html">makeNeg</a></span><span class="op">(</span><span class="va">lambda</span>, numNeg <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h2>
+<h2 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h2>
 <ul><li>
 <code>lambda</code>: inputted item discrimination/slope values</li>
 <li>
 <code>numNeg</code>: integer indicating quantity of lambda values to negate</li>
 </ul></div>
 <div class="section level2">
-<h2 id="value-4">Value<a class="anchor" aria-label="anchor" href="#value-4"></a></h2>
+<h2 id="value-5">Value<a class="anchor" aria-label="anchor" href="#value-5"></a></h2>
 <p>a vector of all lambda values (including negated lambdas)</p>
 </div>
 </div>
@@ -177,21 +199,21 @@ RoxygenNote: 7.3.2</code></pre>
 <h1 id="twopl-generate-a-2-parameter-logistic-2pl-irt-simulation-environment">
 <code>twopl</code>: Generate a 2-Parameter Logistic (2PL) IRT Simulation Environment<a class="anchor" aria-label="anchor" href="#twopl-generate-a-2-parameter-logistic-2pl-irt-simulation-environment"></a></h1>
 <div class="section level2">
-<h2 id="description-6">Description<a class="anchor" aria-label="anchor" href="#description-6"></a></h2>
+<h2 id="description-7">Description<a class="anchor" aria-label="anchor" href="#description-7"></a></h2>
 <p>Generate a 2-Parameter Logistic (2PL) IRT Simulation Environment</p>
 </div>
 <div class="section level2">
-<h2 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<h2 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h2>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/twopl.html">twopl</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h2>
+<h2 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h2>
 <ul><li>
 <code>...</code>: objects inherited from parent</li>
 </ul></div>
 <div class="section level2">
-<h2 id="value-5">Value<a class="anchor" aria-label="anchor" href="#value-5"></a></h2>
+<h2 id="value-6">Value<a class="anchor" aria-label="anchor" href="#value-6"></a></h2>
 <p>an environment stored to a list object of the 2PL simulation environment</p>
 </div>
 </div>
