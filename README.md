@@ -30,18 +30,29 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to acces
 ```r
 library(SMEP24)
 
-# !TO DO! add other methods
-# METHODS (available for 2PL and bifactor models):
+# EMPIRICAL METHODS
 # "base" (all inits randomly drawn)
 # "empiricalPos" (μ_λ > 0)
 # "empiricalAlpha" (λ_i > α)
-# "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
 
-methods <- c("empiricalPos", "empiricalAlpha", "advi")
+# STARTING VALUES
+# "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
+# "base" (all parameters initialized on U(-6,6))
+# "stdSumScore" (latent traits initialized on standardized sum scores, all other parameters initialized on U(-6,6))
+
+# MODELS
+# "twopl" (2-parameter logistic item response model)
+# "bifactor (item response model with 1 General factor and 2 sub-factors)
+
+starting_methods <- c("advi", "allRand", "stdSumScore")
+empirical_methods <- c("empiricalPos", "empiricalAlpha")
 models <- c("twopl", "bifactor")
+
+methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models)
 
 if(!interactive()){
   args <- commandArgs(trailingOnly=TRUE) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
+  startingInd <- as.numeric(args[1])
   methodInd <- as.numeric(args[2]) # selection of model + method combos based on SGE_TASK_ID
   seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
 }
@@ -56,7 +67,7 @@ set.seed(seed) # set seed (for reproducibility)
 
 P=500 # Number of examinees
 I=75 # Number of items
-rHatThreshold=1.05 # Threshold for determining chain convergence
+rHatThreshold=1.05 # Threshold for deteriming chain convergence
 
 coefHyper=5 # Hyperparameter for unbounded/continuous/normal parameters
 sdHyper=.1 # Hyperparameter for positive bounded/gamma parameters
@@ -69,7 +80,7 @@ if(model == "twopl"){
   env <- twopl() # create 2PL simulation environment/list
 }
 
-list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into the global environment
+list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
 
 if(method == "advi"){
 
@@ -103,7 +114,7 @@ if(method == "advi"){
 }
 
 if(!(method == "advi")){
-  modrun <- modstan$sample( # run NUTS sampler (for methods other than "advi")
+  modrun <- modstan$sample( # run NUTS sampler (for methods other than )
     iter_warmup=2000,
     iter_sampling=2000,
     seed=seed,
@@ -140,5 +151,6 @@ if(nBadRhats > 0){
 
   }
 }
+
 
 ```

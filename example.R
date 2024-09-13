@@ -1,18 +1,30 @@
 library(SMEP24)
 
-# !TO DO! add other methods
-# METHODS (available for 2PL and bifactor models):
+# EMPIRICAL METHODS
 # "base" (all inits randomly drawn)
 # "empiricalPos" (μ_λ > 0)
 # "empiricalAlpha" (λ_i > α)
-# "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
 
-methods <- c("empiricalPos", "empiricalAlpha", "advi")
+# STARTING VALUES
+# "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
+# "allRand" (all parameters initialized on U(-6,6))
+# "stdSumScore" (latent traits initialized on standardized sum scores, all other parameters initialized on U(-6,6))
+
+# MODELS
+# "twopl" (2-parameter logistic item response model)
+# "bifactor (item response model with 1 General factor and 2 sub-factors)
+
+starting_methods <- c("advi", "allRand", "stdSumScore")
+empirical_methods <- c("base","empiricalPos", "empiricalAlpha")
 models <- c("twopl", "bifactor")
+
+methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models)
 
 if(!interactive()){
   args <- commandArgs(trailingOnly=TRUE) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
-  methodInd <- as.numeric(args[2]) # selection of model + method combos based on SGE_TASK_ID
+  # empiricalMethod =
+  # startingMethod =
+  # model =
   seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
 }
 
@@ -41,50 +53,17 @@ if(model == "twopl"){
 
 list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
 
-if(method == "advi"){
+modrun$sample(
+  iter_warmup=2000,
+  iter_sampling=2000,
+  seed=seed,
+  data=ModelData,
+  chains=4,
+  parallel_chains=4,
+  init=function()inits
+)
 
-  advirun <- modstan$variational(  # Run variational inference via ADVI
-    data=ModelData,
-    seed=seed
-  )
-
-  advisum <- advirun$summary() # Calculate descriptive stats using draws from approximated posteriors
-
-  inits <- getInits(advisum) # Create a list of initial values using EAP extracted from advisum (to pass to NUTS in next step)
-
-  initDims <- lapply(names(inits), getDims) # get dimensions for parameter matrices from global environment (i.e., theta in bifactor model)
-
-  for(i in 1:length(initDims)){ # reshape initial values to account for matrix dimensions in previous step (if applicable)
-    if(!is.null(initDims[[i]])){
-      dim(inits[[i]]) <- initDims[[i]]
-    }
-  }
-
-  modrun <- basemod$sample( # run NUTS sampler initialized on EAPs from previous step
-    iter_warmup=2000,
-    iter_sampling=2000,
-    seed=seed,
-    data=ModelData,
-    chains=4,
-    parallel_chains=4,
-    init=function()inits
-  )
-
-}
-
-if(!(method == "advi")){
-  modrun <- modstan$sample( # run NUTS sampler (for methods other than )
-    iter_warmup=2000,
-    iter_sampling=2000,
-    seed=seed,
-    data=ModelData,
-    chains=4,
-    parallel_chains=4
-  )
-
-  modsum <- modrun$summary() # generate posterior descriptives
-
-}
+modsum <- modrun$summary()
 
 nBadRhats <- countRhat(modsum, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
@@ -99,13 +78,13 @@ if(nBadRhats > 0){
     unique_rHatNames <- unique_rHatNames[-which(unique_rHatNames == "lp__")] # drop lp__ (log posterior)
 
     sink(paste0(getwd(), "/", model,"_", method,"_", "badCount.txt"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
-      cat(paste0(nBadRhats,",")) # write result
+    cat(paste0(nBadRhats,",")) # write result
     sink() # close connection
 
     sink(paste0(getwd(), "/", model,"_", method,"_", "badNames.txt"), append=TRUE) # begin appending <model>_<method>_badNames.csv file
-      for(i in 1:length(unique_rHatNames)){
-        cat(paste0(unique_rHatNames[i], ",", "\n"))
-      }
+    for(i in 1:length(unique_rHatNames)){
+      cat(paste0(unique_rHatNames[i], ",", "\n"))
+    }
     sink() # close connection
 
   }

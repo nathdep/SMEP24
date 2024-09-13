@@ -65,22 +65,55 @@ bifactor <- function(...){
       sdHyper=sdHyper
     )
 
-    if(method == "advi"){
+    if(startingMethod == "advi"){
       basemod <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_base.stan"))
       StdSumScore <- array(data=NA, dim=c(P,3))
       for(i in 1:ncol(Qmat)){
         StdSumScore[,i] <- getStdSumScore(Y[,which(Qmat[,i] == 1)])
       }
       ModelData$StdSumScore = StdSumScore
+      advirun <- modstan$variational(  # Run variational inference via ADVI
+        data=ModelData,
+        seed=seed
+      )
+
+      advisum <- advirun$summary() # Calculate descriptive stats using draws from approximated posteriors
+
+      inits <- getInits(advisum) # Create a list of initial values using EAP extracted from advisum (to pass to NUTS in next step)
+
+      initDims <- lapply(names(inits), getDims) # get dimensions for parameter matrices from global environment (i.e., theta in bifactor model)
+
+      for(i in 1:length(initDims)){ # reshape initial values to account for matrix dimensions in previous step (if applicable)
+        if(!is.null(initDims[[i]])){
+          dim(inits[[i]]) <- initDims[[i]]
+        }
+      }
     }
 
-    if(method == "empiricalPos"){
+    if(startingMethod == "allRand"){
+      inits <- list(
+        theta = runif(n=P, min=-6, max=6),
+        lambdag12=runif(n=I, min=-6, max=6),
+        lambdaG=runif(n=I, min=.75, max=3),
+        tau=runif(n=I, min=-6, max=6)
+      )
+    }
+
+    if(startingMethod == "stdSumScore"){
+      inits <- list(
+        theta = runif(n=P, min=-6, max=6),
+        lambdag12=runif(n=I, min=-6, max=6),
+        lambdaG=runif(n=I, min=.75, max=3),
+        tau=runif(n=I, min=-6, max=6)
+      )
+    }
+
+    if(empiricalMethod == "empiricalPos"){
       ModelData$QmatInd <- max.col(Qmat[,2:3]) # creating integer indices for mean of sub-factor loadings
     }
 
-    if(method == "empiricalAlpha"){
+    if(empiricalMethod == "empiricalAlpha"){
       ModelData$alpha = min(lambda_g12) - 1 # assigning α using min(lambda_g12) - 1
-
     }
 
   })
