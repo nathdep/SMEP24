@@ -30,7 +30,8 @@ if(!interactive()){
 
 if(interactive()){
   seed <- sample(x=c(1:1e6), size=1) # Randomly draw integer for seed
-  method="empiricalAlpha" # Debugging
+  startingMethod="allRand"
+  empiricalMethod="empiricalAlpha" # Debugging
   model="bifactor"
 }
 
@@ -53,7 +54,7 @@ if(model == "twopl"){
 
 list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
 
-modrun$sample(
+modrun <- modstan$sample(
   iter_warmup=2000,
   iter_sampling=2000,
   seed=seed,
@@ -67,8 +68,7 @@ modsum <- modrun$summary()
 
 nBadRhats <- countRhat(modsum, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
-if(nBadRhats > 0){
-  if(!interactive()){
+if(nBadRhats > 0 && !interactive()){
 
     badRhatModsum <- modsum[which(modsum$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
     write.csv(badRhatModsum, paste0("BadRhatModsum_", seed, ".csv")) # write non-convergent parameter posterior descriptives to .csv file

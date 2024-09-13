@@ -92,16 +92,20 @@ bifactor <- function(...){
 
     if(startingMethod == "allRand"){
       inits <- list(
-        theta = runif(n=P, min=-6, max=6),
-        lambdag12=runif(n=I, min=-6, max=6),
-        lambdaG=runif(n=I, min=.75, max=3),
+        theta = array(data=runif(n=P*3, min=-6, max=6), dim=c(P,3)),
+        lambdag12=runif(n=I, min=.75, max=6),
+        lambdaG=runif(n=I, min=.75, max=6),
         tau=runif(n=I, min=-6, max=6)
       )
     }
 
     if(startingMethod == "stdSumScore"){
+      StdSumScore <- array(data=NA, dim=c(P,3))
+      for(i in 1:ncol(Qmat)){
+        StdSumScore[,i] <- getStdSumScore(Y[,which(Qmat[,i] == 1)])
+      }
       inits <- list(
-        theta = runif(n=P, min=-6, max=6),
+        theta = StdSumScore,
         lambdag12=runif(n=I, min=-6, max=6),
         lambdaG=runif(n=I, min=.75, max=3),
         tau=runif(n=I, min=-6, max=6)
