@@ -29,10 +29,11 @@ if(!interactive()){
 }
 
 if(interactive()){
+  # DEBUGGING
   seed <- sample(x=c(1:1e6), size=1) # Randomly draw integer for seed
-  startingMethod="advi" # Debugging
-  empiricalMethod="empiricalPos"
-  model="bifactor"
+  startingMethod="allRand"
+  empiricalMethod="base"
+  model="twopl"
 }
 
 set.seed(seed) # set seed (for reproducibility)

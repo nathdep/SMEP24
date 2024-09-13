@@ -44,7 +44,7 @@ library(SMEP24)
 # "twopl" (2-parameter logistic item response model)
 # "bifactor (item response model with 1 General factor and 2 sub-factors)
 
-starting_methods <- c("advi", "allRand", "stdSumScore")
+starting_methods <- c("advi", "allRand", "StdSumScore")
 empirical_methods <- c("base","empiricalPos", "empiricalAlpha")
 models <- c("twopl", "bifactor")
 
@@ -59,10 +59,11 @@ if(!interactive()){
 }
 
 if(interactive()){
+  # DEBUGGING
   seed <- sample(x=c(1:1e6), size=1) # Randomly draw integer for seed
-  startingMethod="advi" # Debugging
+  startingMethod="allRand"
   empiricalMethod="base"
-  model="bifactor"
+  model="twopl"
 }
 
 set.seed(seed) # set seed (for reproducibility)
