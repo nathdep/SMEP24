@@ -34,6 +34,7 @@ library(SMEP24)
 # "base" (all inits randomly drawn)
 # "empiricalPos" (μ_λ > 0)
 # "empiricalAlpha" (λ_i > α)
+  # test multiple alpha values (what is the lowest it could be?) (-1 < alpha < 0)
 
 # STARTING VALUES
 # "advi" (item inits from EAP conditioned on StdSumScore -> NUTS)
