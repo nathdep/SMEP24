@@ -71,7 +71,14 @@ modrun <- modstan$sample(
 modsum_full <- modrun$summary()
 modsum_save <- modsum_full[grepl("^lambda", modsum_full$variable),]
 
-modsum_save$true <- lambda
+if(model == "twopl"){
+  modsum_save$true <- lambda
+}
+
+if(model == "bifactor"){
+  modsum_save$true <- c(lambdaG, lambdag12)
+}
+
 modsum_save <- modsum_save[,c(1, ncol(modsum_save), 2:(ncol(modsum_save)-1))]
 
 write.csv(modsum_save, paste0(findings, "Modsum_Reduc_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
