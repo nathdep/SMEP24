@@ -99,19 +99,19 @@ modrun <- modstan$sample(
 )
 
 modsum_full <- modrun$summary()
-modsum_save <- modsum[grepl("^lambda", modsum$variable),]
+modsum_save <- modsum_full[grepl("^lambda", modsum_full$variable),]
 
 modsum_save$true <- lambda
 modsum_save <- modsum_save[,c(1, ncol(modsum_save), 2:(ncol(modsum_save)-1))]
 
 write.csv(modsum_save, paste0(findings, "Modsum_Reduc_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
-write.csv(modsum, paste0(findings, "Modsum_Full_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
+write.csv(modsum_full, paste0(findings, "Modsum_Full_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
 
-nBadRhats <- countRhat(modsum, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
+nBadRhats <- countRhat(modsum_full, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
 if(nBadRhats != 0 && !interactive()){
 
-  badRhatModsum <- modsum[which(modsum$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
+  badRhatModsum <- modsum_save[which(modsum_save$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
   write.csv(badRhatModsum, paste0(findings, "BadRhatModsum_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
   rHatNames <- badRhatModsum$variable # extract bad Rhat names
   dropind_rHat <- sub("\\[.*\\]", "", rHatNames) # drop indices ([,])
