@@ -22,7 +22,7 @@ methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_metho
 
 if(!interactive()){
   args <- commandArgs(trailingOnly=TRUE) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
-  selRow <- as.vector(as.matrix(methodSelect(base10=args[2], methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
+  selRow <- as.vector(as.matrix(methodSelect(base10=as.numeric(args[2]), methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
   startingMethod <- selRow[1]
   empiricalMethod <- selRow[2]
   model <- selRow[3]
