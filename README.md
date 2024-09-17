@@ -106,7 +106,7 @@ if(model == "twopl"){
 }
 
 if(model == "bifactor"){
-  modsum_save$true <- c(lambdaG, lambdag12)
+  modsum_save$true <- c(lambda_G, lambda_g12)
 }
 
 modsum_save <- modsum_save[,c(1, ncol(modsum_save), 2:(ncol(modsum_save)-1))]
