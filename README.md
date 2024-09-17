@@ -98,9 +98,14 @@ modrun <- modstan$sample(
   init=function()inits
 )
 
-modsum <- modrun$summary()
+modsum_full <- modrun$summary()
+modsum_save <- modsum[grepl("^lambda", modsum$variable),]
 
-write.csv(modsum, paste0(findings, "Modsum_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
+modsum_save$true <- lambda
+modsum_save <- modsum_save[,c(1, ncol(modsum_save), 2:(ncol(modsum_save)-1))]
+
+write.csv(modsum_save, paste0(findings, "Modsum_Reduc_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
+write.csv(modsum, paste0(findings, "Modsum_Full_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
 
 nBadRhats <- countRhat(modsum, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
