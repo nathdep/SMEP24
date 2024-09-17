@@ -117,18 +117,14 @@ write.csv(modsum_full, paste0(findings, "Modsum_Full_", seed, "_", model, "_", e
 nBadRhats <- countRhat(modsum_full, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
 if(nBadRhats != 0 && !interactive()){
-  
+
   badRhatModsum <- modsum_save[which(modsum_save$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
   write.csv(badRhatModsum, paste0(findings, "BadRhatModsum_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
-  rHatNames <- badRhatModsum$variable # extract bad Rhat names
-  dropind_rHat <- sub("\\[.*\\]", "", rHatNames) # drop indices ([,])
-  unique_rHatNames <- unique(dropind_rHat) # eliminate repeats in names
-  unique_rHatNames <- unique_rHatNames[-which(unique_rHatNames == "lp__")] # drop lp__ (log posterior)
-  
+
   sink(paste0(findings, "BadRhatModsumNames_", model, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
   cat(paste0(nBadRhats,",", model, ",", empiricalMethod, ",", startingMethod, "\n")) # write result
   sink() # close connection
-  
+
 }
 
 ```
