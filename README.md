@@ -113,14 +113,8 @@ if(nBadRhats != 0 && !interactive()){
   unique_rHatNames <- unique(dropind_rHat) # eliminate repeats in names
   unique_rHatNames <- unique_rHatNames[-which(unique_rHatNames == "lp__")] # drop lp__ (log posterior)
 
-  sink(paste0(findings, "BadRhatModsum_", model, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
-  cat(paste0(nBadRhats,",")) # write result
-  sink() # close connection
-
-  sink(paste0(findings, "BadRhatModsum_", model, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badNames.csv file
-  for(i in 1:length(unique_rHatNames)){
-    cat(paste0(unique_rHatNames[i], ",", "\n"))
-  }
+  sink(paste0(findings, "BadRhatModsumNames_", model, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
+  cat(paste0(nBadRhats,",", model, ",", empiricalMethod, ",", startingMethod, "\n")) # write result
   sink() # close connection
 
 }
