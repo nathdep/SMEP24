@@ -21,7 +21,7 @@ models <- c("twopl", "bifactor")
 methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models)
 
 if(!interactive()){
-  findings <- "/Users/depy/SMEP24/Findings"
+  findings <- "/Users/depy/SMEP24/Findings/"
   args <- commandArgs(trailingOnly=TRUE) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
   selRow <- as.vector(as.matrix(methodSelect(base10=as.numeric(args[2]), methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
   startingMethod <- selRow[1]
@@ -70,12 +70,14 @@ modrun <- modstan$sample(
 
 modsum <- modrun$summary()
 
+write.csv(modsum, paste0(findings, "Modsum_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
+
 nBadRhats <- countRhat(modsum, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
-if(!interactive()){
+if(nBadRhats != 0 && !interactive()){
 
   badRhatModsum <- modsum[which(modsum$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
-  write.csv(badRhatModsum, paste0(findings, "BadRhatModsum_", model, "_", empiricalMethod, "_", startingMethod, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
+  write.csv(badRhatModsum, paste0(findings, "BadRhatModsum_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
   rHatNames <- badRhatModsum$variable # extract bad Rhat names
   dropind_rHat <- sub("\\[.*\\]", "", rHatNames) # drop indices ([,])
   unique_rHatNames <- unique(dropind_rHat) # eliminate repeats in names
@@ -92,5 +94,6 @@ if(!interactive()){
   sink() # close connection
 
 }
+
 
 
