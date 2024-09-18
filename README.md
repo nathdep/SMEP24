@@ -51,15 +51,24 @@ models <- c("twopl", "bifactor")
 methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models)
 
 if(!interactive()){
-  findings <- "/Users/depy/SMEP24/Findings/"
+  saveEnv <- TRUE # Save simulated environment (twopl()/bifactor() output) as list?
+
+  findings <- "/Users/depy/SMEP24/Findings/" # Location to save model results
+
   args <- as.numeric(commandArgs(trailingOnly=TRUE)) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
+
   taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() function
+
   selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
+
   startingMethod <- selRow[1]
   empiricalMethod <- selRow[2]
   model <- selRow[3]
+
   cat("\n", startingMethod, " ", empiricalMethod, " ", model, "\n")
+
   seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
+
   fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_", args[1], "_", args[2]) # file name info for future saving
 }
 
@@ -89,9 +98,9 @@ if(model == "twopl"){
   env <- twopl() # create 2PL simulation environment/list
 }
 
-if(saveEnv){ # save simulated environment?
+if(saveEnv && !interactive()){ # save simulated environment?
   envList <- as.list(env) # convert environment to list object
-  saveRDS(envlist, paste0())
+  save(envList, file=paste0(findings, "simData_", fileInfo, ".RDS"))
 }
 
 list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
