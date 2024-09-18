@@ -94,7 +94,7 @@ write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum_lambda_", model, "_
 write.csv(modsum_save_tau, paste0(findings, "Reduc_Modsum_tau_", model, "_", empiricalMethod, "_", startingMethod,"_", args[1], "_", args[2], ".csv"))
 write.csv(modsum_save_theta, paste0(findings, "Reduc_Modsum_theta_", model, "_", empiricalMethod, "_", startingMethod,"_", args[1], "_", args[2], ".csv"))
 
-write.csv(modsum_full, paste0(findings, "Full_Modsum_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
+write.csv(modsum_full, paste0(findings, "Full_Modsum_", model, "_", empiricalMethod, "_", startingMethod, "_", args[1], "_", args[2], ".csv"))
 
 nBadRhats <- countRhat(modsum_full, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
