@@ -60,7 +60,7 @@ bifactor <- function(...){
     }
 
     if(empiricalMethod == "empiricalAlpha"){
-      ModelData$alpha = -6 # assigning α
+      ModelData$alpha = min(lambda_g12) - .25 # assigning α
     }
 
     if(startingMethod == "advi"){

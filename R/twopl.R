@@ -35,7 +35,7 @@ twopl <- function(...){
     )
 
     if(empiricalMethod == "empiricalAlpha"){
-      ModelData$alpha = -6 # assigning α
+      ModelData$alpha = min(lambda) - .25 # assigning α
     }
 
     if(startingMethod == "advi"){
