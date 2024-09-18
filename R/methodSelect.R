@@ -5,7 +5,8 @@
 #' @export
 
 methodSelect <- function(base10, methodsMatrix){
-  nRow <- nrow(methodsMatrix)
-  selectedInt <- ((base10 + nRow) %% nRow) + 1
-  return(methodsMatrix[selectedInt,])
+  k_wrapped <- ((base10-1) %% (nrow(methodsMatrix)*ncol(methodsMatrix))) + 1
+  i <- floor((k_wrapped - 1)/ncol(methodsMatrix)) + 1
+  j <- ((k_wrapped-1) %% ncol(methodsMatrix)) + 1
+  return(c(i,j))
 }
