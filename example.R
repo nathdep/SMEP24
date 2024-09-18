@@ -70,7 +70,7 @@ if(model == "twopl"){
 
 if(saveEnv && !interactive()){ # save simulated environment?
   envList <- as.list(env) # convert environment to list object
-  save(envList, file=paste0("/root/simData/simData_", fileInfo, ".RData"))
+  save(envList, file=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"))
 }
 
 list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
@@ -126,5 +126,5 @@ if(nBadRhats != 0 && !interactive()){
 }
 
 if(!interactive()){
-  file.rename(from=paste0(findings, "simData/", fileInfo, ".RData"), to="/Users/depy/SMEP24/DONE")
+  file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RData"))
 }

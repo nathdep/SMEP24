@@ -156,6 +156,6 @@ if(nBadRhats != 0 && !interactive()){
 }
 
 if(!interactive()){
-  file.rename(from=paste0(findings, "simData/", fileInfo, ".RData"), to="/Users/depy/SMEP24/DONE")
+  file.rename(from=paste0(findings, "simData/", fileInfo, ".RData"), to=paste0("/Users/depy/SMEP24/DONE/", fileInfo, ".RData"))
 }
 ```
