@@ -90,7 +90,7 @@ modsum_save_lambda <- modsum_save_lambda[,c(1, ncol(modsum_save_lambda), 2:(ncol
 modsum_save_tau <- modsum_save_tau[,c(1, ncol(modsum_save_tau), 2:(ncol(modsum_save_tau)-1))]
 modsum_save_theta <- modsum_save_theta[,c(1, ncol(modsum_save_theta), 2:(ncol(modsum_save_theta)-1))]
 
-write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum_lambda", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
+write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum_lambda_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
 write.csv(modsum_save_tau, paste0(findings, "Reduc_Modsum_tau_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
 write.csv(modsum_save_theta, paste0(findings, "Reduc_Modsum_theta_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
 
