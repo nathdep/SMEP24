@@ -100,29 +100,37 @@ modrun <- modstan$sample(
 )
 
 modsum_full <- modrun$summary()
-modsum_save <- modsum_full[grepl("^lambda", modsum_full$variable),]
+
+modsum_save_lambda <- modsum_full[grepl("^lambda", modsum_full$variable),]
+modsum_save_tau <- modsum_full[grepl("^tau", modsum_full$variable),]
+modsum_save_theta <- modsum_full[grepl("^theta", modsum_full$variable),]
 
 if(model == "twopl"){
-  modsum_save$true <- lambda
+  modsum_save_lambda$true <- lambda
 }
 
 if(model == "bifactor"){
   modsum_save$true <- c(lambda_G, lambda_g12)
 }
 
-modsum_save <- modsum_save[,c(1, ncol(modsum_save), 2:(ncol(modsum_save)-1))]
+modsum_save_lambda <- modsum_save_lambda[,c(1, ncol(modsum_save_lambda), 2:(ncol(modsum_save_lambda)-1))]
+modsum_save_tau <- modsum_save_tau[,c(1, ncol(modsum_save_tau), 2:(ncol(modsum_save_tau)-1))]
+modsum_save_theta <- modsum_save_theta[,c(1, ncol(modsum_save_theta), 2:(ncol(modsum_save_theta)-1))]
 
-write.csv(modsum_save, paste0(findings, "Modsum_Reduc_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
-write.csv(modsum_full, paste0(findings, "Modsum_Full_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
+write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum_lambda", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
+write.csv(modsum_save_tau, paste0(findings, "Reduc_Modsum_tau_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
+write.csv(modsum_save_theta, paste0(findings, "Reduc_Modsum_theta_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
+
+write.csv(modsum_full, paste0(findings, "Full_Modsum_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv"))
 
 nBadRhats <- countRhat(modsum_full, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
 if(nBadRhats != 0 && !interactive()){
 
   badRhatModsum <- modsum_save[which(modsum_save$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
-  write.csv(badRhatModsum, paste0(findings, "BadRhatModsum_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
+  write.csv(badRhatModsum, paste0(findings, "BadRhat_Modsum_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
 
-  sink(paste0(findings, "BadRhatModsumNames_", model, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
+  sink(paste0(findings, "Names_BadRhat_", model, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
   cat(paste0(nBadRhats,",", model, ",", empiricalMethod, ",", startingMethod, "\n")) # write result
   sink() # close connection
 

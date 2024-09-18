@@ -107,7 +107,6 @@ bifactor <- function(...){
 
     if(empiricalMethod == "empiricalPos"){
       ModelData$QmatInd = max.col(Qmat[,2:3]) # creating integer indices for mean of sub-factor loadings
-      inits$lambda_g12 = runif(n=I, min=ModelData$alpha, max=6)
     }
 
     if(empiricalMethod == "empiricalAlpha"){
