@@ -110,8 +110,11 @@ if(model == "twopl"){
 }
 
 if(model == "bifactor"){
-  modsum_save$true <- c(lambda_G, lambda_g12)
+  modsum_save_lambda$true <- c(lambda_G, lambda_g12)
 }
+
+modsum_save_tau$true <- tau
+modsum_save_theta$true <- theta
 
 modsum_save_lambda <- modsum_save_lambda[,c(1, ncol(modsum_save_lambda), 2:(ncol(modsum_save_lambda)-1))]
 modsum_save_tau <- modsum_save_tau[,c(1, ncol(modsum_save_tau), 2:(ncol(modsum_save_tau)-1))]
