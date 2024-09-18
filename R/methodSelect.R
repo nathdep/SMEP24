@@ -5,5 +5,6 @@
 #' @export
 
 methodSelect <- function(base10, methodsMatrix){
-  return(base10 %% nrow(methodsMatrix) + 1)
+  row <- base10 %% nrow(methodsMatrix) + 1
+  return(methodsMatrix[row,])
 }
