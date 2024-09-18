@@ -60,6 +60,7 @@ if(!interactive()){
   model <- selRow[3]
   cat("\n", startingMethod, " ", empiricalMethod, " ", model, "\n")
   seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
+  fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_", args[1], "_", args[2]) # file name info for future saving
 }
 
 if(interactive()){
@@ -68,6 +69,7 @@ if(interactive()){
   startingMethod="allRand"
   empiricalMethod="base"
   model="twopl"
+  fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_", seed)
 }
 
 set.seed(seed) # set seed (for reproducibility)
@@ -85,6 +87,11 @@ if(model == "bifactor"){
 
 if(model == "twopl"){
   env <- twopl() # create 2PL simulation environment/list
+}
+
+if(saveEnv){ # save simulated environment?
+  envList <- as.list(env) # convert environment to list object
+  saveRDS(envlist, paste0())
 }
 
 list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
@@ -120,21 +127,21 @@ modsum_save_lambda <- modsum_save_lambda[,c(1, ncol(modsum_save_lambda), 2:(ncol
 modsum_save_tau <- modsum_save_tau[,c(1, ncol(modsum_save_tau), 2:(ncol(modsum_save_tau)-1))]
 modsum_save_theta <- modsum_save_theta[,c(1, ncol(modsum_save_theta), 2:(ncol(modsum_save_theta)-1))]
 
-write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum_lambda_", model, "_", empiricalMethod, "_", startingMethod,"_", args[1], "_", args[2], ".csv"))
-write.csv(modsum_save_tau, paste0(findings, "Reduc_Modsum_tau_", model, "_", empiricalMethod, "_", startingMethod,"_", args[1], "_", args[2], ".csv"))
-write.csv(modsum_save_theta, paste0(findings, "Reduc_Modsum_theta_", model, "_", empiricalMethod, "_", startingMethod,"_", args[1], "_", args[2], ".csv"))
+write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum_lambda_", fileInfo, ".csv"))
+write.csv(modsum_save_tau, paste0(findings, "Reduc_Modsum_tau_", fileInfo, ".csv"))
+write.csv(modsum_save_theta, paste0(findings, "Reduc_Modsum_theta_", fileInfo, ".csv"))
 
-write.csv(modsum_full, paste0(findings, "Full_Modsum_", model, "_", empiricalMethod, "_", startingMethod, "_", args[1], "_", args[2], ".csv"))
+write.csv(modsum_full, paste0(findings, "Full_Modsum_", fileInfo, ".csv"))
 
 nBadRhats <- countRhat(modsum_full, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
 if(nBadRhats != 0 && !interactive()){
 
   badRhatModsum <- modsum_full[which(modsum_full$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
-  write.csv(badRhatModsum, paste0(findings, "BadRhat_Modsum_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
+  write.csv(badRhatModsum, paste0(findings, "BadRhat_Modsum_", fileInfo, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
 
   sink(paste0(findings, "Names_BadRhat_", model, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
-  cat(paste0(nBadRhats,",", model, ",", empiricalMethod, ",", startingMethod, ",", seed, "\n")) # write result
+  cat(paste0(nBadRhats,",", model, ",", empiricalMethod, ",", startingMethod, ",", args[1], ",", args[2], "\n")) # write result
   sink() # close connection
 
 }
