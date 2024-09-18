@@ -34,13 +34,10 @@ twopl <- function(...){
       sdHyper=sdHyper
     )
 
-    if(empiricalMethod == "empiricalAlpha"){
-      ModelData$alpha = min(lambda) - .25 # assigning α
-    }
-
     if(startingMethod == "advi"){
       StdSumScore <- getStdSumScore(Y)
       ModelData$StdSumScore = StdSumScore
+      ModelData$alpha = min(lambda) - .25 # assigning α
       advirun <- modstan$variational(  # Run variational inference via ADVI
         data=ModelData,
         seed=seed
@@ -76,11 +73,11 @@ twopl <- function(...){
         lambda=runif(n=I, min=-6, max=6),
         tau = runif(n=I, min=-6, max=6)
       )
+    }
 
-      if(empiricalMethod == "empiricalAlpha"){
-        inits$lambda <- runif(n=I, min=ModelData$alpha, max=6)
-      }
-
+    if(empiricalMethod == "empiricalAlpha"){
+      ModelData$alpha = min(lambda) - .25 # assigning α
+      inits$lambda = runif(n=I, min=ModelData$alpha, max=6)
     }
 
   })

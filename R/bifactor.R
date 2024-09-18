@@ -55,16 +55,10 @@ bifactor <- function(...){
       sdHyper=sdHyper
     )
 
-    if(empiricalMethod == "empiricalPos"){
-      ModelData$QmatInd <- max.col(Qmat[,2:3]) # creating integer indices for mean of sub-factor loadings
-    }
-
-    if(empiricalMethod == "empiricalAlpha"){
-      ModelData$alpha = min(lambda_g12) - .25 # assigning α
-    }
-
     if(startingMethod == "advi"){
       StdSumScore <- array(data=NA, dim=c(P,3))
+      ModelData$alpha = min(lambda_g12) - .25 # assigning α
+      ModelData$QmatInd = max.col(Qmat[,2:3]) # creating integer indices for mean of sub-factor loadings
       for(i in 1:ncol(Qmat)){
         StdSumScore[,i] <- getStdSumScore(Y[,which(Qmat[,i] == 1)])
       }
@@ -109,11 +103,16 @@ bifactor <- function(...){
         lambdaG=runif(n=I, min=.75, max=3),
         tau=runif(n=I, min=-6, max=6)
       )
+    }
 
-      if(empiricalMethod == "empiricalAlpha"){
-        inits$lambdag_12 <- runif(n=I, min=ModelData$alpha, max=6)
-      }
+    if(empiricalMethod == "empiricalPos"){
+      ModelData$QmatInd = max.col(Qmat[,2:3]) # creating integer indices for mean of sub-factor loadings
+      inits$lambda_g12 = runif(n=I, min=ModelData$alpha, max=6)
+    }
 
+    if(empiricalMethod == "empiricalAlpha"){
+      ModelData$alpha = min(lambda_g12) - .25 # assigning α
+      inits$lambdag12 = runif(n=I, min=ModelData$alpha, max=6)
     }
 
   })
