@@ -70,7 +70,7 @@ if(model == "twopl"){
 
 if(saveEnv && !interactive()){ # save simulated environment?
   envList <- as.list(env) # convert environment to list object
-  save(envList, file=paste0(findings, "simData_", fileInfo, ".RDS"))
+  save(envList, file=paste0("/root/simData/simData_", fileInfo, ".RData"))
 }
 
 list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
@@ -123,4 +123,8 @@ if(nBadRhats != 0 && !interactive()){
   cat(paste0(nBadRhats,",", model, ",", empiricalMethod, ",", startingMethod, ",", args[1], ",", args[2], "\n")) # write result
   sink() # close connection
 
+}
+
+if(!interactive()){
+  file.rename(from=paste0(findings, "simData/", fileInfo, ".RData"), to="/root/DONE")
 }
