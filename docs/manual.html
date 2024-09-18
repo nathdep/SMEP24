@@ -115,12 +115,14 @@ RoxygenNote: 7.3.2</code></pre>
 <div class="section level2">
 <h2 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/getDims.html">getDims</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/getDims.html">getDims</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">envir</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h2>
 <ul><li>
 <code>name</code>: name of target object</li>
+<li>
+<code>envir</code>: name of target environment</li>
 </ul></div>
 <div class="section level2">
 <h2 id="value-2">Value<a class="anchor" aria-label="anchor" href="#value-2"></a></h2>
@@ -196,24 +198,48 @@ RoxygenNote: 7.3.2</code></pre>
 </div>
 </div>
 <div class="section level1">
-<h1 id="twopl-generate-a-2-parameter-logistic-2pl-irt-simulation-environment">
-<code>twopl</code>: Generate a 2-Parameter Logistic (2PL) IRT Simulation Environment<a class="anchor" aria-label="anchor" href="#twopl-generate-a-2-parameter-logistic-2pl-irt-simulation-environment"></a></h1>
+<h1 id="methodselect-method-selector-by-modulo">
+<code>methodSelect</code>: Method Selector by Modulo<a class="anchor" aria-label="anchor" href="#methodselect-method-selector-by-modulo"></a></h1>
 <div class="section level2">
 <h2 id="description-7">Description<a class="anchor" aria-label="anchor" href="#description-7"></a></h2>
-<p>Generate a 2-Parameter Logistic (2PL) IRT Simulation Environment</p>
+<p>Method Selector by Modulo</p>
 </div>
 <div class="section level2">
 <h2 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h2>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/twopl.html">twopl</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/methodSelect.html">methodSelect</a></span><span class="op">(</span><span class="va">base10</span>, <span class="va">methodsMatrix</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h2>
 <ul><li>
-<code>...</code>: objects inherited from parent</li>
+<code>base10</code>: number in base-10 (decimal) representation</li>
+<li>
+<code>methodsMatrix</code>: matrix containing all combinations of tested methods conditions</li>
 </ul></div>
 <div class="section level2">
 <h2 id="value-6">Value<a class="anchor" aria-label="anchor" href="#value-6"></a></h2>
+<p>A selected row (after converting from base-10/decimal representation) of the methods matrix that describes the tested conditions</p>
+</div>
+</div>
+<div class="section level1">
+<h1 id="twopl-generate-a-2-parameter-logistic-2pl-irt-simulation-environment">
+<code>twopl</code>: Generate a 2-Parameter Logistic (2PL) IRT Simulation Environment<a class="anchor" aria-label="anchor" href="#twopl-generate-a-2-parameter-logistic-2pl-irt-simulation-environment"></a></h1>
+<div class="section level2">
+<h2 id="description-8">Description<a class="anchor" aria-label="anchor" href="#description-8"></a></h2>
+<p>Generate a 2-Parameter Logistic (2PL) IRT Simulation Environment</p>
+</div>
+<div class="section level2">
+<h2 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h2>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/twopl.html">twopl</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h2>
+<ul><li>
+<code>...</code>: objects inherited from parent</li>
+</ul></div>
+<div class="section level2">
+<h2 id="value-7">Value<a class="anchor" aria-label="anchor" href="#value-7"></a></h2>
 <p>an environment stored to a list object of the 2PL simulation environment</p>
 </div>
 </div>

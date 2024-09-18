@@ -71,12 +71,13 @@ Find Dimensions of Filtered `.GlobalEnv` Object
 ## Usage
 
 ```r
-getDims(name)
+getDims(name, envir)
 ```
 
 ## Arguments
 
 * `name`: name of target object
+* `envir`: name of target environment
 
 ## Value
 
@@ -142,6 +143,27 @@ makeNeg(lambda, numNeg = 2)
 ## Value
 
 a vector of all lambda values (including negated lambdas)
+
+# `methodSelect`: Method Selector by Modulo
+
+## Description
+
+Method Selector by Modulo
+
+## Usage
+
+```r
+methodSelect(base10, methodsMatrix)
+```
+
+## Arguments
+
+* `base10`: number in base-10 (decimal) representation
+* `methodsMatrix`: matrix containing all combinations of tested methods conditions
+
+## Value
+
+A selected row (after converting from base-10/decimal representation) of the methods matrix that describes the tested conditions
 
 # `twopl`: Generate a 2-Parameter Logistic (2PL) IRT Simulation Environment
 

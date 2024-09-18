@@ -4,10 +4,12 @@
 \alias{getDims}
 \title{Find Dimensions of Filtered \code{.GlobalEnv} Object}
 \usage{
-getDims(name)
+getDims(name, envir)
 }
 \arguments{
 \item{name}{name of target object}
+
+\item{envir}{name of target environment}
 }
 \value{
 integer of object's total dimensions
