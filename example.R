@@ -100,7 +100,7 @@ nBadRhats <- countRhat(modsum_full, rHatThreshold = rHatThreshold) # Indicator f
 
 if(nBadRhats != 0 && !interactive()){
 
-  badRhatModsum <- modsum[which(modsum$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
+  badRhatModsum <- modsum_full[which(modsum_full$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
   write.csv(badRhatModsum, paste0(findings, "BadRhat_Modsum_", seed, "_", model, "_", empiricalMethod, "_", startingMethod, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
 
   sink(paste0(findings, "Names_BadRhat_", model, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
