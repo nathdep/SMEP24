@@ -60,19 +60,27 @@ twopl <- function(...){
     }
 
     if(startingMethod == "allRand"){
+
       inits <- list(
         theta = runif(n=P, min=-6, max=6),
         lambda = runif(n=I, min=-6, max=6),
         tau = runif(n=I,min=-6, max=6)
       )
+
     }
 
     if(startingMethod == "StdSumScore"){
+
       inits <- list(
         theta = getStdSumScore(Y),
         lambda=runif(n=I, min=-6, max=6),
         tau = runif(n=I, min=-6, max=6)
       )
+
+      if(empiricalMethod == "empiricalAlpha"){
+        inits$lambda <- runif(n=I, min=ModelData$alpha, max=6)
+      }
+
     }
 
   })

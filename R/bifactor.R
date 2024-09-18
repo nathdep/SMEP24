@@ -98,15 +98,22 @@ bifactor <- function(...){
 
     if(startingMethod == "StdSumScore"){
       StdSumScore <- array(data=NA, dim=c(P,3))
+
       for(i in 1:ncol(Qmat)){
         StdSumScore[,i] <- getStdSumScore(Y[,which(Qmat[,i] == 1)])
       }
+
       inits <- list(
         theta = StdSumScore,
         lambdag12=runif(n=I, min=-6, max=6),
         lambdaG=runif(n=I, min=.75, max=3),
         tau=runif(n=I, min=-6, max=6)
       )
+
+      if(empiricalMethod == "empiricalAlpha"){
+        inits$lambdag_12 <- runif(n=I, min=ModelData$alpha, max=6)
+      }
+
     }
 
   })
