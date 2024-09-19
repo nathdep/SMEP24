@@ -19,7 +19,85 @@ library(SMEP24)
 # SAMPLE SIZE
 # Number of examinees = 500, or 2000
 
-#########################
+### METHODS MATRIX ###
+
+# ---------------------------------------------------------------
+#  starting_methods   empirical_methods    models    sampleSizes
+# ------------------ ------------------- ---------- -------------
+#        advi               base           twopl         500
+#
+#      allRand              base           twopl         500
+#
+#    StdSumScore            base           twopl         500
+#
+#        advi           empiricalPos       twopl         500
+#
+#      allRand          empiricalPos       twopl         500
+#
+#    StdSumScore        empiricalPos       twopl         500
+#
+#        advi          empiricalAlpha      twopl         500
+#
+#      allRand         empiricalAlpha      twopl         500
+#
+#    StdSumScore       empiricalAlpha      twopl         500
+#
+#        advi               base          bifactor       500
+#
+#      allRand              base          bifactor       500
+#
+#    StdSumScore            base          bifactor       500
+#
+#        advi           empiricalPos      bifactor       500
+#
+#      allRand          empiricalPos      bifactor       500
+#
+#    StdSumScore        empiricalPos      bifactor       500
+#
+#        advi          empiricalAlpha     bifactor       500
+#
+#      allRand         empiricalAlpha     bifactor       500
+#
+#    StdSumScore       empiricalAlpha     bifactor       500
+#
+#        advi               base           twopl        2000
+#
+#      allRand              base           twopl        2000
+#
+#    StdSumScore            base           twopl        2000
+#
+#        advi           empiricalPos       twopl        2000
+#
+#      allRand          empiricalPos       twopl        2000
+#
+#    StdSumScore        empiricalPos       twopl        2000
+#
+#        advi          empiricalAlpha      twopl        2000
+#
+#      allRand         empiricalAlpha      twopl        2000
+#
+#    StdSumScore       empiricalAlpha      twopl        2000
+#
+#        advi               base          bifactor      2000
+#
+#      allRand              base          bifactor      2000
+#
+#    StdSumScore            base          bifactor      2000
+#
+#        advi           empiricalPos      bifactor      2000
+#
+#      allRand          empiricalPos      bifactor      2000
+#
+#    StdSumScore        empiricalPos      bifactor      2000
+#
+#        advi          empiricalAlpha     bifactor      2000
+#
+#      allRand         empiricalAlpha     bifactor      2000
+#
+#    StdSumScore       empiricalAlpha     bifactor      2000
+# ---------------------------------------------------------------
+
+#####################################################################
 
 starting_methods <- c("advi", "allRand", "StdSumScore")
 empirical_methods <- c("base","empiricalPos", "empiricalAlpha")
