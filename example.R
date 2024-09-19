@@ -122,7 +122,7 @@ if(!interactive()){
   model <- selRow[3]
   selectedSampleSize <- as.numeric(selRow[4])
 
-  cat("\n", startingMethod, " ", empiricalMethod, " ", model, "\n")
+  cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n")
 
   seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
 

@@ -28,6 +28,8 @@
 # Example Replication
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to access the example `.R` file displayed below.
 ```r
+library(SMEP24)
+
 ### CONDITIONS TESTED ###
 
 # EMPIRICAL METHODS
@@ -150,7 +152,7 @@ if(!interactive()){
   model <- selRow[3]
   selectedSampleSize <- as.numeric(selRow[4])
 
-  cat("\n", startingMethod, " ", empiricalMethod, " ", model, "\n")
+  cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n")
 
   seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
 
