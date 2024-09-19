@@ -85,6 +85,7 @@ set.seed(seed) # set seed (for reproducibility)
 
 P=500 # Number of examinees
 I=75 # Number of items
+numNeg=2 # Number of lambda values to negate in total
 rHatThreshold=1.05 # Threshold for deteriming chain convergence
 
 coefHyper=5 # Hyperparameter for unbounded/continuous/normal parameters
