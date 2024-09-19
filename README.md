@@ -45,7 +45,7 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to acces
 # "bifactor (item response model with 1 General factor and 2 sub-factors)
 
 # SAMPLE SIZE
-# Number of examinees = 500, or 2000
+# Number of examinees = 500 or 2000
 
 ### METHODS MATRIX ###
 
