@@ -1,5 +1,7 @@
 library(SMEP24)
 
+### CONDITIONS TESTED ###
+
 # EMPIRICAL METHODS
 # "base" (all inits randomly drawn)
 # "empiricalPos" (μ_λ > 0)
@@ -14,11 +16,17 @@ library(SMEP24)
 # "twopl" (2-parameter logistic item response model)
 # "bifactor (item response model with 1 General factor and 2 sub-factors)
 
+# SAMPLE SIZE
+# Number of examinees = 500, or 2000
+
+#########################
+
 starting_methods <- c("advi", "allRand", "StdSumScore")
 empirical_methods <- c("base","empiricalPos", "empiricalAlpha")
 models <- c("twopl", "bifactor")
+sampleSizes <- c(500, 2000)
 
-methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models)
+methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models, sampleSizes=sampleSizes)
 
 if(!interactive()){
   saveEnv <- TRUE # Save simulated environment (twopl()/bifactor() output) as list?
@@ -34,6 +42,7 @@ if(!interactive()){
   startingMethod <- selRow[1]
   empiricalMethod <- selRow[2]
   model <- selRow[3]
+  selectedSampleSize <- as.numeric(selRow[4])
 
   cat("\n", startingMethod, " ", empiricalMethod, " ", model, "\n")
 
@@ -49,13 +58,14 @@ if(interactive()){
   empiricalMethod="base"
   model="twopl"
   fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_", seed)
+  selectedSampleSize=500
 }
 
 set.seed(seed) # set seed (for reproducibility)
 
-P=500 # Number of examinees
+P=selectedSampleSize # Number of examinees
 I=75 # Number of items
-numNeg=2 # Number of lambda values to negate in total
+numNeg=3 # Number of lambda values to negate in total
 rHatThreshold=1.05 # Threshold for deteriming chain convergence
 
 coefHyper=5 # Hyperparameter for unbounded/continuous/normal parameters
