@@ -88,7 +88,7 @@ bifactor <- function(...){
       }
     }
 
-    if(startingMethod == "allRand"){
+    if(startingMethod == "allRand" | lambdaStatus == "base"){
       inits <- list(
         theta = array(data=runif(n=P*3, min=-6, max=6), dim=c(P,3)),
         lambdag12=runif(n=I, min=.75, max=6),
