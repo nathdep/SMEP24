@@ -27,6 +27,7 @@
 
 # Example Replication
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to access the example `.R` file displayed below.
+
 ```r
 library(SMEP24)
 
@@ -36,13 +37,13 @@ library(SMEP24)
 # --------------------------
 #   models    examineeSizes
 # ---------- ---------------
-#   twopl           500
+#   twopl          500
 #
-#  bifactor         500
+#  bifactor        500
 #
-#   twopl          2000
+#   twopl         2000
 #
-#  bifactor        2000
+#  bifactor       2000
 # --------------------------
 
 ### CONDITIONS TESTED ###
@@ -69,53 +70,53 @@ library(SMEP24)
 # -----------------------------------------------------------------
 #  starting_methods   empirical_methods    models    examineeSizes
 # ------------------ ------------------- ---------- ---------------
-#        advi           empiricalPos       twopl         500
+#        advi           empiricalPos       twopl          500
 #
-#      allRand          empiricalPos       twopl         500
+#      allRand          empiricalPos       twopl          500
 #
-#    StdSumScore        empiricalPos       twopl         500
+#    StdSumScore        empiricalPos       twopl          500
 #
-#        advi          empiricalAlpha      twopl         500
+#        advi          empiricalAlpha      twopl          500
 #
-#      allRand         empiricalAlpha      twopl         500
+#      allRand         empiricalAlpha      twopl          500
 #
-#    StdSumScore       empiricalAlpha      twopl         500
+#    StdSumScore       empiricalAlpha      twopl          500
 #
-#        advi           empiricalPos      bifactor       500
+#        advi           empiricalPos      bifactor        500
 #
-#      allRand          empiricalPos      bifactor       500
+#      allRand          empiricalPos      bifactor        500
 #
-#    StdSumScore        empiricalPos      bifactor       500
+#    StdSumScore        empiricalPos      bifactor        500
 #
-#        advi          empiricalAlpha     bifactor       500
+#        advi          empiricalAlpha     bifactor        500
 #
-#      allRand         empiricalAlpha     bifactor       500
+#      allRand         empiricalAlpha     bifactor        500
 #
-#    StdSumScore       empiricalAlpha     bifactor       500
+#    StdSumScore       empiricalAlpha     bifactor        500
 #
-#        advi           empiricalPos       twopl        2000
+#        advi           empiricalPos       twopl         2000
 #
-#      allRand          empiricalPos       twopl        2000
+#      allRand          empiricalPos       twopl         2000
 #
-#    StdSumScore        empiricalPos       twopl        2000
+#    StdSumScore        empiricalPos       twopl         2000
 #
-#        advi          empiricalAlpha      twopl        2000
+#        advi          empiricalAlpha      twopl         2000
 #
-#      allRand         empiricalAlpha      twopl        2000
+#      allRand         empiricalAlpha      twopl         2000
 #
-#    StdSumScore       empiricalAlpha      twopl        2000
+#    StdSumScore       empiricalAlpha      twopl         2000
 #
-#        advi           empiricalPos      bifactor      2000
+#        advi           empiricalPos      bifactor       2000
 #
-#      allRand          empiricalPos      bifactor      2000
+#      allRand          empiricalPos      bifactor       2000
 #
-#    StdSumScore        empiricalPos      bifactor      2000
+#    StdSumScore        empiricalPos      bifactor       2000
 #
-#        advi          empiricalAlpha     bifactor      2000
+#        advi          empiricalAlpha     bifactor       2000
 #
-#      allRand         empiricalAlpha     bifactor      2000
+#      allRand         empiricalAlpha     bifactor       2000
 #
-#    StdSumScore       empiricalAlpha     bifactor      2000
+#    StdSumScore       empiricalAlpha     bifactor       2000
 # -----------------------------------------------------------------
 
 #####################################################################
@@ -123,7 +124,7 @@ library(SMEP24)
 CONTROL=TRUE # Run control/all positive lambda model?
 saveEnv <- TRUE # Save simulated environment (twopl()/bifactor() output) as list?
 models <- c("twopl", "bifactor") # tested models
-sampleSizes <- c(500, 2000) # tested examinee sample sizes
+examineeSizes <- c(500, 2000) # tested examinee sample sizes
 
 findings <- "/Users/depy/SMEP24/Findings/" # Location to save model results
 
@@ -133,7 +134,7 @@ if(!CONTROL){ # checking if "control"/all positive lambda model should be run
   starting_methods <- c("advi", "allRand", "StdSumScore") # initial value methods
   empirical_methods <- c("empiricalPos", "empiricalAlpha") # empirical methods
   # forming methods matrix from all combos
-  methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models,sampleSizes=sampleSizes)
+  methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models,examineeSizes=examineeSizes)
 
   taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() function
 
@@ -152,7 +153,7 @@ if(CONTROL){
   startingMethod=NULL # placeholder
   empiricalMethod=NULL # placeholder
 
-  control_matrix <- expand.grid(models=models, sampleSizes=sampleSizes) # control conditions (model + examinee sample size)
+  control_matrix <- expand.grid(models=models, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
 
   cat("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n")
   cat(paste0("SELECTED SAMPLE SIZE: ", selectedSampleSize))
@@ -240,7 +241,6 @@ if(nBadRhats != 0){
   sink() # close connection
 
 }
-
 
 file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RData"))
 ```
