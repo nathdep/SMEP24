@@ -10,7 +10,7 @@ getInits(modsum)
 \item{modsum}{object generated from `$summary()` method on a `cmdstanr` model environment}
 }
 \value{
-a named list object containing \emph{expected a prior} from ADVI-approximated posterior draws
+a named list object containing \emph{expected a priori} from ADVI-approximated posterior draws
 }
 \description{
 Get Parameter Values for Initializing NUTS

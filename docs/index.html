@@ -57,8 +57,14 @@
   <div class="contents col-md-9">
 
 <div class="section level1">
-<div class="page-header"><h1 id="function-index">Function Index<a class="anchor" aria-label="anchor" href="#function-index"></a>
+<div class="page-header"><h1 id="research-article">Research Article<a class="anchor" aria-label="anchor" href="#research-article"></a>
 </h1></div>
+<p>Click <a href="https://github.com/nathdep/SMEP24/blob/main/SMEP_2024.pdf" class="external-link"><strong>here</strong></a> to view the SMEP 2024 research article related to this project.</p>
+<hr>
+</div>
+<div class="section level1">
+<h1 id="function-index">Function Index<a class="anchor" aria-label="anchor" href="#function-index"></a>
+</h1>
 <ul>
 <li><p>Click <a href="https://github.com/nathdep/SMEP24/wiki/INDEX" class="external-link"><strong>here</strong></a> to view an online index of the package’s functions. *** # Simulation Files</p></li>
 <li><p><a href="https://github.com/nathdep/SMEP24/blob/main/R/twopl.R" class="external-link"><strong>2PL .R syntax</strong></a></p></li>
@@ -97,6 +103,23 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SMEP24</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co">### CONTROL MATRIX ###</span></span>
+<span><span class="co"># All simulated lambda values &gt; 0</span></span>
+<span></span>
+<span><span class="co"># --------------------------</span></span>
+<span><span class="co">#   models    examineeSizes</span></span>
+<span><span class="co"># ---------- ---------------</span></span>
+<span><span class="co">#   twopl          500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#  bifactor        500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#   twopl         2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#  bifactor       2000</span></span>
+<span><span class="co"># --------------------------</span></span>
+<span></span>
+<span><span class="co">### CONDITIONS TESTED ###</span></span>
+<span></span>
 <span><span class="co"># EMPIRICAL METHODS</span></span>
 <span><span class="co"># "base" (all inits randomly drawn)</span></span>
 <span><span class="co"># "empiricalPos" (μ_λ &gt; 0)</span></span>
@@ -111,35 +134,116 @@
 <span><span class="co"># "twopl" (2-parameter logistic item response model)</span></span>
 <span><span class="co"># "bifactor (item response model with 1 General factor and 2 sub-factors)</span></span>
 <span></span>
-<span><span class="va">starting_methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"advi"</span>, <span class="st">"allRand"</span>, <span class="st">"StdSumScore"</span><span class="op">)</span></span>
-<span><span class="va">empirical_methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"base"</span>,<span class="st">"empiricalPos"</span>, <span class="st">"empiricalAlpha"</span><span class="op">)</span></span>
-<span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"twopl"</span>, <span class="st">"bifactor"</span><span class="op">)</span></span>
+<span><span class="co"># SAMPLE SIZE</span></span>
+<span><span class="co"># Number of examinees = 500 or 2000</span></span>
 <span></span>
-<span><span class="va">methods_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span>starting_methods<span class="op">=</span><span class="va">starting_methods</span>, empirical_methods<span class="op">=</span><span class="va">empirical_methods</span>, models<span class="op">=</span><span class="va">models</span><span class="op">)</span></span>
+<span><span class="co">### METHODS MATRIX ###</span></span>
 <span></span>
-<span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">findings</span> <span class="op">&lt;-</span> <span class="st">"/Users/depy/SMEP24/Findings/"</span></span>
-<span>  <span class="va">args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/commandArgs.html" class="external-link">commandArgs</a></span><span class="op">(</span>trailingOnly<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="co"># Grab JOB_ID and SGE_TASK_ID from .job file in Argon</span></span>
-<span>  <span class="va">selRow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="reference/methodSelect.html">methodSelect</a></span><span class="op">(</span>base10<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">args</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>, methodsMatrix<span class="op">=</span><span class="va">methods_matrix</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># Select row of methods matrix given SGE_TASK_ID number in Argon</span></span>
+<span><span class="co"># -----------------------------------------------------------------</span></span>
+<span><span class="co">#  starting_methods   empirical_methods    models    examineeSizes</span></span>
+<span><span class="co"># ------------------ ------------------- ---------- ---------------</span></span>
+<span><span class="co">#        advi           empiricalPos       twopl          500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#      allRand          empiricalPos       twopl          500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#    StdSumScore        empiricalPos       twopl          500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#        advi          empiricalAlpha      twopl          500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#      allRand         empiricalAlpha      twopl          500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#    StdSumScore       empiricalAlpha      twopl          500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#        advi           empiricalPos      bifactor        500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#      allRand          empiricalPos      bifactor        500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#    StdSumScore        empiricalPos      bifactor        500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#        advi          empiricalAlpha     bifactor        500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#      allRand         empiricalAlpha     bifactor        500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#    StdSumScore       empiricalAlpha     bifactor        500</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#        advi           empiricalPos       twopl         2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#      allRand          empiricalPos       twopl         2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#    StdSumScore        empiricalPos       twopl         2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#        advi          empiricalAlpha      twopl         2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#      allRand         empiricalAlpha      twopl         2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#    StdSumScore       empiricalAlpha      twopl         2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#        advi           empiricalPos      bifactor       2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#      allRand          empiricalPos      bifactor       2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#    StdSumScore        empiricalPos      bifactor       2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#        advi          empiricalAlpha     bifactor       2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#      allRand         empiricalAlpha     bifactor       2000</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#    StdSumScore       empiricalAlpha     bifactor       2000</span></span>
+<span><span class="co"># -----------------------------------------------------------------</span></span>
+<span></span>
+<span><span class="co">#####################################################################</span></span>
+<span></span>
+<span><span class="va">CONTROL</span><span class="op">=</span><span class="cn">TRUE</span> <span class="co"># Run control/all positive lambda model?</span></span>
+<span><span class="va">saveEnv</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># Save simulated environment (twopl()/bifactor() output) as list?</span></span>
+<span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"twopl"</span>, <span class="st">"bifactor"</span><span class="op">)</span> <span class="co"># tested models</span></span>
+<span><span class="va">examineeSizes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">2000</span><span class="op">)</span> <span class="co"># tested examinee sample sizes</span></span>
+<span><span class="va">findings</span> <span class="op">&lt;-</span> <span class="st">"/Users/depy/SMEP24/Findings/"</span> <span class="co"># Location to save model results</span></span>
+<span></span>
+<span><span class="va">args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/commandArgs.html" class="external-link">commandArgs</a></span><span class="op">(</span>trailingOnly<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="co"># Grab JOB_ID and SGE_TASK_ID from .job file in Argon</span></span>
+<span><span class="va">taskNumber</span> <span class="op">&lt;-</span> <span class="va">args</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="fl">1</span> <span class="co"># offsetting to be compatible with methodSelect() function</span></span>
+<span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="va">CONTROL</span><span class="op">)</span><span class="op">{</span> <span class="co"># checking if "control"/all positive lambda model should be run</span></span>
+<span>  <span class="va">starting_methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"advi"</span>, <span class="st">"allRand"</span>, <span class="st">"StdSumScore"</span><span class="op">)</span> <span class="co"># initial value methods</span></span>
+<span>  <span class="va">empirical_methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"empiricalPos"</span>, <span class="st">"empiricalAlpha"</span><span class="op">)</span> <span class="co"># empirical methods</span></span>
+<span>  <span class="va">lambdaStatus</span> <span class="op">=</span> <span class="st">"TEST"</span></span>
+<span></span>
+<span>  <span class="co"># forming methods matrix from all combos</span></span>
+<span>  <span class="va">methods_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span>starting_methods<span class="op">=</span><span class="va">starting_methods</span>, empirical_methods<span class="op">=</span><span class="va">empirical_methods</span>, models<span class="op">=</span><span class="va">models</span>,examineeSizes<span class="op">=</span><span class="va">examineeSizes</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">selRow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="reference/methodSelect.html">methodSelect</a></span><span class="op">(</span>base10<span class="op">=</span><span class="va">taskNumber</span>, methodsMatrix<span class="op">=</span><span class="va">methods_matrix</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># Select row of methods matrix given SGE_TASK_ID number in Argon</span></span>
+<span></span>
 <span>  <span class="va">startingMethod</span> <span class="op">&lt;-</span> <span class="va">selRow</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span>  <span class="va">empiricalMethod</span> <span class="op">&lt;-</span> <span class="va">selRow</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
 <span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="va">selRow</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\n"</span>, <span class="va">startingMethod</span>, <span class="st">" "</span>, <span class="va">empiricalMethod</span>, <span class="st">" "</span>, <span class="va">model</span>, <span class="st">"\n"</span><span class="op">)</span></span>
-<span>  <span class="va">seed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">args</span>, collapse<span class="op">=</span><span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="co"># Generate integer for seed</span></span>
+<span>  <span class="va">selectedSampleSize</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">selRow</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\n"</span>, <span class="va">startingMethod</span>, <span class="st">" "</span>, <span class="va">empiricalMethod</span>, <span class="st">" "</span>, <span class="va">model</span>,<span class="st">" "</span>, <span class="va">selectedSampleSize</span>, <span class="st">"\n\n"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="co"># DEBUGGING</span></span>
-<span>  <span class="va">seed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1e6</span><span class="op">)</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="co"># Randomly draw integer for seed</span></span>
-<span>  <span class="va">startingMethod</span><span class="op">=</span><span class="st">"allRand"</span></span>
-<span>  <span class="va">empiricalMethod</span><span class="op">=</span><span class="st">"base"</span></span>
-<span>  <span class="va">model</span><span class="op">=</span><span class="st">"twopl"</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="va">CONTROL</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">lambdaStatus</span><span class="op">=</span><span class="st">"base"</span></span>
+<span>  <span class="va">startingMethod</span><span class="op">=</span><span class="st">"CONTROL"</span></span>
+<span>  <span class="va">empiricalMethod</span><span class="op">=</span><span class="st">"CONTROL"</span></span>
+<span></span>
+<span>  <span class="va">control_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span>models<span class="op">=</span><span class="va">models</span>, examineeSizes<span class="op">=</span><span class="va">examineeSizes</span><span class="op">)</span> <span class="co"># control conditions (model + examinee sample size)</span></span>
+<span></span>
+<span>  <span class="va">selRow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="reference/methodSelect.html">methodSelect</a></span><span class="op">(</span>base10<span class="op">=</span><span class="va">taskNumber</span>, methodsMatrix<span class="op">=</span><span class="va">control_matrix</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="va">selRow</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="va">selectedSampleSize</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">selRow</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n\n"</span>, <span class="va">model</span>,<span class="st">" "</span>, <span class="va">selectedSampleSize</span>, <span class="st">"\n\n"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">seed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">args</span>, collapse<span class="op">=</span><span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="co"># Generate integer for seed</span></span>
+<span></span>
+<span><span class="va">fileInfo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">model</span>, <span class="st">"_"</span>, <span class="va">empiricalMethod</span>, <span class="st">"_"</span>, <span class="va">startingMethod</span>,<span class="st">"_"</span>,<span class="va">selectedSampleSize</span>,<span class="st">"_"</span>,<span class="va">args</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">"_"</span>, <span class="va">args</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># file name info for future saving</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="va">seed</span><span class="op">)</span> <span class="co"># set seed (for reproducibility)</span></span>
 <span></span>
-<span><span class="va">P</span><span class="op">=</span><span class="fl">500</span> <span class="co"># Number of examinees</span></span>
+<span><span class="va">P</span><span class="op">=</span><span class="va">selectedSampleSize</span> <span class="co"># Number of examinees</span></span>
 <span><span class="va">I</span><span class="op">=</span><span class="fl">75</span> <span class="co"># Number of items</span></span>
+<span><span class="va">numNeg</span><span class="op">=</span><span class="fl">3</span> <span class="co"># Number of lambda values to negate in total</span></span>
 <span><span class="va">rHatThreshold</span><span class="op">=</span><span class="fl">1.05</span> <span class="co"># Threshold for deteriming chain convergence</span></span>
 <span></span>
 <span><span class="va">coefHyper</span><span class="op">=</span><span class="fl">5</span> <span class="co"># Hyperparameter for unbounded/continuous/normal parameters</span></span>
@@ -153,8 +257,14 @@
 <span>  <span class="va">env</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/twopl.html">twopl</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create 2PL simulation environment/list</span></span>
 <span><span class="op">}</span></span>
 <span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="va">saveEnv</span><span class="op">)</span><span class="op">{</span> <span class="co"># save simulated environment?</span></span>
+<span>  <span class="va">envList</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">env</span><span class="op">)</span> <span class="co"># convert environment to list object</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">envList</span>, file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/simData/simData_"</span>, <span class="va">fileInfo</span>, <span class="st">".RDS"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/list2env.html" class="external-link">list2env</a></span><span class="op">(</span><span class="va">env</span>, envir<span class="op">=</span><span class="va">.GlobalEnv</span><span class="op">)</span> <span class="co"># load objects in bifactor simulation into global environment</span></span>
 <span></span>
+<span><span class="co"># SAMPLE STAN MODEL</span></span>
 <span><span class="va">modrun</span> <span class="op">&lt;-</span> <span class="va">modstan</span><span class="op">$</span><span class="fu">sample</span><span class="op">(</span></span>
 <span>  iter_warmup<span class="op">=</span><span class="fl">2000</span>,</span>
 <span>  iter_sampling<span class="op">=</span><span class="fl">2000</span>,</span>
@@ -165,31 +275,47 @@
 <span>  init<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="va">inits</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">modsum_full</span> <span class="op">&lt;-</span> <span class="va">modrun</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">modsum_save</span> <span class="op">&lt;-</span> <span class="va">modsum_full</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^lambda"</span>, <span class="va">modsum_full</span><span class="op">$</span><span class="va">variable</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">modsum_full</span> <span class="op">&lt;-</span> <span class="va">modrun</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span> <span class="co"># generate full posterior descriptives</span></span>
 <span></span>
+<span><span class="co"># Split posterior descriptives by parameter (theta/lambda/tau)</span></span>
+<span><span class="va">modsum_save_lambda</span> <span class="op">&lt;-</span> <span class="va">modsum_full</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^lambda"</span>, <span class="va">modsum_full</span><span class="op">$</span><span class="va">variable</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">modsum_save_tau</span> <span class="op">&lt;-</span> <span class="va">modsum_full</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^tau"</span>, <span class="va">modsum_full</span><span class="op">$</span><span class="va">variable</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">modsum_save_theta</span> <span class="op">&lt;-</span> <span class="va">modsum_full</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^theta"</span>, <span class="va">modsum_full</span><span class="op">$</span><span class="va">variable</span><span class="op">)</span>,<span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Add true value columns for post-processing/comparisons</span></span>
 <span><span class="kw">if</span><span class="op">(</span><span class="va">model</span> <span class="op">==</span> <span class="st">"twopl"</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">modsum_save</span><span class="op">$</span><span class="va">true</span> <span class="op">&lt;-</span> <span class="va">lambda</span></span>
+<span>  <span class="va">modsum_save_lambda</span><span class="op">$</span><span class="va">true</span> <span class="op">&lt;-</span> <span class="va">lambda</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="kw">if</span><span class="op">(</span><span class="va">model</span> <span class="op">==</span> <span class="st">"bifactor"</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">modsum_save</span><span class="op">$</span><span class="va">true</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">lambda_G</span>, <span class="va">lambda_g12</span><span class="op">)</span></span>
+<span>  <span class="va">modsum_save_lambda</span><span class="op">$</span><span class="va">true</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">lambda_G</span>, <span class="va">lambda_g12</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="va">modsum_save</span> <span class="op">&lt;-</span> <span class="va">modsum_save</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">modsum_save</span><span class="op">)</span>, <span class="fl">2</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">modsum_save</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">modsum_save_tau</span><span class="op">$</span><span class="va">true</span> <span class="op">&lt;-</span> <span class="va">tau</span></span>
+<span><span class="va">modsum_save_theta</span><span class="op">$</span><span class="va">true</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">modsum_save</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">findings</span>, <span class="st">"Modsum_Reduc_"</span>, <span class="va">seed</span>, <span class="st">"_"</span>, <span class="va">model</span>, <span class="st">"_"</span>, <span class="va">empiricalMethod</span>, <span class="st">"_"</span>, <span class="va">startingMethod</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">modsum_full</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">findings</span>, <span class="st">"Modsum_Full_"</span>, <span class="va">seed</span>, <span class="st">"_"</span>, <span class="va">model</span>, <span class="st">"_"</span>, <span class="va">empiricalMethod</span>, <span class="st">"_"</span>, <span class="va">startingMethod</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">modsum_save_lambda</span> <span class="op">&lt;-</span> <span class="va">modsum_save_lambda</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">modsum_save_lambda</span><span class="op">)</span>, <span class="fl">2</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">modsum_save_lambda</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">modsum_save_tau</span> <span class="op">&lt;-</span> <span class="va">modsum_save_tau</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">modsum_save_tau</span><span class="op">)</span>, <span class="fl">2</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">modsum_save_tau</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">modsum_save_theta</span> <span class="op">&lt;-</span> <span class="va">modsum_save_theta</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">modsum_save_theta</span><span class="op">)</span>, <span class="fl">2</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">modsum_save_theta</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># SAVING RESULTS</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">modsum_save_lambda</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">findings</span>, <span class="st">"Reduc_Modsum_lambda_"</span>, <span class="va">fileInfo</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">modsum_save_tau</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">findings</span>, <span class="st">"Reduc_Modsum_tau_"</span>, <span class="va">fileInfo</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">modsum_save_theta</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">findings</span>, <span class="st">"Reduc_Modsum_theta_"</span>, <span class="va">fileInfo</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">modsum_full</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">findings</span>, <span class="st">"Full_Modsum_"</span>, <span class="va">fileInfo</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">nBadRhats</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/countRhat.html">countRhat</a></span><span class="op">(</span><span class="va">modsum_full</span>, rHatThreshold <span class="op">=</span> <span class="va">rHatThreshold</span><span class="op">)</span> <span class="co"># Indicator for Rhats &gt; 1.05</span></span>
 <span></span>
-<span><span class="kw">if</span><span class="op">(</span><span class="va">nBadRhats</span> <span class="op">!=</span> <span class="fl">0</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.rename</a></span><span class="op">(</span>from<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/simData/simData_"</span>, <span class="va">fileInfo</span>, <span class="st">".RDS"</span><span class="op">)</span>, to<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,<span class="st">"/DONE/simData_"</span>, <span class="va">fileInfo</span>, <span class="st">".RDS"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span>  <span class="va">badRhatModsum</span> <span class="op">&lt;-</span> <span class="va">modsum_save</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">modsum_save</span><span class="op">$</span><span class="va">rhat</span> <span class="op">&gt;</span> <span class="va">rHatThreshold</span><span class="op">)</span>,<span class="op">]</span> <span class="co"># filter for posterior descriptives that exceed Rhat threshold (non-converging)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">badRhatModsum</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">findings</span>, <span class="st">"BadRhatModsum_"</span>, <span class="va">seed</span>, <span class="st">"_"</span>, <span class="va">model</span>, <span class="st">"_"</span>, <span class="va">empiricalMethod</span>, <span class="st">"_"</span>, <span class="va">startingMethod</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span> <span class="co"># write non-convergent parameter posterior descriptives to .csv file</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="va">nBadRhats</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span><span class="op">{</span></span>
 <span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/sink.html" class="external-link">sink</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">findings</span>, <span class="st">"BadRhatModsumNames_"</span>, <span class="va">model</span>, <span class="st">"_"</span>, <span class="va">empiricalMethod</span>, <span class="st">"_"</span>, <span class="va">startingMethod</span>, <span class="st">".csv"</span><span class="op">)</span>, append<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="co"># begin appending &lt;model&gt;_&lt;method&gt;_badCount.csv file</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">nBadRhats</span>,<span class="st">","</span>, <span class="va">model</span>, <span class="st">","</span>, <span class="va">empiricalMethod</span>, <span class="st">","</span>, <span class="va">startingMethod</span>, <span class="st">"\n"</span><span class="op">)</span><span class="op">)</span> <span class="co"># write result</span></span>
+<span>  <span class="va">badRhatModsum</span> <span class="op">&lt;-</span> <span class="va">modsum_full</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">modsum_full</span><span class="op">$</span><span class="va">rhat</span> <span class="op">&gt;</span> <span class="va">rHatThreshold</span><span class="op">)</span>,<span class="op">]</span> <span class="co"># filter for posterior descriptives that exceed Rhat threshold (non-converging)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">badRhatModsum</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">findings</span>, <span class="st">"BadRhat_Modsum_"</span>, <span class="va">fileInfo</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span> <span class="co"># write non-convergent parameter posterior descriptives to .csv file</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sink.html" class="external-link">sink</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">findings</span>, <span class="st">"Names_BadRhat_"</span>, <span class="va">model</span>, <span class="st">"_"</span>, <span class="va">selectedSampleSize</span>, <span class="st">"_"</span>, <span class="va">empiricalMethod</span>, <span class="st">"_"</span>, <span class="va">startingMethod</span>, <span class="st">".csv"</span><span class="op">)</span>, append<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="co"># begin appending &lt;model&gt;_&lt;method&gt;_badCount.csv file</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">nBadRhats</span>,<span class="st">","</span>, <span class="va">model</span>, <span class="st">","</span>, <span class="va">selectedSampleSize</span>, <span class="st">","</span>, <span class="va">empiricalMethod</span>, <span class="st">","</span>, <span class="va">startingMethod</span>, <span class="st">","</span>, <span class="va">args</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">","</span>, <span class="va">args</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="st">"\n"</span><span class="op">)</span><span class="op">)</span> <span class="co"># write result</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sink.html" class="external-link">sink</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># close connection</span></span>
 <span></span>
 <span><span class="op">}</span></span></code></pre></div>
@@ -234,7 +360,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>

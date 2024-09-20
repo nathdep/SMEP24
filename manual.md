@@ -21,6 +21,8 @@ Config/testthat/edition: 3
 RoxygenNote: 7.3.2
 ```
 
+***
+
 # `bifactor`: Generate a Bifactor Simulation Environment
 
 ## Description
@@ -40,6 +42,8 @@ bifactor(...)
 ## Value
 
 an environment stored to a list object of the bifactor simulation environment
+
+***
 
 # `countRhat`: Rhat Convergence Indicator Function
 
@@ -62,6 +66,8 @@ countRhat(modsum, rHatThreshold = 1.05)
 
 count of Rhat > threshold
 
+***
+
 # `getDims`: Find Dimensions of Filtered `.GlobalEnv` Object
 
 ## Description
@@ -83,6 +89,8 @@ getDims(name, envir)
 
 integer of object's total dimensions
 
+***
+
 # `getInits`: Get Parameter Values for Initializing NUTS
 
 ## Description
@@ -101,7 +109,9 @@ getInits(modsum)
 
 ## Value
 
-a named list object containing *expected a prior* from ADVI-approximated posterior draws
+a named list object containing *expected a priori* from ADVI-approximated posterior draws
+
+***
 
 # `getStdSumScore`: Calculate Standardized Sum Scores
 
@@ -122,6 +132,8 @@ getStdSumScore(resps)
 ## Value
 
 a vector of standardized sum scores of the measured latent trait
+
+***
 
 # `makeNeg`: Negative Lambda Indicator Function
 
@@ -144,6 +156,8 @@ makeNeg(lambda, numNeg = 2)
 
 a vector of all lambda values (including negated lambdas)
 
+***
+
 # `methodSelect`: Method Selector by Modulo
 
 ## Description
@@ -164,6 +178,8 @@ methodSelect(base10, methodsMatrix)
 ## Value
 
 A selected row (after converting from base-10/decimal representation) of the methods matrix that describes the tested conditions
+
+***
 
 # `twopl`: Generate a 2-Parameter Logistic (2PL) IRT Simulation Environment
 

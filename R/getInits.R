@@ -1,6 +1,6 @@
 #' Get Parameter Values for Initializing NUTS
 #' @param modsum  object generated from `$summary()` method on a `cmdstanr` model environment
-#' @returns a named list object containing \emph{expected a prior} from ADVI-approximated posterior draws
+#' @returns a named list object containing \emph{expected a priori} from ADVI-approximated posterior draws
 getInits <- function(modsum){
   vars <- modsum$variable
   dropind <- sub("\\[.*\\]", "", vars)
