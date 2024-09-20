@@ -136,7 +136,7 @@ if(!interactive()){
     cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n")
   }
 
-  if(args[2] == 9998 | args[2] == 9999){
+  if(args[2] == 9998 & args[2] == 9999){
     lambdaStatus="base" # if SGE_TASK_ID == 9998/9999, run the "control"/all positive lambda model
     startingMethod=NULL
     empiricalMethod=NULL
