@@ -125,18 +125,17 @@ CONTROL=TRUE # Run control/all positive lambda model?
 saveEnv <- TRUE # Save simulated environment (twopl()/bifactor() output) as list?
 models <- c("twopl", "bifactor") # tested models
 examineeSizes <- c(500, 2000) # tested examinee sample sizes
-
 findings <- "/Users/depy/SMEP24/Findings/" # Location to save model results
 
 args <- as.numeric(commandArgs(trailingOnly=TRUE)) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
+taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() function
 
 if(!CONTROL){ # checking if "control"/all positive lambda model should be run
   starting_methods <- c("advi", "allRand", "StdSumScore") # initial value methods
   empirical_methods <- c("empiricalPos", "empiricalAlpha") # empirical methods
+
   # forming methods matrix from all combos
   methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models,examineeSizes=examineeSizes)
-
-  taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() function
 
   selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
 
@@ -154,6 +153,8 @@ if(CONTROL){
   empiricalMethod=NULL # placeholder
 
   control_matrix <- expand.grid(models=models, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
+
+  selectedMethod <- methodSelect(base10=taskNumber, methodsMatrix=control_matrix)
 
   cat("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n")
   cat(paste0("SELECTED SAMPLE SIZE: ", selectedSampleSize))
@@ -241,6 +242,7 @@ if(nBadRhats != 0){
   sink() # close connection
 
 }
+
 
 file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RData"))
 ```
