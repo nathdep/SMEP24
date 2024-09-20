@@ -51,115 +51,66 @@ library(SMEP24)
 
 ### METHODS MATRIX ###
 
-# ------------------------------------------------------------------------------
-#  starting_methods   empirical_methods    models    lambdaStatus   sampleSizes
-# ------------------ ------------------- ---------- -------------- -------------
-#        advi           empiricalPos       twopl         base           500
+# ---------------------------------------------------------------
+#  starting_methods   empirical_methods    models    sampleSizes
+# ------------------ ------------------- ---------- -------------
+#        advi           empiricalPos       twopl         500
 #
-#      allRand          empiricalPos       twopl         base           500
+#      allRand          empiricalPos       twopl         500
 #
-#    StdSumScore        empiricalPos       twopl         base           500
+#    StdSumScore        empiricalPos       twopl         500
 #
-#        advi          empiricalAlpha      twopl         base           500
+#        advi          empiricalAlpha      twopl         500
 #
-#      allRand         empiricalAlpha      twopl         base           500
+#      allRand         empiricalAlpha      twopl         500
 #
-#    StdSumScore       empiricalAlpha      twopl         base           500
+#    StdSumScore       empiricalAlpha      twopl         500
 #
-#        advi           empiricalPos      bifactor       base           500
+#        advi           empiricalPos      bifactor       500
 #
-#      allRand          empiricalPos      bifactor       base           500
+#      allRand          empiricalPos      bifactor       500
 #
-#    StdSumScore        empiricalPos      bifactor       base           500
+#    StdSumScore        empiricalPos      bifactor       500
 #
-#        advi          empiricalAlpha     bifactor       base           500
+#        advi          empiricalAlpha     bifactor       500
 #
-#      allRand         empiricalAlpha     bifactor       base           500
+#      allRand         empiricalAlpha     bifactor       500
 #
-#    StdSumScore       empiricalAlpha     bifactor       base           500
+#    StdSumScore       empiricalAlpha     bifactor       500
 #
-#        advi           empiricalPos       twopl         test           500
+#        advi           empiricalPos       twopl        2000
 #
-#      allRand          empiricalPos       twopl         test           500
+#      allRand          empiricalPos       twopl        2000
 #
-#    StdSumScore        empiricalPos       twopl         test           500
+#    StdSumScore        empiricalPos       twopl        2000
 #
-#        advi          empiricalAlpha      twopl         test           500
+#        advi          empiricalAlpha      twopl        2000
 #
-#      allRand         empiricalAlpha      twopl         test           500
+#      allRand         empiricalAlpha      twopl        2000
 #
-#    StdSumScore       empiricalAlpha      twopl         test           500
+#    StdSumScore       empiricalAlpha      twopl        2000
 #
-#        advi           empiricalPos      bifactor       test           500
+#        advi           empiricalPos      bifactor      2000
 #
-#      allRand          empiricalPos      bifactor       test           500
+#      allRand          empiricalPos      bifactor      2000
 #
-#    StdSumScore        empiricalPos      bifactor       test           500
+#    StdSumScore        empiricalPos      bifactor      2000
 #
-#        advi          empiricalAlpha     bifactor       test           500
+#        advi          empiricalAlpha     bifactor      2000
 #
-#      allRand         empiricalAlpha     bifactor       test           500
+#      allRand         empiricalAlpha     bifactor      2000
 #
-#    StdSumScore       empiricalAlpha     bifactor       test           500
-#
-#        advi           empiricalPos       twopl         base          2000
-#
-#      allRand          empiricalPos       twopl         base          2000
-#
-#    StdSumScore        empiricalPos       twopl         base          2000
-#
-#        advi          empiricalAlpha      twopl         base          2000
-#
-#      allRand         empiricalAlpha      twopl         base          2000
-#
-#    StdSumScore       empiricalAlpha      twopl         base          2000
-#
-#        advi           empiricalPos      bifactor       base          2000
-#
-#      allRand          empiricalPos      bifactor       base          2000
-#
-#    StdSumScore        empiricalPos      bifactor       base          2000
-#
-#        advi          empiricalAlpha     bifactor       base          2000
-#
-#      allRand         empiricalAlpha     bifactor       base          2000
-#
-#    StdSumScore       empiricalAlpha     bifactor       base          2000
-#
-#        advi           empiricalPos       twopl         test          2000
-#
-#      allRand          empiricalPos       twopl         test          2000
-#
-#    StdSumScore        empiricalPos       twopl         test          2000
-#
-#        advi          empiricalAlpha      twopl         test          2000
-#
-#      allRand         empiricalAlpha      twopl         test          2000
-#
-#    StdSumScore       empiricalAlpha      twopl         test          2000
-#
-#        advi           empiricalPos      bifactor       test          2000
-#
-#      allRand          empiricalPos      bifactor       test          2000
-#
-#    StdSumScore        empiricalPos      bifactor       test          2000
-#
-#        advi          empiricalAlpha     bifactor       test          2000
-#
-#      allRand         empiricalAlpha     bifactor       test          2000
-#
-#    StdSumScore       empiricalAlpha     bifactor       test          2000
-# ------------------------------------------------------------------------------
+#    StdSumScore       empiricalAlpha     bifactor      2000
+# ---------------------------------------------------------------
 
 #####################################################################
 
 starting_methods <- c("advi", "allRand", "StdSumScore")
 empirical_methods <- c("empiricalPos", "empiricalAlpha")
 models <- c("twopl", "bifactor")
-lambdaStatus <- c("base", "test")
 sampleSizes <- c(500, 2000)
 
-methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models, lambdaStatus=lambdaStatus,sampleSizes=sampleSizes)
+methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models,sampleSizes=sampleSizes)
 
 if(!interactive()){
   saveEnv <- TRUE # Save simulated environment (twopl()/bifactor() output) as list?
