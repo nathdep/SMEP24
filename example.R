@@ -92,16 +92,23 @@ if(!interactive()){
 
   args <- as.numeric(commandArgs(trailingOnly=TRUE)) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
 
-  taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() function
+  if(args[2] != (nrow(methods_matrix)+1)){
 
-  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
+    taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() function
 
-  startingMethod <- selRow[1]
-  empiricalMethod <- selRow[2]
-  model <- selRow[3]
-  selectedSampleSize <- as.numeric(selRow[4])
+    selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
 
-  cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n")
+    startingMethod <- selRow[1]
+    empiricalMethod <- selRow[2]
+    model <- selRow[3]
+    selectedSampleSize <- as.numeric(selRow[4])
+
+    cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n")
+  }
+
+  if(args[2] == (nrow(methods_matrix) + 1)){
+    lambdaStatus="base" # if SGE_TASK_ID = nrow(methods_matrix)+1, run the "control"/all positive lambda model
+  }
 
   seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
 
@@ -117,6 +124,7 @@ if(interactive()){
   fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_", seed)
   selectedSampleSize=500
 }
+
 
 set.seed(seed) # set seed (for reproducibility)
 
