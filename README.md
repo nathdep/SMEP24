@@ -122,7 +122,7 @@ if(!interactive()){
 
   args <- as.numeric(commandArgs(trailingOnly=TRUE)) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
 
-  if(args[2] != (nrow(methods_matrix)+1)){
+  if(args[2] != 9999){ # checking if "control"/all positive lambda model should be run
 
     taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() function
 
@@ -136,8 +136,8 @@ if(!interactive()){
     cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n")
   }
 
-  if(args[2] == (nrow(methods_matrix) + 1)){
-    lambdaStatus="base" # if SGE_TASK_ID = nrow(methods_matrix)+1, run the "control"/all positive lambda model
+  if(args[2] == 9999){
+    lambdaStatus="base" # if SGE_TASK_ID == 9999, run the "control"/all positive lambda model
   }
 
   seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
