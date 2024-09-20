@@ -65,7 +65,17 @@ twopl <- function(...){
       }
     }
 
-    if(startingMethod == "allRand" | lambdaStatus == "base"){
+    if(lambdaStatus == "base"){
+
+      inits <- list(
+        theta = runif(n=P, min=-6, max=6),
+        lambda = runif(n=I, min=.75, max=3),
+        tau = runif(n=I, min=-6, max=6)
+      )
+
+    }
+
+    if(startingMethod == "allRand"){
 
       inits <- list(
         theta = runif(n=P, min=-6, max=6),

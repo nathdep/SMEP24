@@ -113,7 +113,7 @@ if(!CONTROL){ # checking if "control"/all positive lambda model should be run
   model <- selRow[3]
   selectedSampleSize <- as.numeric(selRow[4])
 
-  cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n")
+  cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n\n")
 }
 
 if(CONTROL){
@@ -128,7 +128,7 @@ if(CONTROL){
   model <- selRow[1]
   selectedSampleSize <- as.numeric(selRow[2])
 
-  cat(paste0("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n\n", model," ", selectedSampleSize, "\n"))
+  cat(paste0("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n\n", model," ", selectedSampleSize, "\n\n"))
 }
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
