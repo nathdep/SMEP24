@@ -122,7 +122,7 @@ if(!interactive()){
 
   args <- as.numeric(commandArgs(trailingOnly=TRUE)) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
 
-  if(args[2] != 9999){ # checking if "control"/all positive lambda model should be run
+  if(args[2] != 9999 & args[2] != 9998){ # checking if "control"/all positive lambda model should be run
 
     taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() function
 
