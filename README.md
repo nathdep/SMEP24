@@ -157,7 +157,7 @@ if(CONTROL){
   selectedMethod <- methodSelect(base10=taskNumber, methodsMatrix=control_matrix)
 
   cat("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n")
-  cat(paste0("SELECTED SAMPLE SIZE: ", selectedSampleSize))
+  cat("\n", model," ", selectedSampleSize, "\n")
 }
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
@@ -242,7 +242,6 @@ if(nBadRhats != 0){
   sink() # close connection
 
 }
-
 
 file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RData"))
 ```

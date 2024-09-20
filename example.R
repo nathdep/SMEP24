@@ -126,7 +126,7 @@ if(CONTROL){
   selectedMethod <- methodSelect(base10=taskNumber, methodsMatrix=control_matrix)
 
   cat("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n")
-  cat(paste0("SELECTED SAMPLE SIZE: ", selectedSampleSize))
+  cat("\n", model," ", selectedSampleSize, "\n")
 }
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
