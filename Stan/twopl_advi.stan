@@ -15,6 +15,6 @@ model{
   tau ~ normal(0, coefHyper);
   lambda ~ normal(0, coefHyper);
   for(i in 1:I){
-    Y[,i] ~ bernoulli_logit(theta*lambda[i] + tau[i]);
+    Y[,i] ~ bernoulli_logit(StdSumScore*lambda[i] + tau[i]);
   }
 }
