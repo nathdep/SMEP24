@@ -15,6 +15,11 @@ twopl <- function(...){
 
     if(lambdaStatus != "base"){
       lambda <- makeNeg(lambda, numNeg=numNeg) # negate lambdas at random
+      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_", empiricalMethod, ".stan"))
+    }
+
+    if(lambdaStatus == "base"){
+      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_base.stan"))
     }
 
     tau <- runif(n=I, min=-3, max=3)
@@ -29,7 +34,6 @@ twopl <- function(...){
         Y[p,i] <- rbinom(n=1, size=1, prob=plogis(logits[p,i]))
       }
     }
-    modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_", empiricalMethod, ".stan"))
 
     ModelData <- list(
       P=nrow(Y),

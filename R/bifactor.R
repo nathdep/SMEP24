@@ -21,6 +21,11 @@ bifactor <- function(...){
 
     if(lambdaStatus != "base"){
       lambda_g12 <- makeNeg(lambda_g12, numNeg=numNeg) # negate sub-factor (g) lambdas at random
+      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_", empiricalMethod, ".stan"))
+    }
+
+    if(lambdaStatus == "base"){
+      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_base.stan"))
     }
 
     lambdaMat <- matrix(data=NA, nrow=I, ncol=3)
@@ -46,8 +51,6 @@ bifactor <- function(...){
         Y[p,i] <- rbinom(n=1, size=1, prob=plogis(logits[p,i]))
       }
     }
-
-    modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_", empiricalMethod, ".stan"))
 
     ModelData <- list(
       P=nrow(Y),
