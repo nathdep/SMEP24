@@ -118,15 +118,17 @@ if(!CONTROL){ # checking if "control"/all positive lambda model should be run
 
 if(CONTROL){
   lambdaStatus="base" # if SGE_TASK_ID == 9998/9999, run the "control"/all positive lambda model
-  startingMethod=NULL # placeholder
-  empiricalMethod=NULL # placeholder
+  startingMethod="CONTROL"
+  empiricalMethod="CONTROL"
 
   control_matrix <- expand.grid(models=models, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
 
-  selectedMethod <- methodSelect(base10=taskNumber, methodsMatrix=control_matrix)
+  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=control_matrix)))
 
-  cat("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n")
-  cat("\n", model," ", selectedSampleSize, "\n")
+  model <- selRow[1]
+  selectedSampleSize <- as.numeric(selRow[2])
+
+  cat(paste0("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n\n", model," ", selectedSampleSize, "\n"))
 }
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
