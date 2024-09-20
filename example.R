@@ -1,7 +1,7 @@
 library(SMEP24)
 
-### "CONTROL" MODEL ###
-# all lambda values bounded > 0
+### CONTROL MATRIX ###
+# All simulated lambda values > 0
 
 # --------------------------
 #   models    examineeSizes
@@ -216,4 +216,3 @@ if(nBadRhats != 0){
   sink() # close connection
 
 }
-

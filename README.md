@@ -37,8 +37,8 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to acces
 ```r
 library(SMEP24)
 
-### "CONTROL" MODEL ###
-# all lambda values bounded > 0
+### CONTROL MATRIX ###
+# All simulated lambda values > 0
 
 # --------------------------
 #   models    examineeSizes
