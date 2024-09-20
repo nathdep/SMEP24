@@ -108,6 +108,7 @@ if(!interactive()){
 
   if(args[2] == 9999){
     lambdaStatus="base" # if SGE_TASK_ID == 9999, run the "control"/all positive lambda model
+    cat("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n")
   }
 
   seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
