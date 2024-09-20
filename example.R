@@ -204,6 +204,8 @@ write.csv(modsum_full, paste0(findings, "Full_Modsum_", fileInfo, ".csv"))
 
 nBadRhats <- countRhat(modsum_full, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
+file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RDS"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RDS"))
+
 if(nBadRhats != 0){
 
   badRhatModsum <- modsum_full[which(modsum_full$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
@@ -214,7 +216,4 @@ if(nBadRhats != 0){
   sink() # close connection
 
 }
-
-
-file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RDS"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RDS"))
 
