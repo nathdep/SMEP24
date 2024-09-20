@@ -3,6 +3,18 @@ library(SMEP24)
 ### "CONTROL" MODEL ###
 # all lambda values bounded > 0
 
+# --------------------------
+#   models    examineeSizes
+# ---------- ---------------
+#   twopl           500
+#
+#  bifactor         500
+#
+#   twopl          2000
+#
+#  bifactor        2000
+# --------------------------
+
 ### CONDITIONS TESTED ###
 
 # EMPIRICAL METHODS
@@ -24,9 +36,9 @@ library(SMEP24)
 
 ### METHODS MATRIX ###
 
-# ---------------------------------------------------------------
-#  starting_methods   empirical_methods    models    sampleSizes
-# ------------------ ------------------- ---------- -------------
+# -----------------------------------------------------------------
+#  starting_methods   empirical_methods    models    examineeSizes
+# ------------------ ------------------- ---------- ---------------
 #        advi           empiricalPos       twopl         500
 #
 #      allRand          empiricalPos       twopl         500
@@ -74,69 +86,51 @@ library(SMEP24)
 #      allRand         empiricalAlpha     bifactor      2000
 #
 #    StdSumScore       empiricalAlpha     bifactor      2000
-# ---------------------------------------------------------------
+# -----------------------------------------------------------------
 
 #####################################################################
 
-starting_methods <- c("advi", "allRand", "StdSumScore")
-empirical_methods <- c("empiricalPos", "empiricalAlpha")
-models <- c("twopl", "bifactor")
-sampleSizes <- c(500, 2000)
+CONTROL=TRUE # Run control/all positive lambda model?
+saveEnv <- TRUE # Save simulated environment (twopl()/bifactor() output) as list?
+models <- c("twopl", "bifactor") # tested models
+sampleSizes <- c(500, 2000) # tested examinee sample sizes
 
-methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models,sampleSizes=sampleSizes)
+findings <- "/Users/depy/SMEP24/Findings/" # Location to save model results
 
-if(!interactive()){
-  saveEnv <- TRUE # Save simulated environment (twopl()/bifactor() output) as list?
+args <- as.numeric(commandArgs(trailingOnly=TRUE)) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
 
-  findings <- "/Users/depy/SMEP24/Findings/" # Location to save model results
+if(!CONTROL){ # checking if "control"/all positive lambda model should be run
+  starting_methods <- c("advi", "allRand", "StdSumScore") # initial value methods
+  empirical_methods <- c("empiricalPos", "empiricalAlpha") # empirical methods
+  # forming methods matrix from all combos
+  methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models,sampleSizes=sampleSizes)
 
-  args <- as.numeric(commandArgs(trailingOnly=TRUE)) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
+  taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() function
 
-  if(args[2] != 9999 & args[2] != 9998){ # checking if "control"/all positive lambda model should be run
+  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
 
-    taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() function
+  startingMethod <- selRow[1]
+  empiricalMethod <- selRow[2]
+  model <- selRow[3]
+  selectedSampleSize <- as.numeric(selRow[4])
 
-    selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
-
-    startingMethod <- selRow[1]
-    empiricalMethod <- selRow[2]
-    model <- selRow[3]
-    selectedSampleSize <- as.numeric(selRow[4])
-
-    cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n")
-  }
-
-  if(args[2] == 9998 & args[2] == 9999){
-    lambdaStatus="base" # if SGE_TASK_ID == 9998/9999, run the "control"/all positive lambda model
-    startingMethod=NULL
-    empiricalMethod=NULL
-
-    if(args[2] == 9998){
-      selectedSampleSize=500
-    }
-    if(args[2] == 9999){
-      selectedSampleSize=2000
-    }
-
-    cat("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n")
-    cat(paste0("SELECTED SAMPLE SIZE: ", selectedSampleSize))
-  }
-
-  seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
-
-  fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_", args[1], "_", args[2]) # file name info for future saving
+  cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n")
 }
 
-if(interactive()){
-  # DEBUGGING
-  seed <- sample(x=c(1:1e6), size=1) # Randomly draw integer for seed
-  startingMethod="allRand"
-  empiricalMethod="base"
-  model="twopl"
-  fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_", seed)
-  selectedSampleSize=500
+if(CONTROL){
+  lambdaStatus="base" # if SGE_TASK_ID == 9998/9999, run the "control"/all positive lambda model
+  startingMethod=NULL # placeholder
+  empiricalMethod=NULL # placeholder
+
+  control_matrix <- expand.grid(models=models, sampleSizes=sampleSizes) # control conditions (model + examinee sample size)
+
+  cat("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n")
+  cat(paste0("SELECTED SAMPLE SIZE: ", selectedSampleSize))
 }
 
+seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
+
+fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_", args[1], "_", args[2]) # file name info for future saving
 
 set.seed(seed) # set seed (for reproducibility)
 
@@ -156,13 +150,14 @@ if(model == "twopl"){
   env <- twopl() # create 2PL simulation environment/list
 }
 
-if(saveEnv && !interactive()){ # save simulated environment?
+if(saveEnv){ # save simulated environment?
   envList <- as.list(env) # convert environment to list object
   save(envList, file=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"))
 }
 
 list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
 
+# SAMPLE STAN MODEL
 modrun <- modstan$sample(
   iter_warmup=2000,
   iter_sampling=2000,
@@ -173,12 +168,14 @@ modrun <- modstan$sample(
   init=function()inits
 )
 
-modsum_full <- modrun$summary()
+modsum_full <- modrun$summary() # generate full posterior descriptives
 
+# Split posterior descriptives by parameter (theta/lambda/tau)
 modsum_save_lambda <- modsum_full[grepl("^lambda", modsum_full$variable),]
 modsum_save_tau <- modsum_full[grepl("^tau", modsum_full$variable),]
 modsum_save_theta <- modsum_full[grepl("^theta", modsum_full$variable),]
 
+# Add true value columns for post-processing/comparisons
 if(model == "twopl"){
   modsum_save_lambda$true <- lambda
 }
@@ -194,6 +191,7 @@ modsum_save_lambda <- modsum_save_lambda[,c(1, ncol(modsum_save_lambda), 2:(ncol
 modsum_save_tau <- modsum_save_tau[,c(1, ncol(modsum_save_tau), 2:(ncol(modsum_save_tau)-1))]
 modsum_save_theta <- modsum_save_theta[,c(1, ncol(modsum_save_theta), 2:(ncol(modsum_save_theta)-1))]
 
+# SAVING RESULTS
 write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum_lambda_", fileInfo, ".csv"))
 write.csv(modsum_save_tau, paste0(findings, "Reduc_Modsum_tau_", fileInfo, ".csv"))
 write.csv(modsum_save_theta, paste0(findings, "Reduc_Modsum_theta_", fileInfo, ".csv"))
@@ -202,7 +200,7 @@ write.csv(modsum_full, paste0(findings, "Full_Modsum_", fileInfo, ".csv"))
 
 nBadRhats <- countRhat(modsum_full, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
-if(nBadRhats != 0 && !interactive()){
+if(nBadRhats != 0){
 
   badRhatModsum <- modsum_full[which(modsum_full$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
   write.csv(badRhatModsum, paste0(findings, "BadRhat_Modsum_", fileInfo, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
@@ -213,6 +211,6 @@ if(nBadRhats != 0 && !interactive()){
 
 }
 
-if(!interactive()){
-  file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RData"))
-}
+
+file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RData"))
+
