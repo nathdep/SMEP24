@@ -1,5 +1,8 @@
 library(SMEP24)
 
+### "CONTROL" MODEL ###
+# all lambda values bounded > 0
+
 ### CONDITIONS TESTED ###
 
 # EMPIRICAL METHODS

@@ -30,10 +30,12 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to acces
 ```r
 library(SMEP24)
 
+### "CONTROL" MODEL ###
+# all lambda values bounded > 0
+
 ### CONDITIONS TESTED ###
 
 # EMPIRICAL METHODS
-# "base" (all inits randomly drawn)
 # "empiricalPos" (μ_λ > 0)
 # "empiricalAlpha" (λ_i > α)
 
