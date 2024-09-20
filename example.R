@@ -102,6 +102,7 @@ taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() func
 if(!CONTROL){ # checking if "control"/all positive lambda model should be run
   starting_methods <- c("advi", "allRand", "StdSumScore") # initial value methods
   empirical_methods <- c("empiricalPos", "empiricalAlpha") # empirical methods
+  lambdaStatus = "TEST"
 
   # forming methods matrix from all combos
   methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models,examineeSizes=examineeSizes)
