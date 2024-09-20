@@ -148,7 +148,7 @@ if(!CONTROL){ # checking if "control"/all positive lambda model should be run
 }
 
 if(CONTROL){
-  lambdaStatus="base" # if SGE_TASK_ID == 9998/9999, run the "control"/all positive lambda model
+  lambdaStatus="base"
   startingMethod="CONTROL"
   empiricalMethod="CONTROL"
 
