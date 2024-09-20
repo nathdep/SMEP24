@@ -106,9 +106,20 @@ if(!interactive()){
     cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n")
   }
 
-  if(args[2] == 9999){
-    lambdaStatus="base" # if SGE_TASK_ID == 9999, run the "control"/all positive lambda model
+  if(args[2] == 9998 | args[2] == 9999){
+    lambdaStatus="base" # if SGE_TASK_ID == 9998/9999, run the "control"/all positive lambda model
+    startingMethod=NULL
+    empiricalMethod=NULL
+
+    if(args[2] == 9998){
+      selectedSampleSize=500
+    }
+    if(args[2] == 9999){
+      selectedSampleSize=2000
+    }
+
     cat("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n")
+    cat(paste0("SELECTED SAMPLE SIZE: ", selectedSampleSize))
   }
 
   seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
