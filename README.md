@@ -133,7 +133,7 @@ taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() func
 if(!CONTROL){ # checking if "control"/all positive lambda model should be run
   starting_methods <- c("advi", "allRand", "StdSumScore") # initial value methods
   empirical_methods <- c("empiricalPos", "empiricalAlpha") # empirical methods
-  lambdaStatus="TEST"
+  lambdaStatus = "TEST"
 
   # forming methods matrix from all combos
   methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models,examineeSizes=examineeSizes)
@@ -165,7 +165,7 @@ if(CONTROL){
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
 
-fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_", args[1], "_", args[2]) # file name info for future saving
+fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2]) # file name info for future saving
 
 set.seed(seed) # set seed (for reproducibility)
 
@@ -187,7 +187,7 @@ if(model == "twopl"){
 
 if(saveEnv){ # save simulated environment?
   envList <- as.list(env) # convert environment to list object
-  save(envList, file=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"))
+  save(envList, file=paste0(getwd(), "/simData/simData_", fileInfo, ".RDS"))
 }
 
 list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
@@ -247,5 +247,5 @@ if(nBadRhats != 0){
 }
 
 
-file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RData"))
+file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RDS"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RDS"))
 ```

@@ -70,6 +70,9 @@ bifactor <- function(...){
         StdSumScore[,i] <- getStdSumScore(Y[,which(Qmat[,i] == 1)])
       }
       ModelData$StdSumScore = StdSumScore
+
+      advistan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_advi.stan"))
+
       advirun <- modstan$variational(  # Run variational inference via ADVI
         data=ModelData,
         seed=seed

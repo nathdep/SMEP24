@@ -134,7 +134,7 @@ if(CONTROL){
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
 
-fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_", args[1], "_", args[2]) # file name info for future saving
+fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2]) # file name info for future saving
 
 set.seed(seed) # set seed (for reproducibility)
 
@@ -156,7 +156,7 @@ if(model == "twopl"){
 
 if(saveEnv){ # save simulated environment?
   envList <- as.list(env) # convert environment to list object
-  save(envList, file=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"))
+  save(envList, file=paste0(getwd(), "/simData/simData_", fileInfo, ".RDS"))
 }
 
 list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
@@ -216,5 +216,5 @@ if(nBadRhats != 0){
 }
 
 
-file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RData"))
+file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RDS"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RDS"))
 

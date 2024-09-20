@@ -47,7 +47,10 @@ twopl <- function(...){
       StdSumScore <- getStdSumScore(Y)
       ModelData$StdSumScore = StdSumScore
       ModelData$alpha = min(lambda) - .25 # assigning α
-      advirun <- modstan$variational(  # Run variational inference via ADVI
+
+      advistan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_advi.stan"))
+
+      advirun <- advistan$variational(  # Run variational inference via ADVI
         data=ModelData,
         seed=seed
       )
