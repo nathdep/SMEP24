@@ -10,7 +10,12 @@ twopl <- function(...){
 
     set.seed(seed)
     # SIMULATION OF DISCRIMINATION PARAMETERS
-    lambda <- makeNeg(runif(n=I, min=0, max=3), numNeg=numNeg) # negate lambdas at random
+
+    lambda <- runif(n=I, min=0, max=3)
+
+    if(lambdaStatus != "base"){
+      lambda <- makeNeg(lambda, numNeg=numNeg) # negate lambdas at random
+    }
 
     tau <- runif(n=I, min=-3, max=3)
     # SIMULATION OF LATENT TRAIT MEASUREMENTS

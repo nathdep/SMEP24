@@ -14,8 +14,8 @@ parameters{
   row_vector[I] tau;
 }
 model{
-  lambdaG ~ lognormal(1, coefHyper);
-  lambdag12 ~ normal(1, coefHyper);
+  lambdaG ~ normal(0, coefHyper)T[0,];
+  lambdag12 ~ normal(0, coefHyper)T[0,];
   tau ~ normal(0, coefHyper);
   matrix[I, nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag12,2)).*Qmat;
   for(i in 1:I){

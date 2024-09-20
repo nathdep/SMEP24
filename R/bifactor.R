@@ -17,7 +17,11 @@ bifactor <- function(...){
     tau <- runif(n=I, min=-3, max=3)
     # SIMULATION OF DISCRIMINATION PARAMETERS
     lambda_G <- runif(n=I, min=0, max=3) # loadings on general factor
-    lambda_g12 <- makeNeg(cbind(runif(n=I, min=0, max=3)), numNeg=numNeg) # negate sub-factor (g) lambdas at random
+    lambda_g12 <- runif(n=I, min=0, max=3)
+
+    if(lambdaStatus != "base"){
+      lambda_g12 <- makeNeg(lambda_g12, numNeg=numNeg) # negate sub-factor (g) lambdas at random
+    }
 
     lambdaMat <- matrix(data=NA, nrow=I, ncol=3)
     lambdaMat[,1] <- lambda_G
