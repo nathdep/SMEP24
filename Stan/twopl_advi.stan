@@ -11,7 +11,7 @@ parameters{
   row_vector[I] lambda;
 }
 model{
-  theta ~ std_normal();
+  StdSumScore ~ std_normal();
   tau ~ normal(0, coefHyper);
   lambda ~ normal(0, coefHyper);
   for(i in 1:I){
