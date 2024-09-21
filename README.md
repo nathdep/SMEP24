@@ -67,8 +67,6 @@ library(SMEP24)
 
 ### CONTROL MATRIX ###
 
-# All parameters initialized on U(-6,6) with no empirical methods
-
 # --------------------------------------------
 #   models    startingMethods   examineeSizes 
 # ---------- ----------------- ---------------
