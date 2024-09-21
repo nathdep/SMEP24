@@ -37,7 +37,7 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to acces
 ```r
 library(SMEP24)
 
-### CONTROL MATRIX ###
+### CONTROL/BASE MODEL MATRIX ###
 # All simulated lambda values > 0
 
 # --------------------------
