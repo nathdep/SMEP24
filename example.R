@@ -1,20 +1,5 @@
 library(SMEP24)
 
-### CONTROL MATRIX ###
-# All parameters initialized on U(-6,6) with no empirical methods
-
-# --------------------------
-#   models    examineeSizes
-# ---------- ---------------
-#   twopl          500
-#
-#  bifactor        500
-#
-#   twopl         2000
-#
-#  bifactor       2000
-# --------------------------
-
 ### CONDITIONS TESTED ###
 
 # EMPIRICAL METHODS
@@ -32,6 +17,21 @@ library(SMEP24)
 
 # SAMPLE SIZE
 # Number of examinees = 500 or 2000
+
+### CONTROL MATRIX ###
+# All parameters initialized on U(-6,6) with no empirical methods
+
+# --------------------------
+#   models    examineeSizes
+# ---------- ---------------
+#   twopl          500
+#
+#  bifactor        500
+#
+#   twopl         2000
+#
+#  bifactor       2000
+# --------------------------
 
 ### METHODS MATRIX ###
 
