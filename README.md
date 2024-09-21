@@ -6,6 +6,8 @@ Installation via `devtools`:
 devtools::install_github("nathdep/SMEP24")
 ```
 
+***
+
 # Research Article
 
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/SMEP_2024.pdf) to view the SMEP 2024 research article related to this project.
