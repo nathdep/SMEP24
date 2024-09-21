@@ -3,7 +3,7 @@
 Installation via `devtools`:
 
 ```r
-devtools::install_github("ndep/SMEP24")
+devtools::install_github("nathdep/SMEP24")
 ```
 
 # Research Article
