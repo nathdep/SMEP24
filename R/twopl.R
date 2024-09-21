@@ -68,7 +68,7 @@ twopl <- function(...){
       }
     }
 
-    if(startingMethod == "allRand" | lambdaStatus == "control"){
+    if(startingMethod == "allRand" || lambdaStatus == "control"){
 
       inits <- list(
         theta = runif(n=P, min=-6, max=6),
