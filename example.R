@@ -1,6 +1,6 @@
 library(SMEP24)
 
-### CONTROL MATRIX ###
+### CONTROL/BASE MODEL MATRIX ###
 # All simulated lambda values > 0
 
 # --------------------------
