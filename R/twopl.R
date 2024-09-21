@@ -13,13 +13,13 @@ twopl <- function(...){
 
     lambda <- runif(n=I, min=0, max=3)
 
-    if(lambdaStatus != "base"){
+    if(lambdaStatus != "control"){
       lambda <- makeNeg(lambda, numNeg=numNeg) # negate lambdas at random
       modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_", empiricalMethod, ".stan"))
     }
 
-    if(lambdaStatus == "base"){
-      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_base.stan"))
+    if(lambdaStatus == "control"){
+      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_control.stan"))
     }
 
     tau <- runif(n=I, min=-3, max=3)
@@ -68,17 +68,7 @@ twopl <- function(...){
       }
     }
 
-    if(lambdaStatus == "base"){
-
-      inits <- list(
-        theta = runif(n=P, min=-6, max=6),
-        lambda = runif(n=I, min=.75, max=3),
-        tau = runif(n=I, min=-6, max=6)
-      )
-
-    }
-
-    if(startingMethod == "allRand"){
+    if(startingMethod == "allRand" | lambdaStatus == "control"){
 
       inits <- list(
         theta = runif(n=P, min=-6, max=6),

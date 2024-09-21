@@ -1,7 +1,7 @@
 library(SMEP24)
 
 ### CONTROL MATRIX ###
-# All simulated lambda values > 0
+# All parameters initialized on U(-6,6) with no empirical methods
 
 # --------------------------
 #   models    examineeSizes
@@ -18,7 +18,6 @@ library(SMEP24)
 ### CONDITIONS TESTED ###
 
 # EMPIRICAL METHODS
-# "base" (all inits randomly drawn)
 # "empiricalPos" (μ_λ > 0)
 # "empiricalAlpha" (λ_i > α)
 
@@ -90,7 +89,7 @@ library(SMEP24)
 
 #####################################################################
 
-CONTROL=TRUE # Run control/all positive lambda model?
+CONTROL=TRUE # Run control model?
 saveEnv <- TRUE # Save simulated environment (twopl()/bifactor() output) as list?
 models <- c("twopl", "bifactor") # tested models
 examineeSizes <- c(500, 2000) # tested examinee sample sizes
@@ -99,7 +98,7 @@ findings <- "/Users/depy/SMEP24/Findings/" # Location to save model results
 args <- as.numeric(commandArgs(trailingOnly=TRUE)) # Grab JOB_ID and SGE_TASK_ID from .job file in Argon
 taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() function
 
-if(!CONTROL){ # checking if "control"/all positive lambda model should be run
+if(!CONTROL){
   starting_methods <- c("advi", "allRand", "StdSumScore") # initial value methods
   empirical_methods <- c("empiricalPos", "empiricalAlpha") # empirical methods
   lambdaStatus = "TEST"
@@ -107,7 +106,7 @@ if(!CONTROL){ # checking if "control"/all positive lambda model should be run
   # forming methods matrix from all combos
   methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models,examineeSizes=examineeSizes)
 
-  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
+  selRow <- as.vector(as.matrix(methodSelect(control10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
 
   startingMethod <- selRow[1]
   empiricalMethod <- selRow[2]
@@ -118,22 +117,21 @@ if(!CONTROL){ # checking if "control"/all positive lambda model should be run
 }
 
 if(CONTROL){
-  lambdaStatus="base"
+  lambdaStatus="control"
   startingMethod="CONTROL"
   empiricalMethod="CONTROL"
 
   control_matrix <- expand.grid(models=models, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
 
-  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=control_matrix)))
+  selRow <- as.vector(as.matrix(methodSelect(control10=taskNumber, methodsMatrix=control_matrix)))
 
   model <- selRow[1]
   selectedSampleSize <- as.numeric(selRow[2])
 
-  cat(paste0("\nCONTROL/ALL POSITIVE LAMBDA MODEL IS SELECTED\n\n", model," ", selectedSampleSize, "\n\n"))
+  cat(paste0("\nCONTROL MODEL IS SELECTED\n\n", model," ", selectedSampleSize, "\n\n"))
 }
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
-
 fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2]) # file name info for future saving
 
 set.seed(seed) # set seed (for reproducibility)

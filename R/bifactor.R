@@ -19,13 +19,13 @@ bifactor <- function(...){
     lambda_G <- runif(n=I, min=0, max=3) # loadings on general factor
     lambda_g12 <- runif(n=I, min=0, max=3)
 
-    if(lambdaStatus != "base"){
+    if(lambdaStatus != "control"){
       lambda_g12 <- makeNeg(lambda_g12, numNeg=numNeg) # negate sub-factor (g) lambdas at random
       modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_", empiricalMethod, ".stan"))
     }
 
-    if(lambdaStatus == "base"){
-      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_base.stan"))
+    if(lambdaStatus == "control"){
+      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_control.stan"))
     }
 
     lambdaMat <- matrix(data=NA, nrow=I, ncol=3)
@@ -91,16 +91,7 @@ bifactor <- function(...){
       }
     }
 
-    if(startingMethod == "allRand"){
-      inits <- list(
-        theta = array(data=runif(n=P*3, min=-6, max=6), dim=c(P,3)),
-        lambdag12=runif(n=I, min=.75, max=6),
-        lambdaG=runif(n=I, min=.75, max=6),
-        tau=runif(n=I, min=-6, max=6)
-      )
-    }
-
-    if(lambdaStatus == "base"){
+    if(startingMethod == "allRand" | lambdaStatus == "control"){
       inits <- list(
         theta = array(data=runif(n=P*3, min=-6, max=6), dim=c(P,3)),
         lambdag12=runif(n=I, min=.75, max=6),
