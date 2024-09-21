@@ -35,57 +35,58 @@ library(SMEP24)
 
 ### METHODS MATRIX ###
 
-# ----------------------------------------------------------------
-#   models    startingMethods   empirical_methods   exaimneeSizes
-# ---------- ----------------- ------------------- ---------------
-#   twopl          advi           empiricalPos           500
+# ---------------------------------------------------------------
+#   models    startingMethods   empiricalMethods   examineeSizes
+# ---------- ----------------- ------------------ ---------------
+#   twopl          advi           empiricalPos          500
 #
-#  bifactor        advi           empiricalPos           500
+#  bifactor        advi           empiricalPos          500
 #
-#   twopl         allRand         empiricalPos           500
+#   twopl         allRand         empiricalPos          500
 #
-#  bifactor       allRand         empiricalPos           500
+#  bifactor       allRand         empiricalPos          500
 #
-#   twopl       StdSumScore       empiricalPos           500
+#   twopl       StdSumScore       empiricalPos          500
 #
-#  bifactor     StdSumScore       empiricalPos           500
+#  bifactor     StdSumScore       empiricalPos          500
 #
-#   twopl          advi          empiricalAlpha          500
+#   twopl          advi          empiricalAlpha         500
 #
-#  bifactor        advi          empiricalAlpha          500
+#  bifactor        advi          empiricalAlpha         500
 #
-#   twopl         allRand        empiricalAlpha          500
+#   twopl         allRand        empiricalAlpha         500
 #
-#  bifactor       allRand        empiricalAlpha          500
+#  bifactor       allRand        empiricalAlpha         500
 #
-#   twopl       StdSumScore      empiricalAlpha          500
+#   twopl       StdSumScore      empiricalAlpha         500
 #
-#  bifactor     StdSumScore      empiricalAlpha          500
+#  bifactor     StdSumScore      empiricalAlpha         500
 #
-#   twopl          advi           empiricalPos          2000
+#   twopl          advi           empiricalPos         2000
 #
-#  bifactor        advi           empiricalPos          2000
+#  bifactor        advi           empiricalPos         2000
 #
-#   twopl         allRand         empiricalPos          2000
+#   twopl         allRand         empiricalPos         2000
 #
-#  bifactor       allRand         empiricalPos          2000
+#  bifactor       allRand         empiricalPos         2000
 #
-#   twopl       StdSumScore       empiricalPos          2000
+#   twopl       StdSumScore       empiricalPos         2000
 #
-#  bifactor     StdSumScore       empiricalPos          2000
+#  bifactor     StdSumScore       empiricalPos         2000
 #
-#   twopl          advi          empiricalAlpha         2000
+#   twopl          advi          empiricalAlpha        2000
 #
-#  bifactor        advi          empiricalAlpha         2000
+#  bifactor        advi          empiricalAlpha        2000
 #
-#   twopl         allRand        empiricalAlpha         2000
+#   twopl         allRand        empiricalAlpha        2000
 #
-#  bifactor       allRand        empiricalAlpha         2000
+#  bifactor       allRand        empiricalAlpha        2000
 #
-#   twopl       StdSumScore      empiricalAlpha         2000
+#   twopl       StdSumScore      empiricalAlpha        2000
 #
-#  bifactor     StdSumScore      empiricalAlpha         2000
-# ----------------------------------------------------------------
+#  bifactor     StdSumScore      empiricalAlpha        2000
+# ---------------------------------------------------------------
+
 #####################################################################
 
 CONTROL=TRUE # Run control model?
@@ -103,7 +104,7 @@ if(!CONTROL){
   lambdaStatus = "TEST"
 
   # forming methods matrix from all combos
-  methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models,examineeSizes=examineeSizes)
+  methods_matrix <- expand.grid(starting_methods=starting_methods, empiricalMethods=empirical_methods, models=models,examineeSizes=examineeSizes)
 
   selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
 
