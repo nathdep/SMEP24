@@ -106,7 +106,7 @@ if(!CONTROL){
   # forming methods matrix from all combos
   methods_matrix <- expand.grid(starting_methods=starting_methods, empirical_methods=empirical_methods, models=models,examineeSizes=examineeSizes)
 
-  selRow <- as.vector(as.matrix(methodSelect(control10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
+  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
 
   startingMethod <- selRow[1]
   empiricalMethod <- selRow[2]
@@ -123,7 +123,7 @@ if(CONTROL){
 
   control_matrix <- expand.grid(models=models, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
 
-  selRow <- as.vector(as.matrix(methodSelect(control10=taskNumber, methodsMatrix=control_matrix)))
+  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=control_matrix)))
 
   model <- selRow[1]
   selectedSampleSize <- as.numeric(selRow[2])
