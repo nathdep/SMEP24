@@ -154,7 +154,7 @@ if(!CONTROL){
 }
 
 if(CONTROL){
-  lambdaStatus="control"
+  lambdaStatus="CONTROL"
   startingMethod="CONTROL"
   empiricalMethod="CONTROL"
 
