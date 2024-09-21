@@ -35,58 +35,57 @@ library(SMEP24)
 
 ### METHODS MATRIX ###
 
-# -----------------------------------------------------------------
-#  starting_methods   empirical_methods    models    examineeSizes
-# ------------------ ------------------- ---------- ---------------
-#        advi           empiricalPos       twopl          500
+# ----------------------------------------------------------------
+#   models    startingMethods   empirical_methods   exaimneeSizes
+# ---------- ----------------- ------------------- ---------------
+#   twopl          advi           empiricalPos           500
 #
-#      allRand          empiricalPos       twopl          500
+#  bifactor        advi           empiricalPos           500
 #
-#    StdSumScore        empiricalPos       twopl          500
+#   twopl         allRand         empiricalPos           500
 #
-#        advi          empiricalAlpha      twopl          500
+#  bifactor       allRand         empiricalPos           500
 #
-#      allRand         empiricalAlpha      twopl          500
+#   twopl       StdSumScore       empiricalPos           500
 #
-#    StdSumScore       empiricalAlpha      twopl          500
+#  bifactor     StdSumScore       empiricalPos           500
 #
-#        advi           empiricalPos      bifactor        500
+#   twopl          advi          empiricalAlpha          500
 #
-#      allRand          empiricalPos      bifactor        500
+#  bifactor        advi          empiricalAlpha          500
 #
-#    StdSumScore        empiricalPos      bifactor        500
+#   twopl         allRand        empiricalAlpha          500
 #
-#        advi          empiricalAlpha     bifactor        500
+#  bifactor       allRand        empiricalAlpha          500
 #
-#      allRand         empiricalAlpha     bifactor        500
+#   twopl       StdSumScore      empiricalAlpha          500
 #
-#    StdSumScore       empiricalAlpha     bifactor        500
+#  bifactor     StdSumScore      empiricalAlpha          500
 #
-#        advi           empiricalPos       twopl         2000
+#   twopl          advi           empiricalPos          2000
 #
-#      allRand          empiricalPos       twopl         2000
+#  bifactor        advi           empiricalPos          2000
 #
-#    StdSumScore        empiricalPos       twopl         2000
+#   twopl         allRand         empiricalPos          2000
 #
-#        advi          empiricalAlpha      twopl         2000
+#  bifactor       allRand         empiricalPos          2000
 #
-#      allRand         empiricalAlpha      twopl         2000
+#   twopl       StdSumScore       empiricalPos          2000
 #
-#    StdSumScore       empiricalAlpha      twopl         2000
+#  bifactor     StdSumScore       empiricalPos          2000
 #
-#        advi           empiricalPos      bifactor       2000
+#   twopl          advi          empiricalAlpha         2000
 #
-#      allRand          empiricalPos      bifactor       2000
+#  bifactor        advi          empiricalAlpha         2000
 #
-#    StdSumScore        empiricalPos      bifactor       2000
+#   twopl         allRand        empiricalAlpha         2000
 #
-#        advi          empiricalAlpha     bifactor       2000
+#  bifactor       allRand        empiricalAlpha         2000
 #
-#      allRand         empiricalAlpha     bifactor       2000
+#   twopl       StdSumScore      empiricalAlpha         2000
 #
-#    StdSumScore       empiricalAlpha     bifactor       2000
-# -----------------------------------------------------------------
-
+#  bifactor     StdSumScore      empiricalAlpha         2000
+# ----------------------------------------------------------------
 #####################################################################
 
 CONTROL=TRUE # Run control model?
