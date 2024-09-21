@@ -66,17 +66,17 @@ library(SMEP24)
 ### CONTROL MATRIX ###
 # All parameters initialized on U(-6,6) with no empirical methods
 
-# --------------------------
-#   models    examineeSizes
-# ---------- ---------------
-#   twopl          500
+# ---------------------------------------------
+#   models    starting_methods   examineeSizes
+# ---------- ------------------ ---------------
+#   twopl         allRand             500
 #
-#  bifactor        500
+#  bifactor       allRand             500
 #
-#   twopl         2000
+#   twopl         allRand            2000
 #
-#  bifactor       2000
-# --------------------------
+#  bifactor       allRand            2000
+# ---------------------------------------------
 
 ### METHODS MATRIX ###
 
