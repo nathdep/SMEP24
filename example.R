@@ -19,7 +19,6 @@ library(SMEP24)
 # Number of examinees = 500 or 2000
 
 ### CONTROL MATRIX ###
-# All parameters initialized on U(-6,6) with no empirical methods
 
 # --------------------------------------------
 #   models    startingMethods   examineeSizes
