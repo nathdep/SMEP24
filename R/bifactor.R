@@ -41,7 +41,7 @@ bifactor <- function(...){
     # GENERATING Q MATRIX
     QmatLong <- sample(x=c(1:2), size=I, replace=TRUE) # Indices of dimension loading by item
     Qmat <- model.matrix(data=data.frame(x=as.factor(QmatLong)), ~x) # Q matrix of item loadings (first column is general factor)
-    lambdaQ <- Qmat*lambdaMat
+    lambdaQ <- cbind(rep(1,I),Qmat)*lambdaMat
     # GENERATING DICHOTOMIZED ITEM RESPONSE DATA
     Y <- matrix(data=NA, nrow=P, ncol=I) # storing dichotomized item responses
     logits <- matrix(data=NA, nrow=P, ncol=I)
