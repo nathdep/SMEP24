@@ -57,7 +57,7 @@ bifactor <- function(...){
       I=ncol(Y),
       Y=Y,
       nDim=3,
-      Qmat=Qmat,
+      Qmat=Qmat[,2:3],
       coefHyper=coefHyper,
       sdHyper=sdHyper
     )
