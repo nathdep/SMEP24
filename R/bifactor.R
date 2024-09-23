@@ -39,7 +39,7 @@ bifactor <- function(...){
     theta_g2 <- rnorm(n=P, mean=0, sd=1) # Latent trait measurements of g2
     theta <- cbind(theta_G, theta_g1, theta_g2)
     # GENERATING Q MATRIX
-    QmatLong <- sample(x=c(1:3), size=I, replace=TRUE) # Indices of dimension loading by item
+    QmatLong <- sample(x=c(1:2), size=I, replace=TRUE) # Indices of dimension loading by item
     Qmat <- model.matrix(data=data.frame(x=as.factor(QmatLong)), ~x) # Q matrix of item loadings (first column is general factor)
     lambdaQ <- Qmat*lambdaMat
     # GENERATING DICHOTOMIZED ITEM RESPONSE DATA
@@ -63,12 +63,17 @@ bifactor <- function(...){
     )
 
     if(startingMethod == "advi"){
-      StdSumScore <- array(data=NA, dim=c(P,3))
       ModelData$alpha = min(lambda_g12) - .25 # assigning α
       ModelData$QmatInd = max.col(Qmat[,2:3]) # creating integer indices for mean of sub-factor loadings
-      for(i in 1:ncol(Qmat)){
-        StdSumScore[,i] <- getStdSumScore(Y[,which(Qmat[,i] == 1)])
+
+      StdSumScore <- array(data=NA, dim=c(P,3))
+
+      StdSumScore[,1] <- getStdSumScore(Y)
+
+      for(i in 1:2){
+        StdSumScore[,i+1] <- getStdSumScore(Y[,which(QmatLong == i)])
       }
+
       ModelData$StdSumScore = StdSumScore
 
       advistan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_advi.stan"))
@@ -103,8 +108,10 @@ bifactor <- function(...){
     if(startingMethod == "StdSumScore"){
       StdSumScore <- array(data=NA, dim=c(P,3))
 
-      for(i in 1:ncol(Qmat)){
-        StdSumScore[,i] <- getStdSumScore(Y[,which(Qmat[,i] == 1)])
+      StdSumScore[,1] <- getStdSumScore(Y)
+
+      for(i in 1:2){
+        StdSumScore[,i+1] <- getStdSumScore(Y[,which(QmatLong == i)])
       }
 
       inits <- list(
