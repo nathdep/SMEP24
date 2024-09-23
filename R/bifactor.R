@@ -40,8 +40,8 @@ bifactor <- function(...){
     theta <- cbind(theta_G, theta_g1, theta_g2)
     # GENERATING Q MATRIX
     QmatLong <- sample(x=c(1:2), size=I, replace=TRUE) # Indices of dimension loading by item
-    Qmat <- model.matrix(data=data.frame(x=as.factor(QmatLong)), ~x) # Q matrix of item loadings (first column is general factor)
-    lambdaQ <- cbind(rep(1,I),Qmat)*lambdaMat
+    Qmat <- model.matrix(data=data.frame(x=as.factor(QmatLong)), ~-1+x) # Q matrix of item loadings (specific factors only)
+    lambdaQ <- cbind(rep(1,I),Qmat)*lambdaMat # add intercept/general factor indicator column
     # GENERATING DICHOTOMIZED ITEM RESPONSE DATA
     Y <- matrix(data=NA, nrow=P, ncol=I) # storing dichotomized item responses
     logits <- matrix(data=NA, nrow=P, ncol=I)
