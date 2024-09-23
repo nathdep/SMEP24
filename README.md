@@ -190,12 +190,12 @@ rHatThreshold=1.05 # Threshold for deteriming chain convergence
 coefHyper=5 # Hyperparameter for unbounded/continuous/normal parameters
 sdHyper=.1 # Hyperparameter for positive bounded/gamma parameters
 
-if(model == "bifactor"){
-  env <- bifactor() # create bifactor simulation environment/list
-}
-
 if(model == "twopl"){
   env <- twopl() # create 2PL simulation environment/list
+}
+
+if(model == "bifactor"){
+  env <- bifactor() # create bifactor simulation environment/list
 }
 
 if(saveEnv){ # save simulated environment?
