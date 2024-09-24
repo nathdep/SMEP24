@@ -68,69 +68,69 @@ library(SMEP24)
 ### CONTROL MATRIX ###
 
 # --------------------------------------------
-#   models    startingMethods   examineeSizes 
+#   models    startingMethods   examineeSizes
 # ---------- ----------------- ---------------
-#   twopl         allRand            500      
-# 
-#  bifactor       allRand            500      
-# 
-#   twopl         allRand           2000      
-# 
-#  bifactor       allRand           2000      
+#   twopl         allRand            500
+#
+#  bifactor       allRand            500
+#
+#   twopl         allRand           2000
+#
+#  bifactor       allRand           2000
 # --------------------------------------------
 
 ### METHODS MATRIX ###
 
 # ---------------------------------------------------------------
-#   models    startingMethods   empiricalMethods   examineeSizes 
+#   models    startingMethods   empiricalMethods   examineeSizes
 # ---------- ----------------- ------------------ ---------------
-#   twopl          advi           empiricalPos          500      
-# 
-#  bifactor        advi           empiricalPos          500      
-# 
-#   twopl         allRand         empiricalPos          500      
-# 
-#  bifactor       allRand         empiricalPos          500      
-# 
-#   twopl       StdSumScore       empiricalPos          500      
-# 
-#  bifactor     StdSumScore       empiricalPos          500      
-# 
-#   twopl          advi          empiricalAlpha         500      
-# 
-#  bifactor        advi          empiricalAlpha         500      
-# 
-#   twopl         allRand        empiricalAlpha         500      
-# 
-#  bifactor       allRand        empiricalAlpha         500      
-# 
-#   twopl       StdSumScore      empiricalAlpha         500      
-# 
-#  bifactor     StdSumScore      empiricalAlpha         500      
-# 
-#   twopl          advi           empiricalPos         2000      
-# 
-#  bifactor        advi           empiricalPos         2000      
-# 
-#   twopl         allRand         empiricalPos         2000      
-# 
-#  bifactor       allRand         empiricalPos         2000      
-# 
-#   twopl       StdSumScore       empiricalPos         2000      
-# 
-#  bifactor     StdSumScore       empiricalPos         2000      
-# 
-#   twopl          advi          empiricalAlpha        2000      
-# 
-#  bifactor        advi          empiricalAlpha        2000      
-# 
-#   twopl         allRand        empiricalAlpha        2000      
-# 
-#  bifactor       allRand        empiricalAlpha        2000      
-# 
-#   twopl       StdSumScore      empiricalAlpha        2000      
-# 
-#  bifactor     StdSumScore      empiricalAlpha        2000      
+#   twopl          advi           empiricalPos          500
+#
+#  bifactor        advi           empiricalPos          500
+#
+#   twopl         allRand         empiricalPos          500
+#
+#  bifactor       allRand         empiricalPos          500
+#
+#   twopl       StdSumScore       empiricalPos          500
+#
+#  bifactor     StdSumScore       empiricalPos          500
+#
+#   twopl          advi          empiricalAlpha         500
+#
+#  bifactor        advi          empiricalAlpha         500
+#
+#   twopl         allRand        empiricalAlpha         500
+#
+#  bifactor       allRand        empiricalAlpha         500
+#
+#   twopl       StdSumScore      empiricalAlpha         500
+#
+#  bifactor     StdSumScore      empiricalAlpha         500
+#
+#   twopl          advi           empiricalPos         2000
+#
+#  bifactor        advi           empiricalPos         2000
+#
+#   twopl         allRand         empiricalPos         2000
+#
+#  bifactor       allRand         empiricalPos         2000
+#
+#   twopl       StdSumScore       empiricalPos         2000
+#
+#  bifactor     StdSumScore       empiricalPos         2000
+#
+#   twopl          advi          empiricalAlpha        2000
+#
+#  bifactor        advi          empiricalAlpha        2000
+#
+#   twopl         allRand        empiricalAlpha        2000
+#
+#  bifactor       allRand        empiricalAlpha        2000
+#
+#   twopl       StdSumScore      empiricalAlpha        2000
+#
+#  bifactor     StdSumScore      empiricalAlpha        2000
 # ---------------------------------------------------------------
 
 #####################################################################
@@ -239,10 +239,18 @@ modsum_save_lambda <- modsum_save_lambda[,c(1, ncol(modsum_save_lambda), 2:(ncol
 modsum_save_tau <- modsum_save_tau[,c(1, ncol(modsum_save_tau), 2:(ncol(modsum_save_tau)-1))]
 modsum_save_theta <- modsum_save_theta[,c(1, ncol(modsum_save_theta), 2:(ncol(modsum_save_theta)-1))]
 
+modsum_rmsd_theta <- modsum_full[grepl("^rmsd", modsum$variable),]
+modsum_rmsd_lambda <- modsum_full[grepl("^rmsd", modsum$variable),]
+modsum_rmsd_tau <- modsum_full[grepl("^rmsd", modsum$variable),]
+
 # SAVING RESULTS
 write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum_lambda_", fileInfo, ".csv"))
 write.csv(modsum_save_tau, paste0(findings, "Reduc_Modsum_tau_", fileInfo, ".csv"))
 write.csv(modsum_save_theta, paste0(findings, "Reduc_Modsum_theta_", fileInfo, ".csv"))
+
+write.csv(modsum_rmsd_lambda, paste0(findings, "RMSD_Modsum_lambda_", fileInfo, ".csv"))
+write.csv(modsum_rmsd_tau, paste0(findings, "RMSD_Modsum_tau_", fileInfo, ".csv"))
+write.csv(modsum_rmsd_theta, paste0(findings, "RMSD_Modsum_theta_", fileInfo, ".csv"))
 
 write.csv(modsum_full, paste0(findings, "Full_Modsum_", fileInfo, ".csv"))
 
