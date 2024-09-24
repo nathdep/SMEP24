@@ -125,7 +125,7 @@ if(!CONTROL){
 
 if(CONTROL){
   startingMethod=c("ALLPOS", "CONTROL")
-  empiricalMethod="CONTROL"
+  empiricalMethod="NA"
 
   control_matrix <- expand.grid(models=models,startingMethods=startingMethod, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
 
