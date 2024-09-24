@@ -13,13 +13,13 @@ twopl <- function(...){
 
     lambda <- runif(n=I, min=0, max=3)
 
-    if(lambdaStatus != "control"){
+    if(lambdaStatus != "CONTROL"){
       lambda <- makeNeg(lambda, numNeg=numNeg) # negate lambdas at random
       modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_", empiricalMethod, ".stan"))
     }
 
-    if(lambdaStatus == "control"){
-      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_control.stan"))
+    if(lambdaStatus == "CONTROL"){
+      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_CONTROL.stan"))
     }
 
     tau <- runif(n=I, min=-3, max=3)
