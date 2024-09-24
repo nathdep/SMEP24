@@ -219,9 +219,7 @@ modrun <- modstan$sample(
 modsum_full <- modrun$summary() # generate full posterior descriptives
 
 # Retrieve sampled RMSD (Est. - True) Samples
-modsum_rmsd_theta <- modsum_full[grepl("^rmsd", modsum_full$variable),]
-modsum_rmsd_lambda <- modsum_full[grepl("^rmsd", modsum_full$variable),]
-modsum_rmsd_tau <- modsum_full[grepl("^rmsd", modsum_full$variable),]
+modsum_rmsd <- modsum_full[grepl("^rmsd", modsum_full$variable),]
 
 # Split posterior descriptives by parameter (theta/lambda/tau)
 modsum_save_lambda <- modsum_full[grepl("^lambda", modsum_full$variable),]
@@ -248,11 +246,7 @@ modsum_save_theta <- modsum_save_theta[,c(1, ncol(modsum_save_theta), 2:(ncol(mo
 write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum_lambda_", fileInfo, ".csv"))
 write.csv(modsum_save_tau, paste0(findings, "Reduc_Modsum_tau_", fileInfo, ".csv"))
 write.csv(modsum_save_theta, paste0(findings, "Reduc_Modsum_theta_", fileInfo, ".csv"))
-
-write.csv(modsum_rmsd_lambda, paste0(findings, "RMSD_Modsum_lambda_", fileInfo, ".csv"))
-write.csv(modsum_rmsd_tau, paste0(findings, "RMSD_Modsum_tau_", fileInfo, ".csv"))
-write.csv(modsum_rmsd_theta, paste0(findings, "RMSD_Modsum_theta_", fileInfo, ".csv"))
-
+write.csv(modsum_rmsd, paste0(findings, "RMSD_Modsum_", fileInfo, ".csv"))
 write.csv(modsum_full, paste0(findings, "Full_Modsum_", fileInfo, ".csv"))
 
 nBadRhats <- countRhat(modsum_full, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
