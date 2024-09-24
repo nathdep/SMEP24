@@ -19,7 +19,7 @@ bifactor <- function(...){
     lambda_G <- runif(n=I, min=0, max=3) # loadings on general factor
     lambdag_12 <- runif(n=I, min=0, max=3) # loadings on specific factors (g1/g2)
 
-    if(lambdaStatus != "CONTROL" && lambdaStatus != "ALLPOS"){
+    if(lambdaStatus != "CONTROL" & lambdaStatus != "ALLPOS"){
       lambda_g12 <- makeNeg(runif(n=I, min=0, max=3), numNeg=numNeg) # negate sub-factor (g) lambdas at random
       modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/bifactor_", empiricalMethod, ".stan"))
     }
