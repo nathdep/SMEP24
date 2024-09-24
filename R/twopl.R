@@ -15,16 +15,16 @@ twopl <- function(...){
 
     if(lambdaStatus != "CONTROL" & lambdaStatus != "ALLPOS"){
       lambda <- makeNeg(lambda, numNeg=numNeg) # negate lambdas at random
-      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_", empiricalMethod, ".stan"))
+      modstan <- cmdstan_model(stan_file=file.path(paste0(getwd(), "/Stan/twopl_", empiricalMethod, ".stan")))
     }
 
     if(lambdaStatus == "CONTROL"){
       lambda <- makeNeg(lambda, numNeg=numNeg) # negate lambdas at random
-      modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_CONTROL.stan"))
+      modstan <- cmdstan_model(stan_file=file.path(paste0(getwd(), "/Stan/twopl_CONTROL.stan")))
     }
 
     if(lambdaStatus == "ALLPOS"){
-      modstan <- cmdstan_model(stan_file=paste0(getwd()), "/Stan/twopl_ALLPOS.stan")
+      modstan <- cmdstan_model(stan_file=file.path(paste0(getwd()), "/Stan/twopl_ALLPOS.stan"))
     }
 
     tau <- runif(n=I, min=-3, max=3)
