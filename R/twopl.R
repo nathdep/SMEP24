@@ -78,6 +78,15 @@ twopl <- function(...){
       inits$theta <- runif(n=P, min=-6, max=6)
     }
 
+    if(startingMethod == "ALLPOS"){
+      inits <- list(
+        theta <- runif(n=P, min=-6, max=6),
+        lambdaG <- runif(n=I, min=0, max=3),
+        lambdag_12=runif(n=I, min=0, max=3),
+        tau <- runif(n=I, min=-6, max=6)
+      )
+    }
+
     if(startingMethod == "allRand" || startingMethod == "CONTROL"){
 
       inits <- list(
