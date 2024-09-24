@@ -1,4 +1,9 @@
 
+functions{
+  real rmsd(vector x, vector y){
+    return mean(sqrt((x-y).^2));
+  }
+}
 data{
   int<lower=0> P;
   int<lower=0> I;
@@ -6,20 +11,32 @@ data{
   array[P,I] int<lower=0, upper=1> Y;
   matrix[I,nDim] Qmat;
   real<lower=0> coefHyper;
+  matrix[I,nDim-1] true_lambda;
+  row_vector[I] true_tau;
+  matrix[P,nDim] true_theta;
 }
 parameters{
   matrix[P, nDim] theta;
   row_vector<lower=0>[I] lambdaG;
-  row_vector[I] lambdag12;
+  row_vector[I] lambdag_12;
   row_vector[I] tau;
 }
 model{
   to_vector(theta) ~ std_normal();
   lambdaG ~ normal(0, coefHyper)T[0,];
-  lambdag12 ~ normal(0, coefHyper);
+  lambdag_12 ~ normal(0, coefHyper);
   tau ~ normal(0, coefHyper);
-  matrix[I, nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag12,2))'.*Qmat;
+  matrix[I, nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag_12,2))'.*Qmat;
   for(i in 1:I){
     Y[,i] ~ bernoulli_logit(theta*lambdaQ[i,]' + tau[i]);
+  }
+}
+generated quantities{
+  real rmsd_tau = rmsd(tau', true_tau');
+  real rmsd_theta = rmsd(to_vector(theta), to_vector(true_theta));
+  real rmsd_lambda=0;
+  {
+    matrix[I, nDim-1] lambda = append_row(lambdaG, lambdag_12);
+    rmsd_lambda=rmsd(to_vector(true_lambda), to_vector(lambda));
   }
 }

@@ -59,7 +59,10 @@ bifactor <- function(...){
       nDim=3,
       Qmat=Qmat,
       coefHyper=coefHyper,
-      sdHyper=sdHyper
+      sdHyper=sdHyper,
+      true_theta=theta,
+      true_lambda=lambdaMat,
+      true_tau=tau
     )
 
     if(startingMethod == "advi"){

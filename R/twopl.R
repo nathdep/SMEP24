@@ -40,7 +40,10 @@ twopl <- function(...){
       I=ncol(Y),
       Y=Y,
       coefHyper=coefHyper,
-      sdHyper=sdHyper
+      sdHyper=sdHyper,
+      true_theta=theta,
+      true_tau=tau,
+      true_lambda=lambda
     )
 
     if(startingMethod == "advi"){

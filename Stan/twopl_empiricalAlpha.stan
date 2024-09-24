@@ -1,4 +1,9 @@
 
+functions{
+  real rmsd(vector x, vector y){
+    return mean(sqrt((x-y).^2));
+  }
+}
 data{
   int P;
   int I;
@@ -6,6 +11,9 @@ data{
   real<lower=0> coefHyper;
   real<lower=0> sdHyper;
   real alpha;
+  vector[P] true_theta;
+  row_vector[I] true_lambda;
+  row_vector[I] true_tau;
 }
 parameters{
   vector[P] theta;
@@ -19,4 +27,9 @@ model{
   for(i in 1:I){
     Y[,i] ~ bernoulli_logit(theta*lambda[i] + tau[i]);
   }
+}
+generated quantities{
+  real rmsd_theta=rmsd(theta, true_theta);
+  real rmsd_lambda=rmsd(lambda', true_lambda');
+  real rmsd_tau=rmsd(tau', true_tau');
 }

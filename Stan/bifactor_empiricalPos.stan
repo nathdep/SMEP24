@@ -1,4 +1,9 @@
 
+functions{
+  real rmsd(vector x, vector y){
+    return mean(sqrt((x-y).^2));
+  }
+}
 data{
 
   int<lower=0> P; // Number of examinees
@@ -9,6 +14,9 @@ data{
   array[I] int<lower=1, upper=2> QmatInd; // Integer index for identifying mu_1 and mu_2 for subfactor loadings/lambdas
   real<lower=0> coefHyper; // Hyperparameter for unbounded/continuous/normal parameters
   real<lower=0> sdHyper; // Hyperparameter for positive bounded/gamma parameters
+  matrix[I,nDim-1] true_lambda;
+  row_vector[I] true_tau;
+  matrix[P,nDim] true_theta;
 
 }
 parameters{
@@ -16,8 +24,8 @@ parameters{
   matrix[P, nDim] theta; // latent factor scores
   row_vector[I] tau; // item intercepts (easiness)
 
-  vector<lower=0>[I] lambdaG; // General (G) factor loadings
-  vector[I] lambdag_12; // Sub-factor (g) loadings
+  row_vector<lower=0>[I] lambdaG; // General (G) factor loadings
+  row_vector[I] lambdag_12; // Sub-factor (g) loadings
 
   real<lower=0> sigma_lambdaG; // variance of General (G) factor loadings
   vector<lower=0>[2] sigma_lambdag_12; // variance of sub-factor (g) loadings
@@ -41,7 +49,7 @@ model{
   lambdaG ~ normal(mu_lambdaG, sigma_lambdaG)T[0,];
   lambdag_12 ~ normal(mu_lambdag_12[QmatInd], sigma_lambdag_12[QmatInd]);
 
-  matrix[I,nDim] lambdaQ = append_col(lambdaG, rep_matrix(lambdag_12, 2)).*Qmat; // concatenating matrix of loadings and multp
+  matrix[I,nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag_12, 2)).*Qmat; // concatenating matrix of loadings and multp
 
   // LIKELIHOOD //
 
@@ -49,4 +57,13 @@ model{
     Y[,i] ~ bernoulli_logit(theta*lambdaQ[i,]' + tau[i]);
   }
 
+}
+generated quantities{
+  real rmsd_tau = rmsd(tau', true_tau');
+  real rmsd_theta = rmsd(to_vector(theta), to_vector(true_theta));
+  real rmsd_lambda=0;
+  {
+    matrix[I, nDim-1] lambda = append_row(lambdaG, lambdag_12);
+    rmsd_lambda=rmsd(to_vector(true_lambda), to_vector(lambda));
+  }
 }
