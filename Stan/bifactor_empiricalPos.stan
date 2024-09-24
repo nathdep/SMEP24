@@ -63,7 +63,7 @@ generated quantities{
   real rmsd_theta = rmsd(to_vector(theta), to_vector(true_theta));
   real rmsd_lambda=0;
   {
-    matrix[I, nDim-1] lambda = append_row(lambdaG, lambdag_12);
+    matrix[I, nDim-1] lambda = append_row(lambdaG, lambdag_12)';
     rmsd_lambda=rmsd(to_vector(true_lambda), to_vector(lambda));
   }
 }
