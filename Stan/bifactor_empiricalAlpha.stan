@@ -43,6 +43,6 @@ generated quantities{
   real rmsd_lambda=0;
   {
     matrix[I, nDim-1] lambda = append_row(lambdaG, lambdag_12);
-    rmsd_lambda=rmsd(to_vector(true_lambda), to_vector(lambda));
+    rmsd_lambda=rmsd(to_vector(lambda), to_vector(true_lambda));
   }
 }
