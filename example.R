@@ -192,10 +192,18 @@ modsum_save_lambda <- modsum_save_lambda[,c(1, ncol(modsum_save_lambda), 2:(ncol
 modsum_save_tau <- modsum_save_tau[,c(1, ncol(modsum_save_tau), 2:(ncol(modsum_save_tau)-1))]
 modsum_save_theta <- modsum_save_theta[,c(1, ncol(modsum_save_theta), 2:(ncol(modsum_save_theta)-1))]
 
+modsum_rmsd_theta <- modsum_full[grepl("^rmsd", modsum$variable),]
+modsum_rmsd_lambda <- modsum_full[grepl("^rmsd", modsum$variable),]
+modsum_rmsd_tau <- modsum_full[grepl("^rmsd", modsum$variable),]
+
 # SAVING RESULTS
 write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum_lambda_", fileInfo, ".csv"))
 write.csv(modsum_save_tau, paste0(findings, "Reduc_Modsum_tau_", fileInfo, ".csv"))
 write.csv(modsum_save_theta, paste0(findings, "Reduc_Modsum_theta_", fileInfo, ".csv"))
+
+write.csv(modsum_rmsd_lambda, paste0(findings, "RMSD_Modsum_lambda_", fileInfo, ".csv"))
+write.csv(modsum_rmsd_tau, paste0(findings, "RMSD_Modsum_tau_", fileInfo, ".csv"))
+write.csv(modsum_rmsd_theta, paste0(findings, "RMSD_Modsum_theta_", fileInfo, ".csv"))
 
 write.csv(modsum_full, paste0(findings, "Full_Modsum_", fileInfo, ".csv"))
 
