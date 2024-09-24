@@ -37,7 +37,7 @@ generated quantities{
   real rmsd_tau=rmsd(tau', true_tau');
   real rmsd_lambda=0;
   {
-    matrix[nDim,I] lambdaMat = rep_matrix(0.0, I, nDim);
+    matrix[nDim,I] lambdaMat = rep_matrix(0.0, nDim, I);
     lambdaMat[1,] += lambdaG;
     lambdaMat[2,] += lambdag_12;
     lambdaMat[3,] += lambdag_12;
