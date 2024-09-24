@@ -102,7 +102,7 @@ bifactor <- function(...){
     if(startingMethod == "allRand" || lambdaStatus == "CONTROL"){
       inits <- list(
         theta = array(data=runif(n=P*3, min=-6, max=6), dim=c(P,3)),
-        lambdag12=runif(n=I, min=.75, max=6),
+        lambdag_12=runif(n=I, min=.75, max=6),
         lambdaG=runif(n=I, min=.75, max=6),
         tau=runif(n=I, min=-6, max=6)
       )
@@ -119,7 +119,7 @@ bifactor <- function(...){
 
       inits <- list(
         theta = StdSumScore,
-        lambdag12=runif(n=I, min=-6, max=6),
+        lambdag_12=runif(n=I, min=-6, max=6),
         lambdaG=runif(n=I, min=.75, max=3),
         tau=runif(n=I, min=-6, max=6)
       )
@@ -131,7 +131,7 @@ bifactor <- function(...){
 
     if(empiricalMethod == "empiricalAlpha"){
       ModelData$alpha = min(lambda_g12) - .25 # assigning α
-      inits$lambdag12 = runif(n=I, min=ModelData$alpha, max=6)
+      inits$lambdag_12 = runif(n=I, min=ModelData$alpha, max=6)
     }
 
   })
