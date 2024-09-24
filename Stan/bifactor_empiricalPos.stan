@@ -14,7 +14,7 @@ data{
   array[I] int<lower=1, upper=2> QmatInd; // Integer index for identifying mu_1 and mu_2 for subfactor loadings/lambdas
   real<lower=0> coefHyper; // Hyperparameter for unbounded/continuous/normal parameters
   real<lower=0> sdHyper; // Hyperparameter for positive bounded/gamma parameters
-  matrix[I,nDim-1] true_lambda;
+  matrix[I,nDim] true_lambda;
   row_vector[I] true_tau;
   matrix[P,nDim] true_theta;
 
@@ -63,7 +63,7 @@ generated quantities{
   real rmsd_theta = rmsd(to_vector(theta), to_vector(true_theta));
   real rmsd_lambda=0;
   {
-    matrix[I, nDim-1] lambda = append_row(lambdaG, lambdag_12)';
+    matrix[I, nDim] lambda = append_row(lambdaG, lambdag_12)';
     rmsd_lambda=rmsd(to_vector(lambda), to_vector(true_lambda));
   }
 }

@@ -61,7 +61,7 @@ bifactor <- function(...){
       coefHyper=coefHyper,
       sdHyper=sdHyper,
       true_theta=theta,
-      true_lambda=lambdaMat[,2:3],
+      true_lambda=lambdaMat,
       true_tau=tau
     )
 

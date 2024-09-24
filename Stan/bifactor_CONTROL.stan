@@ -11,7 +11,7 @@ data{
   array[P,I] int<lower=0, upper=1> Y;
   matrix[I,nDim] Qmat;
   real<lower=0> coefHyper;
-  matrix[I,nDim-1] true_lambda;
+  matrix[I,nDim] true_lambda;
   row_vector[I] true_tau;
   matrix[P,nDim] true_theta;
 }
@@ -36,7 +36,7 @@ generated quantities{
   real rmsd_theta = rmsd(to_vector(theta), to_vector(true_theta));
   real rmsd_lambda=0;
   {
-    matrix[I, nDim-1] lambda = append_row(lambdaG, lambdag_12)';
+    matrix[I, nDim] lambda = append_row(lambdaG, lambdag_12)';
     rmsd_lambda=rmsd(to_vector(lambda), to_vector(true_lambda));
   }
 }
