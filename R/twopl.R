@@ -69,6 +69,8 @@ twopl <- function(...){
           dim(inits[[i]]) <- initDims[[i]]
         }
       }
+
+      inits$theta <- runif(n=P, min=-6, max=6)
     }
 
     if(startingMethod == "allRand" || lambdaStatus == "CONTROL"){

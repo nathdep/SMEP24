@@ -97,6 +97,8 @@ bifactor <- function(...){
           dim(inits[[i]]) <- initDims[[i]]
         }
       }
+
+      inits$theta <- array(data=runif(n=P*3, min=-6, max=6), dim=c(P,3))
     }
 
     if(startingMethod == "allRand" || lambdaStatus == "CONTROL"){
