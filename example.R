@@ -23,13 +23,21 @@ library(SMEP24)
 # --------------------------------------------
 #   models    startingMethods   examineeSizes
 # ---------- ----------------- ---------------
-#   twopl         allRand            500
+#   twopl         ALLPOS             500
 #
-#  bifactor       allRand            500
+#  bifactor       ALLPOS             500
 #
-#   twopl         allRand           2000
+#   twopl         CONTROL            500
 #
-#  bifactor       allRand           2000
+#  bifactor       CONTROL            500
+#
+#   twopl         ALLPOS            2000
+#
+#  bifactor       ALLPOS            2000
+#
+#   twopl         CONTROL           2000
+#
+#  bifactor       CONTROL           2000
 # --------------------------------------------
 
 ### METHODS MATRIX ###
@@ -117,10 +125,10 @@ if(!CONTROL){
 
 if(CONTROL){
   lambdaStatus="CONTROL"
-  startingMethod="CONTROL"
+  startingMethod=c("ALLPOS", "CONTROL")
   empiricalMethod="CONTROL"
 
-  control_matrix <- expand.grid(models=models, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
+  control_matrix <- expand.grid(models=models,startingMethods=startingMethod, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
 
   selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=control_matrix)))
 
