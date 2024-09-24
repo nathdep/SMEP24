@@ -173,7 +173,6 @@ if(!CONTROL){
 }
 
 if(CONTROL){
-  lambdaStatus="CONTROL"
   startingMethod=c("ALLPOS", "CONTROL")
   empiricalMethod="CONTROL"
 
@@ -182,9 +181,10 @@ if(CONTROL){
   selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=control_matrix)))
 
   model <- selRow[1]
-  selectedSampleSize <- as.numeric(selRow[2])
+  lambdaStatus <- selRow[2]
+  selectedSampleSize <- as.numeric(selRow[3])
 
-  cat(paste0("\nCONTROL MODEL IS SELECTED\n\n", model," ", selectedSampleSize, "\n\n"))
+  cat(paste0("\nCONTROL MODEL IS SELECTED\n\n", model," ",lambdaStatus, " ", selectedSampleSize, "\n\n"))
 }
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
