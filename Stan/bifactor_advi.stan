@@ -24,7 +24,7 @@ model{
   lambdaG ~ normal(0, coefHyper)T[0,];
   lambdag_12 ~ normal(0, coefHyper)T[0,];
   tau ~ normal(0, coefHyper);
-  matrix[I, nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag_12,2)).*Qmat;
+  matrix[I, nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag_12,2))'.*Qmat;
   for(i in 1:I){
     Y[,i] ~ bernoulli_logit(StdSumScore*lambdaQ[i,]' + tau[i]);
   }
