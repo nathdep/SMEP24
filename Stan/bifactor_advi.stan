@@ -24,7 +24,11 @@ model{
   lambdaG ~ normal(0, coefHyper)T[0,];
   lambdag_12 ~ normal(0, coefHyper)T[0,];
   tau ~ normal(0, coefHyper);
-  matrix[I, nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag_12,2))'.*Qmat;
+  matrix[nDim,I] lambdaMat = rep_matrix(0.0, I, nDim);
+  lambdaMat[1,] += lambdaG;
+  lambdaMat[2,] += lambdag_12;
+  lambdaMat[3,] += lambdag_12;
+  matrix[I,nDim] lambdaQ = lambdaMat'.*Qmat;
   for(i in 1:I){
     Y[,i] ~ bernoulli_logit(StdSumScore*lambdaQ[i,]' + tau[i]);
   }
@@ -33,7 +37,10 @@ generated quantities{
   real rmsd_tau=rmsd(tau', true_tau');
   real rmsd_lambda=0;
   {
-    matrix[I, nDim] lambda = append_row(lambdaG, lambdag_12)';
-    rmsd_lambda=rmsd(to_vector(lambda), to_vector(true_lambda));
+    matrix[nDim,I] lambdaMat = rep_matrix(0.0, I, nDim);
+    lambdaMat[1,] += lambdaG;
+    lambdaMat[2,] += lambdag_12;
+    lambdaMat[3,] += lambdag_12;
+    rmsd_lambda=rmsd(to_vector(lambdaMat), to_vector(true_lambda));
   }
 }
