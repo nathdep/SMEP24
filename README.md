@@ -31,14 +31,14 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/SMEP_2024.pdf) to v
 ## Bifactor Model
 
 - [**All Positive λ**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_ALLPOS.stan)
-- [**Control**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_CONTROL.stan)
+- [**Control (±λ)**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_CONTROL.stan)
 - [**ADVI**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_advi.stan)
 - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalAlpha.stan)
 - [**Empirical Positively Bounded μ<sub>λ</sub>**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalPos.stan)
 
 ## 2PL Model
 - [**All Positive λ**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_ALLPOS.stan)
-- [**Control**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_CONTROL.stan)
+- [**Control (±λ)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_CONTROL.stan)
 - [**ADVI**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_advi.stan)
 - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalAlpha.stan)
 - [**Empirical Positively Bounded μ<sub>λ</sub>**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalPos.stan)
