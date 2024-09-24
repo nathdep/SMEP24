@@ -129,7 +129,7 @@ if(CONTROL){
 
   control_matrix <- expand.grid(models=models,startingMethods=startingMethod, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
 
-  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=control_matrix)))
+  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, startingMethods=starthingMethod, methodsMatrix=control_matrix)))
 
   model <- selRow[1]
   lambdaStatus <- selRow[2]
