@@ -13,7 +13,7 @@ data{
   real<lower=0> coefHyper;
   real<lower=0> sdHyper;
   real alpha;
-  matrix[I,nDim-1] true_lambda;
+  matrix[I,nDim] true_lambda;
   row_vector[I] true_tau;
   matrix[P,nDim] true_theta;
 }
