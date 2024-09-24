@@ -10,7 +10,7 @@ data{
   array[P,I] int Y;
   real<lower=0> coefHyper;
   vector[P] true_theta;
-  row_vector[I] true_lambda;
+  row_vector<lower=0>[I] true_lambda;
   row_vector[I] true_tau;
 }
 parameters{
