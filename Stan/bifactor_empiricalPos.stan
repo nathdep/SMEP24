@@ -49,7 +49,7 @@ model{
   lambdaG ~ normal(mu_lambdaG, sigma_lambdaG)T[0,];
   lambdag_12 ~ normal(mu_lambdag_12[QmatInd], sigma_lambdag_12[QmatInd]);
 
-  matrix[I,nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag_12, 2)).*Qmat; // concatenating matrix of loadings and multp
+  matrix[I,nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag_12, 2))'.*Qmat; // concatenating matrix of loadings and multp
 
   // LIKELIHOOD //
 
