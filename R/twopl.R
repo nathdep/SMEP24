@@ -12,9 +12,9 @@ twopl <- function(...){
     # SIMULATION OF DISCRIMINATION PARAMETERS
 
     lambda <- runif(n=I, min=0, max=3)
+    lambda <- makeNeg(lambda, numNeg=numNeg) # negate lambdas at random
 
     if(lambdaStatus != "CONTROL"){
-      lambda <- makeNeg(lambda, numNeg=numNeg) # negate lambdas at random
       modstan <- cmdstan_model(stan_file=paste0(getwd(), "/Stan/twopl_", empiricalMethod, ".stan"))
     }
 
