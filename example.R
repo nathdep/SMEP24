@@ -108,7 +108,6 @@ taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() func
 if(!CONTROL){
   starting_methods <- c("advi", "allRand", "StdSumScore") # initial value methods
   empirical_methods <- c("empiricalPos", "empiricalAlpha") # empirical methods
-  lambdaStatus = "TEST"
 
   # forming methods matrix from all combos
   methods_matrix <- expand.grid(starting_methods=starting_methods, empiricalMethods=empirical_methods, models=models,examineeSizes=examineeSizes)
@@ -124,18 +123,18 @@ if(!CONTROL){
 }
 
 if(CONTROL){
-  startingMethod=c("ALLPOS", "CONTROL")
+  startingMethods=c("ALLPOS", "CONTROL")
   empiricalMethod="NA"
 
-  control_matrix <- expand.grid(models=models,startingMethods=startingMethod, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
+  control_matrix <- expand.grid(models=models,startingMethods=startingMethods, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
 
   selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber,methodsMatrix=control_matrix)))
 
   model <- selRow[1]
-  lambdaStatus <- selRow[2]
+  startingMethod <- selRow[2]
   selectedSampleSize <- as.numeric(selRow[3])
 
-  cat(paste0("\nCONTROL MODEL IS SELECTED\n\n", model," ",lambdaStatus, " ", selectedSampleSize, "\n\n"))
+  cat(paste0("\nCONTROL MODEL IS SELECTED\n\n", model," ",startingMethod, " ", selectedSampleSize, "\n\n"))
 }
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed

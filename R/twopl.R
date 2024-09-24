@@ -13,17 +13,17 @@ twopl <- function(...){
 
     lambda <- runif(n=I, min=0, max=3)
 
-    if(lambdaStatus != "CONTROL" & lambdaStatus != "ALLPOS"){
+    if(startingMethod != "CONTROL" & startingMethod != "ALLPOS"){
       lambda <- makeNeg(lambda, numNeg=numNeg) # negate lambdas at random
       modstan <- cmdstan_model(stan_file=file.path(paste0(getwd(), "/Stan/twopl_", empiricalMethod, ".stan")))
     }
 
-    if(lambdaStatus == "CONTROL"){
+    if(startingMethod == "CONTROL"){
       lambda <- makeNeg(lambda, numNeg=numNeg) # negate lambdas at random
       modstan <- cmdstan_model(stan_file=file.path(paste0(getwd(), "/Stan/twopl_CONTROL.stan")))
     }
 
-    if(lambdaStatus == "ALLPOS"){
+    if(startingMethod == "ALLPOS"){
       modstan <- cmdstan_model(stan_file=file.path(paste0(getwd()), "/Stan/twopl_ALLPOS.stan"))
     }
 
@@ -78,7 +78,7 @@ twopl <- function(...){
       inits$theta <- runif(n=P, min=-6, max=6)
     }
 
-    if(startingMethod == "allRand" || lambdaStatus == "CONTROL"){
+    if(startingMethod == "allRand" || startingMethod == "CONTROL"){
 
       inits <- list(
         theta = runif(n=P, min=-6, max=6),

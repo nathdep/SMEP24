@@ -19,17 +19,17 @@ bifactor <- function(...){
     lambda_G <- runif(n=I, min=0, max=3) # loadings on general factor
     lambda_g12 <- runif(n=I, min=0, max=3) # loadings on specific factors (g1/g2)
 
-    if(lambdaStatus != "CONTROL" & lambdaStatus != "ALLPOS"){
+    if(startingMethod != "CONTROL" & startingMethod != "ALLPOS"){
       lambda_g12 <- makeNeg(runif(n=I, min=0, max=3), numNeg=numNeg) # negate sub-factor (g) lambdas at random
       modstan <- cmdstan_model(stan_file=paste0(getwd(), file.path("/Stan/bifactor_", empiricalMethod, ".stan")))
     }
 
-    if(lambdaStatus == "CONTROL"){
+    if(startingMethod == "CONTROL"){
       lambda_g12 <- makeNeg(runif(n=I, min=0, max=3), numNeg=numNeg) # negate sub-factor (g) lambdas at random
       modstan <- cmdstan_model(stan_file=file.path(paste0(getwd(), "/Stan/bifactor_CONTROL.stan")))
     }
 
-    if(lambdaStatus == "ALLPOS"){
+    if(startingMethod == "ALLPOS"){
       modstan <- cmdstan_model(stan_file=file.path(paste0(getwd(), "/Stan/bifactor_ALLPOS.stan")))
     }
 
@@ -106,7 +106,7 @@ bifactor <- function(...){
       inits$theta <- array(data=runif(n=P*3, min=-6, max=6), dim=c(P,3))
     }
 
-    if(startingMethod == "allRand" || lambdaStatus == "CONTROL"){
+    if(startingMethod == "allRand" || startingMethod == "CONTROL"){
       inits <- list(
         theta = array(data=runif(n=P*3, min=-6, max=6), dim=c(P,3)),
         lambdag_12=runif(n=I, min=.75, max=6),
