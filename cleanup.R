@@ -26,13 +26,11 @@ fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selected
 
 if(empiricalMethod == "NA"){
   CONTROL=TRUE
-  cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n\n")
   modstan <- cmdstan_model(stan_file=paste0("/Users/depy/Stan/", model, "_", startingMethod, ".stan"))
 }
 
 if(empiricalMethod != "NA"){
   CONTROL=FALSE
-  cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n\n")
   modstan <- cmdstan_model(stan_file=paste0("/Users/depy/SMEP24/Stan/", model, "_", empiricalMethod, ".stan"))
 }
 
