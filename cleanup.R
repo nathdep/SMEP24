@@ -1,6 +1,9 @@
 library(SMEP24)
 
 setwd("/Users/depy/SMEP24/simData")
+
+findings <- "/Users/depy/SMEP24/Findings/" # Location to save model results
+
 args <- as.numeric(commandArgs(trailingOnly=TRUE))
 
 selectedFile <- read.csv("simDataFileList.csv", header=FALSE)[args[2],1]
@@ -9,7 +12,7 @@ cat(paste0("SELECTED FILE: ", selectedFile, "\n\n"))
 
 load(selectedFile)
 
-setwd("/root")
+setwd("/Users/depy/SMEP24")
 
 list2env(envList, envir=.GlobalEnv)
 
