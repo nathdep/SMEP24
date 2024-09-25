@@ -22,7 +22,7 @@ taskNo <- as.numeric(gsub(".RData", "", gatheredInfo[7]))
 seed <- as.numeric(paste0(gatheredInfo[6],taskNo))
 set.seed(seed)
 
-fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2]) # file name info for future saving
+fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",gatheredInfo[6], "_", taskNo) # file name info for future saving
 
 if(empiricalMethod == "NA"){
   CONTROL=TRUE
