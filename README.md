@@ -274,7 +274,7 @@ if(nBadRhats != 0){
 
 }
 ```
-# Clean-Up Script
+# Clean-Up 
 
 The following script may be used to re-run simulation environments booted from the HPC queue. 
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/cleanup.R) to access the corresponding `.R` file.
@@ -306,7 +306,7 @@ taskNo <- as.numeric(gsub(".RData", "", gatheredInfo[7]))
 seed <- as.numeric(paste0(gatheredInfo[6],taskNo))
 set.seed(seed)
 
-fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2]) # file name info for future saving
+fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",gatheredInfo[6], "_", taskNo) # file name info for future saving
 
 if(empiricalMethod == "NA"){
   CONTROL=TRUE
