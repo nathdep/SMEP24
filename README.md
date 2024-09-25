@@ -277,7 +277,7 @@ if(nBadRhats != 0){
 # Clean-Up Script
 
 The following script may be used to re-run simulation environments booted from the HPC queue. 
-Click [**here**]() to access the corresponding `.R` file.
+Click [**here**](https://github.com/nathdep/SMEP24/blob/main/cleanup.R) to access the corresponding `.R` file.
 
 ```r
 library(SMEP24)
