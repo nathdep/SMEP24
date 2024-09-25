@@ -28,7 +28,7 @@ model{
   to_vector(theta) ~ std_normal();
   tau ~ normal(0, coefHyper);
 
-  lambdaG ~ normal(0, coefHyper)T[0,];
+  lambdaG ~ lognormal(1, coefHyper);
   lambdag_12 ~ normal(0, coefHyper)T[alpha,];
 
   matrix[I, nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag_12,2))'.*Qmat;
