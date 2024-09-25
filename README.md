@@ -287,7 +287,7 @@ library(SMEP24)
 setwd("/Users/depy/SMEP24/simData")
 args <- as.numeric(commandArgs(trailingOnly=TRUE))
 
-selectedFile <- read.csv("simDataFileList.csv", row.names=1)[args[2],1]
+selectedFile <- read.csv("simDataFileList.csv", header=FALSE)[args[2],1]
 
 cat(paste0("\n\nSELECTED FILE: ", selectedFile, "\n\n"))
 
