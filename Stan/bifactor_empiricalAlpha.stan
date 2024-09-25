@@ -46,6 +46,6 @@ generated quantities{
     lambdaMat[1,] += lambdaG;
     lambdaMat[2,] += lambdag_12;
     lambdaMat[3,] += lambdag_12;
-    rmsd_lambda+=rmsd(to_vector(lambdaMat), to_vector(true_lambda));
+    rmsd_lambda+=rmsd(to_vector(lambdaMat), to_vector(true_lambda'));
   }
 }
