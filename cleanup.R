@@ -16,6 +16,7 @@ setwd("/Users/depy/SMEP24")
 
 list2env(envList, envir=.GlobalEnv)
 
+rHatThreshold <- 1.05
 gatheredInfo <- unlist(strsplit(x=selectedFile, split="_"))
 model <- gatheredInfo[2]
 empiricalMethod <- gatheredInfo[3]
