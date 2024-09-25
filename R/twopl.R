@@ -83,7 +83,7 @@ twopl <- function(...){
         theta = runif(n=P, min=-6, max=6),
         lambdaG = runif(n=I, min=0, max=3),
         lambdag_12=runif(n=I, min=0, max=3),
-        tau <- runif(n=I, min=-6, max=6)
+        tau = runif(n=I, min=-6, max=6)
       )
     }
 
