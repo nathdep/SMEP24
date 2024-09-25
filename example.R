@@ -160,7 +160,7 @@ if(model == "bifactor"){
 
 if(saveEnv){ # save simulated environment?
   envList <- as.list(env) # convert environment to list object
-  save(envList, file=paste0(getwd(), "/simData/simData_", fileInfo, ".RDS"))
+  saveRDS(envList, file=paste0(getwd(), "/simData/simData_", fileInfo, ".RDS"))
 }
 
 list2env(env, envir=.GlobalEnv) # load objects in bifactor simulation into global environment
