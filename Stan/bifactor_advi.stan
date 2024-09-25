@@ -22,7 +22,7 @@ parameters{
 }
 model{
   lambdaG ~ normal(0, coefHyper)T[0,];
-  lambdag_12 ~ normal(0, coefHyper)T[0,];
+  lambdag_12 ~ normal(0, coefHyper);
   tau ~ normal(0, coefHyper);
   matrix[nDim,I] lambdaMat = rep_matrix(0.0, I, nDim);
   lambdaMat[1,] += lambdaG;
