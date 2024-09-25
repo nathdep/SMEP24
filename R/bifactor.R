@@ -21,7 +21,7 @@ bifactor <- function(...){
 
     if(startingMethod != "CONTROL" & startingMethod != "ALLPOS"){
       lambda_g12 <- makeNeg(runif(n=I, min=0, max=3), numNeg=numNeg) # negate sub-factor (g) lambdas at random
-      modstan <- cmdstan_model(stan_file=paste0(getwd(), file.path("/Stan/bifactor_", empiricalMethod, ".stan")))
+      modstan <- cmdstan_model(stan_file=file.path(paste0(getwd(),"/Stan/bifactor_", empiricalMethod, ".stan")))
     }
 
     if(startingMethod == "CONTROL"){
