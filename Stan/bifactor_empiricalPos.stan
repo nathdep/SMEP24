@@ -43,7 +43,7 @@ model{
   sigma_lambdaG ~ gamma(1, sdHyper);
   sigma_lambdag_12 ~ gamma(1, sdHyper);
 
-  mu_lambdaG ~ lognormal(mu_lambdaG, coefHyper);
+  mu_lambdaG ~ normal(mu_lambdaG, coefHyper)T[0,];
   mu_lambdag_12 ~ normal(mu_lambdag_12, coefHyper);
 
   lambdaG ~ normal(mu_lambdaG, sigma_lambdaG)T[0,];
