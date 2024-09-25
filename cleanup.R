@@ -92,7 +92,7 @@ if(nBadRhats != 0){
   write.csv(badRhatModsum, paste0(findings, "BadRhat_Modsum_", fileInfo, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
 
   sink(paste0(findings, "Names_BadRhat_", model, "_", selectedSampleSize, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
-  cat(paste0(nBadRhats,",", model, ",", selectedSampleSize, ",", empiricalMethod, ",", startingMethod, ",", args[1], ",", args[2], "\n")) # write result
+  cat(paste0(nBadRhats,",", model, ",", selectedSampleSize, ",", empiricalMethod, ",", startingMethod, ",", gatheredInfo[6], ",", taskNo, "\n")) # write result
   sink() # close connection
 
 }
