@@ -117,7 +117,7 @@ bifactor <- function(...){
 
     if(startingMethod == "ALLPOS"){
       inits <- list(
-        theta = runif(n=P, min=-6, max=6),
+        theta = array(data=runif(n=P*3, min=-6, max=6), dim=c(P,3)),
         lambdaG = runif(n=I, min=0, max=3),
         lambdag_12=runif(n=I, min=0, max=3),
         tau =runif(n=I, min=-6, max=6)
