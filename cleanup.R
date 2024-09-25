@@ -80,7 +80,7 @@ write.csv(modsum_full, paste0(findings, "Full_Modsum_", fileInfo, ".csv"))
 
 nBadRhats <- countRhat(modsum_full, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
-file.rename(from=paste0(getwd(), "/simData/simData_", fileInfo, ".RData"), to=paste0(getwd(),"/DONE/simData_", fileInfo, ".RData"))
+file.rename(from=paste0(getwd(), "/simData/", selectedFile), to=paste0(getwd(),"/DONE/", selectedFile))
 
 if(nBadRhats != 0){
 
