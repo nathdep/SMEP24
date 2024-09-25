@@ -297,14 +297,16 @@ setwd("/root")
 
 list2env(envList, envir=.GlobalEnv)
 
-fileInfo <- unlist(strsplit(x=selectedFile, split="_"))
-model <- fileInfo[2]
-empiricalMethod <- fileInfo[3]
-startingMethod <- fileInfo[4]
-selectedSampleSize <- as.numeric(fileInfo[5])
-seed <- as.numeric(fileInfo[6])
+gatheredInfo <- unlist(strsplit(x=selectedFile, split="_"))
+model <- gatheredInfo[2]
+empiricalMethod <- gatheredInfo[3]
+startingMethod <- gatheredInfo[4]
+selectedSampleSize <- as.numeric(gatheredInfo[5])
+taskNo <- as.numeric(gsub(".RData", "", gatheredInfo[7]))
+seed <- as.numeric(paste0(gatheredInfo[6], gatheredInfo[7]))
 set.seed(seed)
-taskNo <- as.numeric(gsub(".RData", "", fileInfo[7]))
+
+fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2]) # file name info for future saving
 
 if(empiricalMethod == "NA"){
   CONTROL=TRUE
