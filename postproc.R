@@ -3,7 +3,7 @@ library(tidyverse)
 
 setwd("Findings")
 
-f <-  gsub(".*__(.*)__.*", "\\1", list.files(pattern=".csv$"))
+f <- gsub(".*__(.*)__.*", "\\1", list.files(pattern=".csv$"))
 
 gatheredInfo <- lapply(strsplit(x=f, split="_"), function(x)sub(".csv","",x))
 
