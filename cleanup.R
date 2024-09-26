@@ -3,18 +3,15 @@ library(SMEP24)
 setwd("/Users/depy/SMEP24/simData")
 
 findings <- "/Users/depy/SMEP24/Findings/" # Location to save model results
-
 args <- as.numeric(commandArgs(trailingOnly=TRUE))
-
 selectedFile <- read.csv("simDataFileList.csv", header=FALSE)[args[2],1]
 
 cat(paste0("SELECTED FILE: ", selectedFile, "\n\n"))
 
 load(selectedFile)
+list2env(envList, envir=.GlobalEnv)
 
 setwd("/Users/depy/SMEP24")
-
-list2env(envList, envir=.GlobalEnv)
 
 rHatThreshold <- 1.05
 gatheredInfo <- unlist(strsplit(x=selectedFile, split="_"))
@@ -26,7 +23,7 @@ taskNo <- as.numeric(gsub(".RData", "", gatheredInfo[7]))
 seed <- as.numeric(paste0(gatheredInfo[6],taskNo))
 set.seed(seed)
 
-fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",gatheredInfo[6], "_", taskNo) # file name info for future saving
+fileInfo <- paste0("__",model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",gatheredInfo[6], "_", taskNo, "__") # file name info for future saving
 
 if(empiricalMethod == "NA"){
   CONTROL=TRUE
@@ -96,4 +93,3 @@ if(nBadRhats != 0){
   sink() # close connection
 
 }
-

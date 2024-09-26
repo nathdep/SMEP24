@@ -157,7 +157,6 @@ taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() func
 if(!CONTROL){
   starting_methods <- c("advi", "allRand", "StdSumScore") # initial value methods
   empirical_methods <- c("empiricalPos", "empiricalAlpha") # empirical methods
-  lambdaStatus = "TEST"
 
   # forming methods matrix from all combos
   methods_matrix <- expand.grid(starting_methods=starting_methods, empiricalMethods=empirical_methods, models=models,examineeSizes=examineeSizes)
@@ -173,22 +172,22 @@ if(!CONTROL){
 }
 
 if(CONTROL){
-  startingMethod=c("ALLPOS", "CONTROL")
+  startingMethods=c("ALLPOS", "CONTROL")
   empiricalMethod="NA"
 
-  control_matrix <- expand.grid(models=models,startingMethods=startingMethod, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
+  control_matrix <- expand.grid(models=models,startingMethods=startingMethods, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
 
-  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=control_matrix)))
+  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber,methodsMatrix=control_matrix)))
 
   model <- selRow[1]
-  lambdaStatus <- selRow[2]
+  startingMethod <- selRow[2]
   selectedSampleSize <- as.numeric(selRow[3])
 
-  cat(paste0("\nCONTROL MODEL IS SELECTED\n\n", model," ",lambdaStatus, " ", selectedSampleSize, "\n\n"))
+  cat(paste0("\nCONTROL MODEL IS SELECTED\n\n", model," ",startingMethod, " ", selectedSampleSize, "\n\n"))
 }
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
-fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2]) # file name info for future saving
+fileInfo <- paste0("__",model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2],"__") # file name info for future saving
 
 set.seed(seed) # set seed (for reproducibility)
 
@@ -268,10 +267,6 @@ if(nBadRhats != 0){
   badRhatModsum <- modsum_full[which(modsum_full$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
   write.csv(badRhatModsum, paste0(findings, "BadRhat_Modsum_", fileInfo, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
 
-  sink(paste0(findings, "Names_BadRhat_", model, "_", selectedSampleSize, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
-  cat(paste0(nBadRhats,",", model, ",", selectedSampleSize, ",", empiricalMethod, ",", startingMethod, ",", args[1], ",", args[2], "\n")) # write result
-  sink() # close connection
-
 }
 ```
 # Clean-Up 
@@ -287,18 +282,15 @@ library(SMEP24)
 setwd("/Users/depy/SMEP24/simData")
 
 findings <- "/Users/depy/SMEP24/Findings/" # Location to save model results
-
 args <- as.numeric(commandArgs(trailingOnly=TRUE))
-
 selectedFile <- read.csv("simDataFileList.csv", header=FALSE)[args[2],1]
 
 cat(paste0("SELECTED FILE: ", selectedFile, "\n\n"))
 
 load(selectedFile)
+list2env(envList, envir=.GlobalEnv)
 
 setwd("/Users/depy/SMEP24")
-
-list2env(envList, envir=.GlobalEnv)
 
 rHatThreshold <- 1.05
 gatheredInfo <- unlist(strsplit(x=selectedFile, split="_"))
@@ -310,7 +302,7 @@ taskNo <- as.numeric(gsub(".RData", "", gatheredInfo[7]))
 seed <- as.numeric(paste0(gatheredInfo[6],taskNo))
 set.seed(seed)
 
-fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",gatheredInfo[6], "_", taskNo) # file name info for future saving
+fileInfo <- paste0("__",model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",gatheredInfo[6], "_", taskNo, "__") # file name info for future saving
 
 if(empiricalMethod == "NA"){
   CONTROL=TRUE
@@ -374,10 +366,6 @@ if(nBadRhats != 0){
 
   badRhatModsum <- modsum_full[which(modsum_full$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
   write.csv(badRhatModsum, paste0(findings, "BadRhat_Modsum_", fileInfo, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
-
-  sink(paste0(findings, "Names_BadRhat_", model, "_", selectedSampleSize, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
-  cat(paste0(nBadRhats,",", model, ",", selectedSampleSize, ",", empiricalMethod, ",", startingMethod, ",", gatheredInfo[6], ",", taskNo, "\n")) # write result
-  sink() # close connection
 
 }
 ```
