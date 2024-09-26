@@ -1,9 +1,10 @@
 library(SMEP24)
+library(tidyverse)
 
-setwd("~/Findings")
+setwd("Findings")
 
 f <- list.files(pattern=".csv$")
-gatheredInfo <- strsplit(x=f, split="_")
+gatheredInfo <- lapply(strsplit(x=f, split="_"), function(x)sub(".csv","",x))
 
 catNamesLong <- unlist(lapply(gatheredInfo, function(x) x[[1]]))
 catNames <- unique(catNamesLong)
@@ -18,11 +19,18 @@ for(i in 1:length(catNames)){
 
 catCounts <- as.list(catCounts)
 names(catCounts) <- catNames
+saveRDS(catCounts, file="catCounts.RDS")
 
-catList <- list()
+catList <- vector(length=length(catNamesLong), mode="list")
 
 for(i in 1:length(catNamesLong)){
-  catList[[catNamesLong[i]]] <- c(catList[[catNamesLong[i]]], read_csv(f[i]))
+  catList[[i]]$Info <- as.data.frame(rbind(gatheredInfo[[i]][c(1,3:length(gatheredInfo[[i]]))]))
+  colnames(catList[[i]]$Info) <- c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo")
+  current_csv <- read_csv(f[i])
+  catList[[i]]$modsum <- current_csv
 }
 
 saveRDS(catList, file="catList.RDS")
+
+
+
