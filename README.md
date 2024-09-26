@@ -183,7 +183,7 @@ if(CONTROL){
   startingMethod <- selRow[2]
   selectedSampleSize <- as.numeric(selRow[3])
 
-  cat(paste0("\nCONTROL MODEL IS SELECTED\n\n", model," ",startingMethod, " ", selectedSampleSize, "\n\n"))
+  cat(paste0("\nCONTROL/ALLPOS MODEL IS SELECTED\n\n", model," ",startingMethod, " ", selectedSampleSize, "\n\n"))
 }
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
@@ -352,11 +352,11 @@ modsum_save_tau <- modsum_save_tau[,c(1, ncol(modsum_save_tau), 2:(ncol(modsum_s
 modsum_save_theta <- modsum_save_theta[,c(1, ncol(modsum_save_theta), 2:(ncol(modsum_save_theta)-1))]
 
 # SAVING RESULTS
-write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum_lambda_", fileInfo, ".csv"))
-write.csv(modsum_save_tau, paste0(findings, "Reduc_Modsum_tau_", fileInfo, ".csv"))
-write.csv(modsum_save_theta, paste0(findings, "Reduc_Modsum_theta_", fileInfo, ".csv"))
-write.csv(modsum_rmsd, paste0(findings, "RMSD_Modsum_", fileInfo, ".csv"))
-write.csv(modsum_full, paste0(findings, "Full_Modsum_", fileInfo, ".csv"))
+write.csv(modsum_save_lambda, paste0(findings, "Reduc_Modsum", fileInfo, "lambda.csv"))
+write.csv(modsum_save_tau, paste0(findings, "Reduc_Modsum", fileInfo, "tau.csv"))
+write.csv(modsum_save_theta, paste0(findings, "Reduc_Modsum", fileInfo, "theta.csv"))
+write.csv(modsum_rmsd, paste0(findings, "RMSD_Modsum", fileInfo, ".csv"))
+write.csv(modsum_full, paste0(findings, "Full_Modsum", fileInfo, ".csv"))
 
 nBadRhats <- countRhat(modsum_full, rHatThreshold = rHatThreshold) # Indicator for Rhats > 1.05
 
@@ -365,7 +365,7 @@ file.rename(from=paste0(getwd(), "/simData/", selectedFile), to=paste0(getwd(),"
 if(nBadRhats != 0){
 
   badRhatModsum <- modsum_full[which(modsum_full$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
-  write.csv(badRhatModsum, paste0(findings, "BadRhat_Modsum_", fileInfo, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
+  write.csv(badRhatModsum, paste0(findings, "BadRhat_Modsum", fileInfo, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
 
 }
 ```

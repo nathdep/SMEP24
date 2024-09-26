@@ -134,7 +134,7 @@ if(CONTROL){
   startingMethod <- selRow[2]
   selectedSampleSize <- as.numeric(selRow[3])
 
-  cat(paste0("\nCONTROL MODEL IS SELECTED\n\n", model," ",startingMethod, " ", selectedSampleSize, "\n\n"))
+  cat(paste0("\nCONTROL/ALLPOS MODEL IS SELECTED\n\n", model," ",startingMethod, " ", selectedSampleSize, "\n\n"))
 }
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
