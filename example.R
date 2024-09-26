@@ -138,7 +138,7 @@ if(CONTROL){
 }
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
-fileInfo <- paste0(model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2]) # file name info for future saving
+fileInfo <- paste0("__",model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2],"__") # file name info for future saving
 
 set.seed(seed) # set seed (for reproducibility)
 
@@ -217,9 +217,5 @@ if(nBadRhats != 0){
 
   badRhatModsum <- modsum_full[which(modsum_full$rhat > rHatThreshold),] # filter for posterior descriptives that exceed Rhat threshold (non-converging)
   write.csv(badRhatModsum, paste0(findings, "BadRhat_Modsum_", fileInfo, ".csv")) # write non-convergent parameter posterior descriptives to .csv file
-
-  sink(paste0(findings, "Names_BadRhat_", model, "_", selectedSampleSize, "_", empiricalMethod, "_", startingMethod, ".csv"), append=TRUE) # begin appending <model>_<method>_badCount.csv file
-  cat(paste0(nBadRhats,",", model, ",", selectedSampleSize, ",", empiricalMethod, ",", startingMethod, ",", args[1], ",", args[2], "\n")) # write result
-  sink() # close connection
 
 }
