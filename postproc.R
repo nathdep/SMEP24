@@ -38,6 +38,9 @@ for(i in 1:length(typeLong)){
   assign(x=typeLong[i], rbind(get(typeLong[i], envir=.GlobalEnv), addedObj), envir=.GlobalEnv)
 }
 
+for(i in 1:length(type)){
+  write.csv(get(type[i], envir=.GlobalEnv), paste0(type[i], ".csv"))
+}
 
 
 
