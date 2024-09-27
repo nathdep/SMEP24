@@ -24,9 +24,8 @@ for(i in 1:length(f)){
   catList[[i]]$Modsum <- current_csv
 }
 
-saveRDS(catList, file="catListFull.RDS")
 
-typeLong <- unlist(lapply(catListFull, function(x) x$Info[1]))
+typeLong <- unlist(lapply(catList, function(x) x$Info[1]))
 type <- unique(typeLong)
 
 for(i in 1:length(type)){
