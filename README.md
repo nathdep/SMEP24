@@ -287,19 +287,20 @@ selectedFile <- read.csv("simDataFileList.csv", header=FALSE)[args[2],1]
 
 cat(paste0("SELECTED FILE: ", selectedFile, "\n\n"))
 
-load(selectedFile)
+envList <- readRDS(selectedFile)
 list2env(envList, envir=.GlobalEnv)
 
 setwd("/Users/depy/SMEP24")
 
 rHatThreshold <- 1.05
-gatheredInfo <- unlist(strsplit(x=selectedFile, split="_"))
-model <- gatheredInfo[2]
-empiricalMethod <- gatheredInfo[3]
-startingMethod <- gatheredInfo[4]
-selectedSampleSize <- as.numeric(gatheredInfo[5])
-taskNo <- as.numeric(gsub(".RData", "", gatheredInfo[7]))
-seed <- as.numeric(paste0(gatheredInfo[6],taskNo))
+f <- gsub(".*__(.*)__.*", "\\1", selectedFile)
+gatheredInfo <- unlist(strsplit(x=f, split="_"))
+model <- gatheredInfo[1]
+empiricalMethod <- gatheredInfo[2]
+startingMethod <- gatheredInfo[3]
+selectedSampleSize <- as.numeric(gatheredInfo[4])
+taskNo <- as.numeric(gsub(".RDS", "", gatheredInfo[6]))
+seed <- as.numeric(paste0(gatheredInfo[5],taskNo))
 set.seed(seed)
 
 fileInfo <- paste0("__",model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",gatheredInfo[6], "_", taskNo, "__") # file name info for future saving
