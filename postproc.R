@@ -1,9 +1,7 @@
 library(SMEP24)
 library(tidyverse)
 
-setwd("Findings")
-
-files <- list.files(pattern=".csv$")
+files <- list.files(path="/root/Findings/", pattern=".csv$")
 
 f <- gsub(pattern=".*__(.*)__.*", replacement="\\1", x=files)
 
@@ -20,10 +18,11 @@ for(i in 1:length(f)){
   if(any(c("lambda", "tau", "theta") %in% gatheredInfo[[i]][length(gatheredInfo[[i]])])){
     colnames(catList[[i]]$Info) <-  c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo", gatheredInfo[[i]][length(gatheredInfo[[i]])])
   }
-  current_csv <- read_csv(files[i])
+  current_csv <- read_csv(paste0("/root/Findings/", files[i]))
   catList[[i]]$Modsum <- current_csv
 }
 
+saveRDS(catList, file="catList.RDS")
 
 typeLong <- unlist(lapply(catList, function(x) x$Info[1]))
 type <- unique(typeLong)
@@ -40,3 +39,4 @@ for(i in 1:length(typeLong)){
 for(i in 1:length(type)){
   write.csv(get(type[i], envir=.GlobalEnv), paste0(type[i], ".csv"))
 }
+
