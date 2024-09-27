@@ -6,6 +6,7 @@ setwd("Findings")
 f <- gsub(".*__(.*)__.*", "\\1", list.files(pattern=".csv$"))
 
 gatheredInfo <- lapply(strsplit(x=f, split="_"), function(x)sub(".csv","",x))
+prefix <- lapply(list.files(pattern=".csv"), sub("(.*?)__.*", "\\1", ))
 
 catNamesLong <- unlist(lapply(gatheredInfo, function(x) x[[1]]))
 catNames <- unique(catNamesLong)
@@ -25,11 +26,11 @@ saveRDS(catCounts, file="catCounts.RDS")
 catList <- vector(length=length(catNamesLong), mode="list")
 
 for(i in 1:length(catNamesLong)){
-  catList[[i]]$Info <- as.data.frame(rbind(gatheredInfo[[i]][c(1,3:length(gatheredInfo[[i]]))]))
-  if(!any(c("lambda", "tau", "theta") %in% gatheredInfo[[1]][length(gatheredInfo[[1]])])){
+  catList[[i]]$Info <- as.data.frame(rbind(c(prefix[[i]], gatheredInfo[[i]])))
+  if(!any(c("lambda", "tau", "theta") %in% gatheredInfo[[i]][length(gatheredInfo[[i]])])){
     colnames(catList[[i]]$Info) <- c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo")
   }
-  if(any(c("lambda", "tau", "theta") %in% gatheredInfo[[1]][length(gatheredInfo[[1]])])){
+  if(any(c("lambda", "tau", "theta") %in% gatheredInfo[[i]][length(gatheredInfo[[i]])])){
     colnames(catList[[i]]$Info) <-  c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo", gatheredInfo[[i]][length(gatheredInfo[[i]])])
   }
   current_csv <- read_csv(f[i])
