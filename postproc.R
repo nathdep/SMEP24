@@ -24,7 +24,19 @@ for(i in 1:length(f)){
   catList[[i]]$Modsum <- current_csv
 }
 
-saveRDS(catList, file="catList.RDS")
+saveRDS(catList, file="catListFull.RDS")
+
+typeLong <- unlist(lapply(catListFull, function(x) x$Info[1]))
+type <- unique(typeLong)
+
+for(i in 1:length(type)){
+  assign(type[i], list(), envir=.GlobalEnv)
+}
+
+for(i in 1:length(typeLong)){
+  addedObj <- catList[[i]]$Info[-1]
+  assign(x=typeLong[i], rbind(get(typeLong[i], envir=.GlobalEnv), addedObj), envir=.GlobalEnv)
+}
 
 
 
