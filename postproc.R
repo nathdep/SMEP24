@@ -33,7 +33,7 @@ for(i in 1:length(catNamesLong)){
     colnames(catList[[i]]$Info) <-  c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo", gatheredInfo[[i]][length(gatheredInfo[[i]])])
   }
   current_csv <- read_csv(f[i])
-  catList[[i]]$modsum <- current_csv
+  catList[[i]]$Modsum <- current_csv
 }
 
 saveRDS(catList, file="catList.RDS")
