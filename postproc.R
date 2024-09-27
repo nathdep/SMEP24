@@ -3,29 +3,16 @@ library(tidyverse)
 
 setwd("Findings")
 
-f <- gsub(".*__(.*)__.*", "\\1", list.files(pattern=".csv$"))
+files <- list.files(pattern=".csv$")
 
-gatheredInfo <- lapply(strsplit(x=f, split="_"), function(x)sub(".csv","",x))
-prefix <- lapply(list.files(pattern=".csv"), sub("(.*?)__.*", "\\1", ))
+f <- gsub(pattern=".*__(.*)__.*", replacement="\\1", x=files)
 
-catNamesLong <- unlist(lapply(gatheredInfo, function(x) x[[1]]))
-catNames <- unique(catNamesLong)
+gatheredInfo <- lapply(strsplit(x=f, split="_"), function(x)sub(pattern=".csv",replacement="",x=x))
+prefix <- lapply(files, function(x)sub(pattern="(.*?)__.*", replacement="\\1",x=x))
 
-catCounts <- vector(length=length(catNames), mode="numeric")
+catList <- vector(length=length(f), mode="list")
 
-for(i in 1:length(catNames)){
-  for(j in 1:length(f)){
-    catCounts[i] <- catCounts[i] + ifelse(grepl(catNames[i], f[j]), 1, 0)
-  }
-}
-
-catCounts <- as.list(catCounts)
-names(catCounts) <- catNames
-saveRDS(catCounts, file="catCounts.RDS")
-
-catList <- vector(length=length(catNamesLong), mode="list")
-
-for(i in 1:length(catNamesLong)){
+for(i in 1:length(f)){
   catList[[i]]$Info <- as.data.frame(rbind(c(prefix[[i]], gatheredInfo[[i]])))
   if(!any(c("lambda", "tau", "theta") %in% gatheredInfo[[i]][length(gatheredInfo[[i]])])){
     colnames(catList[[i]]$Info) <- c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo")
@@ -33,11 +20,12 @@ for(i in 1:length(catNamesLong)){
   if(any(c("lambda", "tau", "theta") %in% gatheredInfo[[i]][length(gatheredInfo[[i]])])){
     colnames(catList[[i]]$Info) <-  c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo", gatheredInfo[[i]][length(gatheredInfo[[i]])])
   }
-  current_csv <- read_csv(f[i])
+  current_csv <- read_csv(files[i])
   catList[[i]]$Modsum <- current_csv
 }
 
 saveRDS(catList, file="catList.RDS")
+
 
 
 
