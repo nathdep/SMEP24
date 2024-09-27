@@ -41,6 +41,3 @@ for(i in 1:length(typeLong)){
 for(i in 1:length(type)){
   write.csv(get(type[i], envir=.GlobalEnv), paste0(type[i], ".csv"))
 }
-
-
-
