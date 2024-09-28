@@ -63,7 +63,7 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/compile.R) to acces
 
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/postproc.R) to access the `postproc.R` script. NOTE: make sure to run this file from *within the directory containing the `Findings` directory*.
 ***
-# Description of Controls/Tested Methods
+# Description of Control/Tested Methods
 ```r
 # EMPIRICAL METHODS
 # "empiricalPos" (μ_λ > 0)
