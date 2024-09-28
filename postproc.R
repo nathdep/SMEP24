@@ -1,6 +1,7 @@
 library(SMEP24)
 
 files <- list.files(path="/root/Findings/", pattern=".csv$")
+csvFiles <- lapply(files, function(x)fread(file=paste0("/root/Findings/", x), data.table=FALSE))
 
 f <- gsub(pattern=".*__(.*)__.*", replacement="\\1", x=files)
 
@@ -13,12 +14,11 @@ catList <- vector(length=length(f), mode="list")
 for(i in 1:length(f)){
   catList[[i]]$Info <- as.data.frame(rbind(c(prefix[[i]], gatheredInfo[[i]])))
   colnames(catList[[i]]$Info) <- c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo")
-  current_csv <- fread(file=paste0("/root/Findings/", files[i]), data.table=FALSE)
   if(any(c("lambda", "tau", "theta") %in% suffix[[i]])){
-    catList[[i]]$Modsum[[suffix[[i]]]] <- current_csv
+    catList[[i]]$Modsum[[suffix[[i]]]] <- csvFiles[[i]]
   }
   else{
-    catList[[i]]$Modsum <- current_csv
+    catList[[i]]$Modsum <- csvFiles[[i]]
   }
 }
 
