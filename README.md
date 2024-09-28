@@ -151,7 +151,7 @@ The descriptive statistics for sampled posterior densities may be compiled acros
 
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/compile.R) to access the `compile.R` script. NOTE: make sure to run this file from *within the directory containing the `simData` directory*.
 ***
-#Post-processing
+# Post-processing
 *After compiling the descriptive statistics of sampled posterior densities* across replications, results may be organized in separate `.csv` files according to the methods/control matrices in the `example.R` script.
 
 **Run `postproc.R` *after* executing the `compile.R` script above.**
