@@ -121,7 +121,7 @@ combo_matrix <- expand.grid(startingMethods=starting_methods, empiricalMethods=e
 selRow <- as.vector(as.matrix(methodSelect(base10=args[2], methodsMatrix = combo_matrix)))
 
 startingMethod <- selRow[1]
-empricalMethod <- selRow[2]
+empiricalMethod <- selRow[2]
 model=selRow[3]
 selectedSampleSize <- as.numeric(selRow[4])
 
