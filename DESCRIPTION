@@ -15,6 +15,7 @@ Depends:
     cmdstanr,
     ggplot2,
     data.table,
-    dplyr
+    dplyr,
+	jtools
 Config/testthat/edition: 3
 RoxygenNote: 7.3.2
