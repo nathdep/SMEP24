@@ -3,7 +3,7 @@ library(SMEP24)
 CONTROL=FALSE
 args <- as.numeric(commandArgs(trailingOnly=TRUE))
 
-Reduc_Modsum <- readRDS("Reduc_Modsum.RDS")
+Reduc_Modsum <- readRDS("Reduc_Modsum.RDS")[[1]]
 
 models <- c("twopl", "bifactor")
 examineeSizes <- c(500, 2000)
