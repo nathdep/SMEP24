@@ -24,19 +24,21 @@ for(i in 1:length(f)){
 
 saveRDS(catList, file="catList.RDS")
 
-typeLong <- unlist(lapply(catList, function(x) x$Info[1]))
-type <- unique(typeLong)
+dfNames <- as.vector(unlist(unique(lapply(catList, function(x)x$Info[1]))))
+lapply(dfNames, function(x)assign(x, new.env(), envir=.GlobalEnv))
+dfByName <- vector(length=length(dfNames), mode="list")
 
-for(i in 1:length(type)){
-  assign(type[i], list(), envir=.GlobalEnv)
+namesLong <- as.vector(unlist(lapply(catList, function(x)x$Info[1])))
+typeInds <- sapply(dfNames, function(x)which(namesLong == x))
+
+for(i in 1:length(dfNames)){
+  selCatList <- catList[typeInds[[dfNames[i]]]]
+  selInfos <- lapply(selCatList, function(x)x$Info)
+  assign("Infos", selInfos, envir=get(dfNames[i], envir=.GlobalEnv))
+  selModsums <- lapply(selCatList, function(x)x$Modsum)
+  assign("Modsums", selModsums, envir=get(dfNames[i], envir=.GlobalEnv))
 }
 
-for(i in 1:length(typeLong)){
-  addedObj <- catList[[i]]$Info[-1]
-  assign(x=typeLong[i], rbind(get(typeLong[i], envir=.GlobalEnv), addedObj), envir=.GlobalEnv)
-}
+splitLists <- lapply(mget(dfNames, envir=.GlobalEnv), as.list)
 
-for(i in 1:length(type)){
-  write.csv(get(type[i], envir=.GlobalEnv), paste0(type[i], ".csv"))
-}
-
+saveRDS(splitLists, file="ResultsByType.RDS")
