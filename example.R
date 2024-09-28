@@ -127,6 +127,7 @@ selectedSampleSize <- as.numeric(selRow[4])
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
 fileInfo <- paste0("__",model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2],"__") # file name info for future saving
+cat(paste0("\n", fileInfo, "\n"))
 
 set.seed(seed) # set seed (for reproducibility)
 
