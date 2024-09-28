@@ -23,6 +23,10 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/SMEP_2024.pdf) to v
 
 - [**Bifactor .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/bifactor.R)
 
+# Job Scripts
+
+Click [**here**]() to view the collection of job scripts used to submit replications. These files are compatible with the *Sun Grid Engine* clustser computing software.
+
 ***
 # Stan Files for Label-Switching Methods
 
