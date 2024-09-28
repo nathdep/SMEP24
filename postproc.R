@@ -13,7 +13,7 @@ catList <- vector(length=length(f), mode="list")
 for(i in 1:length(f)){
   catList[[i]]$Info <- as.data.frame(rbind(c(prefix[[i]], gatheredInfo[[i]])))
   colnames(catList[[i]]$Info) <- c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo")
-  current_csv <- fread(paste0("/root/Findings/", files[i]))
+  current_csv <- fread(file=paste0("/root/Findings/", files[i]), data.table=FALSE)
   if(any(c("lambda", "tau", "theta") %in% suffix[[i]])){
     catList[[i]]$Modsum[[suffix[[i]]]] <- current_csv
   }
