@@ -1,6 +1,7 @@
 library(SMEP24)
 
 CONTROL=FALSE
+args <- as.numeric(commandArgs(trailingOnly=TRUE))
 
 files <- list.files(path="/root/Findings/", pattern=".csv$")
 csvFiles <- lapply(files, function(x)fread(file=paste0("/root/Findings/", x), data.table=FALSE))
