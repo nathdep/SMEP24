@@ -89,3 +89,5 @@ for(j in 1:length(paramNames)){
   write.csv(bind_rows(filteredModsums[[paramNames[j]]])[,2:ncol(bind_rows(filteredModsums[[paramNames[j]]]))], paste0(paste0(selRow, collapse="_"), "_",paramNames[j],".csv"), row.names=FALSE)
 }
 
+saveRDS(filteredModsumsFull, file="filteredModsumsFull.RDS")
+
