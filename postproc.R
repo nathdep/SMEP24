@@ -1,5 +1,4 @@
 library(SMEP24)
-library(data.table)
 
 files <- list.files(path="/root/Findings/", pattern=".csv$")
 
