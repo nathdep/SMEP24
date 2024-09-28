@@ -46,8 +46,3 @@ saveRDS(splitLists, file="ResultsByTypeFull.RDS")
 for(i in 1:length(splitLists)){
   saveRDS(splitLists[i], file=paste0(dfNames[i], ".RDS"))
 }
-
-for(i in 1:length(splitLists)){
-  current_df <- as.data.frame(splitLists[i])
-  write.csv(current_df, paste0(dfNames[i], ".csv"))
-}
