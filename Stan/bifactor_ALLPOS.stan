@@ -23,8 +23,8 @@ parameters{
 }
 model{
   to_vector(theta) ~ std_normal();
-  lambdaG ~ lognormal(1, coefHyper);
-  lambdag_12 ~ lognormal(1, coefHyper);
+  lambdaG ~ normal(0, coefHyper)T[0,];
+  lambdag_12 ~ normal(0, coefHyper)T[0,];
   tau ~ normal(0, coefHyper);
   matrix[nDim,I] lambdaMat = rep_matrix(0.0, nDim, I);
   lambdaMat[1,] += lambdaG;
