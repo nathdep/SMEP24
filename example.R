@@ -20,79 +20,79 @@ library(SMEP24)
 
 ### CONTROL MATRIX ###
 
-# --------------------------------------------
-#   models    startingMethods   examineeSizes
-# ---------- ----------------- ---------------
-#   twopl         ALLPOS             500
+# ---------------------------------------------------------------
+#  startingMethods   empiricalMethods    models    examineeSizes
+# ----------------- ------------------ ---------- ---------------
+#      ALLPOS               NA           twopl          500
 #
-#  bifactor       ALLPOS             500
+#      CONTROL              NA           twopl          500
 #
-#   twopl         CONTROL            500
+#      ALLPOS               NA          bifactor        500
 #
-#  bifactor       CONTROL            500
+#      CONTROL              NA          bifactor        500
 #
-#   twopl         ALLPOS            2000
+#      ALLPOS               NA           twopl         2000
 #
-#  bifactor       ALLPOS            2000
+#      CONTROL              NA           twopl         2000
 #
-#   twopl         CONTROL           2000
+#      ALLPOS               NA          bifactor       2000
 #
-#  bifactor       CONTROL           2000
-# --------------------------------------------
+#      CONTROL              NA          bifactor       2000
+# ---------------------------------------------------------------
 
 ### METHODS MATRIX ###
 
-# ----------------------------------------------------------------
-#  starting_methods   empiricalMethods    models    examineeSizes
-# ------------------ ------------------ ---------- ---------------
-#        advi           empiricalPos      twopl          500
+# ---------------------------------------------------------------
+#  startingMethods   empiricalMethods    models    examineeSizes
+# ----------------- ------------------ ---------- ---------------
+#       advi           empiricalPos      twopl          500
 #
-#      allRand          empiricalPos      twopl          500
+#      allRand         empiricalPos      twopl          500
 #
-#    StdSumScore        empiricalPos      twopl          500
+#    StdSumScore       empiricalPos      twopl          500
 #
-#        advi          empiricalAlpha     twopl          500
+#       advi          empiricalAlpha     twopl          500
 #
-#      allRand         empiricalAlpha     twopl          500
+#      allRand        empiricalAlpha     twopl          500
 #
-#    StdSumScore       empiricalAlpha     twopl          500
+#    StdSumScore      empiricalAlpha     twopl          500
 #
-#        advi           empiricalPos     bifactor        500
+#       advi           empiricalPos     bifactor        500
 #
-#      allRand          empiricalPos     bifactor        500
+#      allRand         empiricalPos     bifactor        500
 #
-#    StdSumScore        empiricalPos     bifactor        500
+#    StdSumScore       empiricalPos     bifactor        500
 #
-#        advi          empiricalAlpha    bifactor        500
+#       advi          empiricalAlpha    bifactor        500
 #
-#      allRand         empiricalAlpha    bifactor        500
+#      allRand        empiricalAlpha    bifactor        500
 #
-#    StdSumScore       empiricalAlpha    bifactor        500
+#    StdSumScore      empiricalAlpha    bifactor        500
 #
-#        advi           empiricalPos      twopl         2000
+#       advi           empiricalPos      twopl         2000
 #
-#      allRand          empiricalPos      twopl         2000
+#      allRand         empiricalPos      twopl         2000
 #
-#    StdSumScore        empiricalPos      twopl         2000
+#    StdSumScore       empiricalPos      twopl         2000
 #
-#        advi          empiricalAlpha     twopl         2000
+#       advi          empiricalAlpha     twopl         2000
 #
-#      allRand         empiricalAlpha     twopl         2000
+#      allRand        empiricalAlpha     twopl         2000
 #
-#    StdSumScore       empiricalAlpha     twopl         2000
+#    StdSumScore      empiricalAlpha     twopl         2000
 #
-#        advi           empiricalPos     bifactor       2000
+#       advi           empiricalPos     bifactor       2000
 #
-#      allRand          empiricalPos     bifactor       2000
+#      allRand         empiricalPos     bifactor       2000
 #
-#    StdSumScore        empiricalPos     bifactor       2000
+#    StdSumScore       empiricalPos     bifactor       2000
 #
-#        advi          empiricalAlpha    bifactor       2000
+#       advi          empiricalAlpha    bifactor       2000
 #
-#      allRand         empiricalAlpha    bifactor       2000
+#      allRand        empiricalAlpha    bifactor       2000
 #
-#    StdSumScore       empiricalAlpha    bifactor       2000
-# ----------------------------------------------------------------
+#    StdSumScore      empiricalAlpha    bifactor       2000
+# ---------------------------------------------------------------
 
 #####################################################################
 
@@ -108,34 +108,22 @@ taskNumber <- args[2] - 1 # offsetting to be compatible with methodSelect() func
 if(!CONTROL){
   starting_methods <- c("advi", "allRand", "StdSumScore") # initial value methods
   empirical_methods <- c("empiricalPos", "empiricalAlpha") # empirical methods
-
-  # forming methods matrix from all combos
-  methods_matrix <- expand.grid(starting_methods=starting_methods, empiricalMethods=empirical_methods, models=models,examineeSizes=examineeSizes)
-
-  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix=methods_matrix))) # Select row of methods matrix given SGE_TASK_ID number in Argon
-
-  startingMethod <- selRow[1]
-  empiricalMethod <- selRow[2]
-  model <- selRow[3]
-  selectedSampleSize <- as.numeric(selRow[4])
-
-  cat("\n", startingMethod, " ", empiricalMethod, " ", model," ", selectedSampleSize, "\n\n")
 }
 
 if(CONTROL){
-  startingMethods=c("ALLPOS", "CONTROL")
-  empiricalMethod="NA"
-
-  control_matrix <- expand.grid(models=models,startingMethods=startingMethods, examineeSizes=examineeSizes) # control conditions (model + examinee sample size)
-
-  selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber,methodsMatrix=control_matrix)))
-
-  model <- selRow[1]
-  startingMethod <- selRow[2]
-  selectedSampleSize <- as.numeric(selRow[3])
-
-  cat(paste0("\nCONTROL/ALLPOS MODEL IS SELECTED\n\n", model," ",startingMethod, " ", selectedSampleSize, "\n\n"))
+  starting_methods=c("ALLPOS", "CONTROL")
+  empirical_methods="NA"
+  cat(paste0("CONTROL/ALLPOS MODEL IS SELECTED\n\n"))
 }
+
+# forming methods matrix from all combos of control/methods matrix
+combo_matrix <- expand.grid(startingMethods=starting_methods, empiricalMethods=empirical_methods, models=models,examineeSizes=examineeSizes)
+selRow <- as.vector(as.matrix(methodSelect(base10=args[2], methodsMatrix = combo_matrix)))
+
+startingMethod <- selRow[1]
+empricalMethod <- selRow[2]
+model=selRow[3]
+selectedSampleSize <- as.numeric(selRow[4])
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
 fileInfo <- paste0("__",model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2],"__") # file name info for future saving
