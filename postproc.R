@@ -26,7 +26,6 @@ saveRDS(catList, file="catList.RDS")
 
 dfNames <- as.vector(unlist(unique(lapply(catList, function(x)x$Info[1]))))
 lapply(dfNames, function(x)assign(x, new.env(), envir=.GlobalEnv))
-dfByName <- vector(length=length(dfNames), mode="list")
 
 namesLong <- as.vector(unlist(lapply(catList, function(x)x$Info[1])))
 typeInds <- sapply(dfNames, function(x)which(namesLong == x))
@@ -46,3 +45,5 @@ saveRDS(splitLists, file="ResultsByTypeFull.RDS")
 for(i in 1:length(splitLists)){
   saveRDS(splitLists[i], file=paste0(dfNames[i], ".RDS"))
 }
+
+
