@@ -15,7 +15,7 @@ for(i in 1:length(f)){
   catList[[i]]$Info <- as.data.frame(rbind(c(prefix[[i]], gatheredInfo[[i]])))
   colnames(catList[[i]]$Info) <- c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo")
   if(any(c("lambda", "tau", "theta") %in% suffix[[i]])){
-    catList[[i]]$Modsum[[1]] <- list(reduc=suffix[[i]], df=csvFiles[[i]])
+    catList[[i]]$Modsum <- list(reduc=suffix[[i]], df=csvFiles[[i]])
   }
   else{
     catList[[i]]$Modsum <- csvFiles[[i]]
