@@ -122,7 +122,7 @@ selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix = co
 
 startingMethod <- selRow[1]
 empiricalMethod <- selRow[2]
-model=selRow[3]
+model <- selRow[3]
 selectedSampleSize <- as.numeric(selRow[4])
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
