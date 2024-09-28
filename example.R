@@ -118,7 +118,7 @@ if(CONTROL){
 
 # forming methods matrix from all combos of control/methods matrix
 combo_matrix <- expand.grid(startingMethods=starting_methods, empiricalMethods=empirical_methods, models=models,examineeSizes=examineeSizes)
-selRow <- as.vector(as.matrix(methodSelect(base10=args[2], methodsMatrix = combo_matrix)))
+selRow <- as.vector(as.matrix(methodSelect(base10=taskNumber, methodsMatrix = combo_matrix)))
 
 startingMethod <- selRow[1]
 empiricalMethod <- selRow[2]
@@ -127,7 +127,8 @@ selectedSampleSize <- as.numeric(selRow[4])
 
 seed <- as.numeric(paste(args, collapse="")) # Generate integer for seed
 fileInfo <- paste0("__",model, "_", empiricalMethod, "_", startingMethod,"_",selectedSampleSize,"_",args[1], "_", args[2],"__") # file name info for future saving
-cat(paste0("\n", fileInfo, "\n"))
+
+cat(paste0("\n\n", fileInfo, "\n\n"))
 
 set.seed(seed) # set seed (for reproducibility)
 
