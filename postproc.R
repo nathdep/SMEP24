@@ -1,5 +1,5 @@
 library(SMEP24)
-library(tidyverse)
+library(data.table)
 
 files <- list.files(path="/root/Findings/", pattern=".csv$")
 
@@ -13,15 +13,14 @@ catList <- vector(length=length(f), mode="list")
 
 for(i in 1:length(f)){
   catList[[i]]$Info <- as.data.frame(rbind(c(prefix[[i]], gatheredInfo[[i]])))
-  if(!any(c("lambda", "tau", "theta") %in% suffix[[i]])){
-    colnames(catList[[i]]$Info) <- c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo")
-  }
+  colnames(catList[[i]]$Info) <- c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo")
+  current_csv <- fread(paste0("/root/Findings/", files[i]))
   if(any(c("lambda", "tau", "theta") %in% suffix[[i]])){
-    catList[[i]]$Info <- cbind(catList[[i]]$Info, suffix[[i]])
-    colnames(catList[[i]]$Info) <-  c("type","model", "empiricalMethod", "startingMethod", "sampleSize", "seed", "taskNo", "reduc")
+    catList[[i]]$Modsum[[suffix[[i]]]] <- current_csv
   }
-  current_csv <- read_csv(paste0("/root/Findings/", files[i]))
-  catList[[i]]$Modsum <- current_csv
+  else{
+    catList[[i]]$Modsum <- current_csv
+  }
 }
 
 saveRDS(catList, file="catList.RDS")

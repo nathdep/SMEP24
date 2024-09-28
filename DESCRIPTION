@@ -13,6 +13,7 @@ Suggests:
 Depends:
     bayesplot,
     cmdstanr,
-    ggplot2
+    ggplot2,
+    data.table
 Config/testthat/edition: 3
 RoxygenNote: 7.3.2
