@@ -17,20 +17,15 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/SMEP_2024.pdf) to v
 
 - Click [**here**](https://github.com/nathdep/SMEP24/wiki/INDEX) to view an online index of the package's functions.
 ***
-# Simulation Files
+# Files
 
+## R
 - [**2PL .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/twopl.R)
 
 - [**Bifactor .R syntax**](https://github.com/nathdep/SMEP24/blob/main/R/bifactor.R)
 
-# Job Scripts
-
-Click [**here**]() to view the collection of job scripts used to submit replications. These files are compatible with the *Sun Grid Engine* clustser computing software.
-
-***
-# Stan Files for Label-Switching Methods
-
-## Bifactor Model
+## Stan 
+### Bifactor Item Response Model
 
 - [**All Positive (+λ)**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_ALLPOS.stan)
 - [**Control (±λ,Random Initial Values, No Empirical Methods)**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_CONTROL.stan)
@@ -38,12 +33,15 @@ Click [**here**]() to view the collection of job scripts used to submit replicat
 - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalAlpha.stan)
 - [**Empirical Positively Bounded μ<sub>λ</sub>**](https://github.com/nathdep/SMEP24/blob/main/Stan/bifactor_empiricalPos.stan)
 
-## 2PL Model
+### 2PL Item Response Model
 - [**All Positive (+λ)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_ALLPOS.stan)
 - [**Control (±λ,Random Initial Values, No Empirical Methods)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_CONTROL.stan)
 - [**ADVI**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_advi.stan)
 - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalAlpha.stan)
 - [**Empirical Positively Bounded μ<sub>λ</sub>**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalPos.stan)
+
+## Job Scripts
+Click [**here**]() to view the collection of job scripts used to submit replications. These files are compatible with the *Sun Grid Engine* clustser computing software.
 ***
 # Replication
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to access the `example.R` file used to run replications. 
