@@ -1,5 +1,3 @@
-library(SMEP24)
-
 CONTROL=FALSE
 args <- as.numeric(commandArgs(trailingOnly=TRUE))
 
