@@ -10,9 +10,11 @@ data{
   int<lower=0> nDim;
   array[P,I] int<lower=0, upper=1> Y;
   matrix[I,nDim] Qmat;
-  real<lower=0> coefHyper;
-  real<lower=0> sdHyper;
   real alpha;
+  real<lower=0> coefHyper;
+  real<lower=alpha> lambdaMeanHyper;
+  real tauMeanHyper;
+  real<lower=0> sdHyper;
   matrix[I,nDim] true_lambda;
   row_vector[I] true_tau;
   matrix[P,nDim] true_theta;
@@ -26,10 +28,10 @@ parameters{
 }
 model{
   to_vector(theta) ~ std_normal();
-  tau ~ normal(0, coefHyper);
+  tau ~ normal(tauMeanHyper, coefHyper);
 
-  lambdaG ~ normal(0, coefHyper)T[0,];
-  lambdag_12 ~ normal(0, coefHyper)T[alpha,];
+  lambdaG ~ normal(lambdaMeanHyper, coefHyper)T[0,];
+  lambdag_12 ~ normal(lambdaMeanHyper, coefHyper)T[alpha,];
 
   matrix[I, nDim] lambdaQ = append_row(lambdaG, rep_matrix(lambdag_12,2))'.*Qmat;
 

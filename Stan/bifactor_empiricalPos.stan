@@ -12,6 +12,8 @@ data{
   array[P,I] int<lower=0, upper=1> Y; // item response integer array/matrix
   matrix[I,nDim] Qmat; // Dummy-coded (0/1) design matrix for factor loadings/lambdas Cols:[G, g1, g2]
   real<lower=0> coefHyper; // Hyperparameter for unbounded/continuous/normal parameters
+  real<lower=0> lambdaMeanHyper; // Hyperparameter for distribution of loadings
+  real tauMeanHyper; // Hyperparameter for distribution of item intercepts/easiness measures
   real<lower=0> sdHyper; // Hyperparameter for positive bounded/gamma parameters
   matrix[I,nDim] true_lambda;
   row_vector[I] true_tau;
@@ -42,8 +44,8 @@ model{
   sigma_lambdaG ~ gamma(1, sdHyper);
   sigma_lambdag_12 ~ gamma(1, sdHyper);
 
-  mu_lambdaG ~ normal(mu_lambdaG, coefHyper)T[0,];
-  mu_lambdag_12 ~ normal(mu_lambdag_12, coefHyper);
+  mu_lambdaG ~ normal(lambdaMeanHyper, coefHyper)T[0,];
+  mu_lambdag_12 ~ normal(lambdaMeanHyper, coefHyper);
 
   lambdaG ~ normal(mu_lambdaG, sigma_lambdaG)T[0,];
   lambdag_12 ~ normal(mu_lambdag_12, sigma_lambdag_12);
