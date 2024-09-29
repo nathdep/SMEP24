@@ -64,6 +64,8 @@ bifactor <- function(...){
       nDim=3,
       Qmat=Qmat,
       coefHyper=coefHyper,
+      lambdaMeanHyper=lambdaMeanHyper,
+      tauMeanHyper=tauMeanHyper,
       sdHyper=sdHyper,
       true_theta=theta,
       true_lambda=lambdaMat,

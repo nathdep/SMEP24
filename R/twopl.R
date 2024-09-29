@@ -51,6 +51,8 @@ twopl <- function(...){
       I=ncol(Y),
       Y=Y,
       coefHyper=coefHyper,
+      lambdaMeanHyper=lambdaMeanHyper,
+      tauMeanHyper=tauMeanHyper,
       sdHyper=sdHyper,
       true_theta=theta,
       true_tau=tau,
