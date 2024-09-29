@@ -8,9 +8,11 @@ data{
   int P;
   int I;
   array[P,I] int Y;
-  real<lower=0> coefHyper;
-  real<lower=0> sdHyper;
   real alpha;
+  real<lower=0> coefHyper;
+  real<lower=alpha> lambdaMeanHyper;
+  real tauMeanHyper;
+  real<lower=0> sdHyper;
   vector[P] true_theta;
   row_vector[I] true_lambda;
   row_vector[I] true_tau;
@@ -22,8 +24,8 @@ parameters{
 }
 model{
   theta ~ std_normal();
-  tau ~ normal(0, coefHyper);
-  lambda ~ normal(0, coefHyper)T[alpha,];
+  tau ~ normal(tauMeanHyper, coefHyper);
+  lambda ~ normal(lambdaMeanHyper, coefHyper)T[alpha,];
   for(i in 1:I){
     Y[,i] ~ bernoulli_logit(theta*lambda[i] + tau[i]);
   }

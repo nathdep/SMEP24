@@ -7,8 +7,14 @@ twopl <- function(...){
   env <- new.env(parent=.GlobalEnv)
 
   with(env, {
-
+    seed=seed
     set.seed(seed)
+    P=P
+    I=I
+    coefHyper=coefHyper
+    sdHyper=sdHyper
+    lambdaMeanHyper=lambdaMeanHyper
+    tauMeanHyper=tauMeanHyper
     # SIMULATION OF DISCRIMINATION PARAMETERS
 
     lambda <- runif(n=I, min=0, max=3)

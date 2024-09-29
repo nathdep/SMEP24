@@ -8,6 +8,7 @@ bifactor <- function(...){
   env <- new.env(parent=.GlobalEnv)
   with(env, {
 
+    seed=seed
     set.seed(seed)
     P=P
     I=I
