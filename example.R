@@ -138,6 +138,8 @@ numNeg=3 # Number of lambda values to negate in total
 rHatThreshold=1.05 # Threshold for deteriming chain convergence
 
 coefHyper=5 # Hyperparameter for unbounded/continuous/normal parameters
+lambdaMeanHyper=1 # Hyperparameter for distribution of loadings
+tauMeanHyper=0 # Hyperparameter for distribution of item intercepts/easiness measures
 sdHyper=.1 # Hyperparameter for positive bounded/gamma parameters
 
 if(model == "twopl"){
