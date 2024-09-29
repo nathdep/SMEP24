@@ -49,9 +49,8 @@ bifactor <- function(...){
     lambdaQ <- Qmat*lambdaMat
     # GENERATING DICHOTOMIZED ITEM RESPONSE DATA
     Y <- matrix(data=NA, nrow=P, ncol=I) # storing dichotomized item responses
-    logits <- matrix(data=NA, nrow=P, ncol=I)
+    logits <- theta%*%t(lambdaQ) + outer(rep(1,P), tau) # outer function replicates tau to be added column-wise (equivalent to adding easiness/intercept for each item)
     for(i in 1:I){
-      logits[,i] <- theta%*%lambdaQ[i,] + tau[i]
       for(p in 1:P){
         Y[p,i] <- rbinom(n=1, size=1, prob=plogis(logits[p,i]))
       }
