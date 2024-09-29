@@ -24,13 +24,21 @@ if(!CONTROL){
 selRow <-as.vector(as.matrix(methodSelect(base10=args[2], methodsMatrix=combo_matrix)))
 
 filteredInds <- which(sapply(Reduc_Modsum$Infos, function(x) all(selRow %in% x)))
+
 filteredModsumsFull <- lapply(Reduc_Modsum$Modsums[filteredInds], function(x)x$df)
+filteredInfosFull <- lapply(Reduc_Modsum$Infos[filteredInds], function(x) paste0(x, collapse="_"))
 
 paramInds <- vector(length=length(paramNames), mode="list")
 names(paramInds) <- paramNames
 
 filteredModsums <- vector(length=length(paramNames), mode="list")
 names(filteredModsums) <- paramNames
+
+filteredInfos <- vector(length=length(paramNames), mode="list")
+names(filteredInfos) <- paramNames
+
+bound <- vector(length=length(paramNames), mode="list")
+names(bound) <- paramNames
 
 for(j in 1:length(paramNames)){
   for(i in 1:length(filteredInds)){
@@ -42,10 +50,18 @@ for(j in 1:length(paramNames)){
 
 for(j in 1:length(paramNames)){
   filteredModsums[[paramNames[j]]] <- filteredModsumsFull[paramInds[[paramNames[j]]]]
-  write.csv(bind_rows(filteredModsums[[paramNames[j]]])[,2:ncol(bind_rows(filteredModsums[[paramNames[j]]]))], paste0(paste0(selRow, collapse="_"), "_",paramNames[j],".csv"), row.names=FALSE)
+  filteredInfos[[paramNames[j]]] <- filteredInfosFull[paramInds[[paramNames[j]]]]
+  bound[[paramNames[j]]] <- bind_rows(filteredModsums[[paramNames[j]]])
+  bound[[paramNames[j]]] <- bound[[paramNames[j]]][,-which(colnames(bound[[paramNames[j]]]) == "V1")]
+  bound[[paramNames[j]]]$File <- as.vector(unlist(filteredInfos[[paramNames[j]]]))
+  write.csv(bound[[paramNames[j]]], paste0(paste0(selRow, collapse="_"), "_",paramNames[j],".csv"), row.names=FALSE)
 }
 
 paramLengths <- lapply(filteredModsums, length)
 
-saveRDS(filteredModsumsFull, file=paste0(paste0(selRow, collapse="_"), "_", "filteredModsumsFull.RDS"))
+cat("\nPARAM LENGTHS\n")
+print(paramLengths)
+cat("\n")
+
+saveRDS(filteredModsums, file=paste0(paste0(selRow, collapse="_"), "_", "filteredModsums.RDS"))
 
