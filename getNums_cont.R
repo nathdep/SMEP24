@@ -18,7 +18,7 @@ fileNames <- f[inds]
 
 repTaskNumbers <- sort(as.numeric(sub(".txt", "", sub("_", "", str_extract(fileNames, "_([0-9]{1,2})\\.txt$")))))
 
-con <- file("task.txt", open="wt")
+con <- file("task_cont.txt", open="wt")
 
 for(i in 1:length(repTaskNumbers)){
 	cat(paste0(repTaskNumbers[i], "\n"), file = con)
