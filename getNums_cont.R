@@ -3,7 +3,7 @@ library(SMEP24)
 setwd("o")
 
 f <- list.files(pattern=".txt")
-f <- f[!grepl("CONTROL", f)]
+f <- f[grepl("CONTROL", f)]
 
 readFiles <- lapply(f, readLines)
 truthCheck <- vector(mode="logical", length=length(readFiles))
