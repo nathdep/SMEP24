@@ -41,7 +41,7 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/SMEP_2024.pdf) to v
 - [**Empirical Positively Bounded μ<sub>λ</sub>**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalPos.stan)
 
 ## `bash` Scripts
-Click [**here**]() to view the collection of bash scripts used to submit replications and perform Unix-based operations. NOTE: `.job` files are formatted for the *Sun Grid Engine* clustser computing software.
+Click [**here**](https://github.com/nathdep/SMEP24/tree/main/JobScripts) to view the collection of bash scripts used to submit replications and perform Unix-based operations. NOTE: `.job` files are formatted for the *Sun Grid Engine* clustser computing software.
 ***
 # Replication
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to access the `example.R` file used to run replications. 
