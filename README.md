@@ -40,8 +40,8 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/SMEP_2024.pdf) to v
 - [**Empirical TruncNorm (α)**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalAlpha.stan)
 - [**Empirical Positively Bounded μ<sub>λ</sub>**](https://github.com/nathdep/SMEP24/blob/main/Stan/twopl_empiricalPos.stan)
 
-## Job Scripts
-Click [**here**]() to view the collection of job scripts used to submit replications. These files are compatible with the *Sun Grid Engine* clustser computing software.
+## `bash` Scripts
+Click [**here**]() to view the collection of bash scripts used to submit replications and perform Unix-based operations. NOTE: `.job` files are formatted for the *Sun Grid Engine* clustser computing software.
 ***
 # Replication
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/example.R) to access the `example.R` file used to run replications. 
