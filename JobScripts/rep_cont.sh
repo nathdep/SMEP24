@@ -3,8 +3,6 @@
 
 #! /bin/bash
 
-apptainer run --bind /Users/depy/SMEP24:/root Rscript --vanilla getNums_cont.R
-
 FILES=($(cat task_cont.txt))
 
 for i in "${FILES[@]}"; do
