@@ -1,3 +1,5 @@
+# JOB SUBMISSION FOR RUNNING TESTED MODELS
+
 #! /bin/bash
 #$ -pe smp 4
 #$ -N SMEP
