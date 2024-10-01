@@ -68,11 +68,7 @@ twopl <- function(...){
 
       advirun <- advistan$variational(  # Run variational inference via ADVI
         data=ModelData,
-        seed=seed,
-        init=function()list(
-          tau=runif(n=I, min=-6, max=6),
-          lambda=runif(n=I, min=1, max=3)
-        )
+        seed=seed
       )
 
       advisum <- advirun$summary() # Calculate descriptive stats using draws from approximated posteriors
