@@ -40,13 +40,13 @@ model{
   // PRIORS //
 
   to_vector(theta) ~ std_normal();
-  tau ~ normal(0, coefHyper);
+  tau ~ normal(tauMeanHyper, coefHyper);
 
   sigma_lambdaG ~ gamma(1, sdHyper);
   sigma_lambdag_12 ~ gamma(1, sdHyper);
 
   mu_lambdaG ~ normal(lambdaMeanHyper, coefHyper)T[0,];
-  mu_lambdag_12 ~ normal(tauMeanHyper, coefHyper);
+  mu_lambdag_12 ~ normal(lambdaMeanHyper, coefHyper)T[0,];
 
   lambdaG ~ normal(mu_lambdaG, sigma_lambdaG)T[0,];
   lambdag_12 ~ normal(mu_lambdag_12[QmatInd], sigma_lambdag_12[QmatInd]);
