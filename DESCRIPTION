@@ -17,6 +17,7 @@ Depends:
     data.table,
     dplyr,
 	jtools,
-	stringr
+	stringr,
+	glue
 Config/testthat/edition: 3
 RoxygenNote: 7.3.2
