@@ -1,15 +1,17 @@
 library(SMEP24)
 
 Palette <- c("#FF8200", "#8134DF", "#bd472a", "#00664f", "#63666a", "#00558c")
-sampleSize=2000
-model <- "bifactor"
+sampleSize=500
+model <- "twopl"
+PDF=FALSE
+PNG=TRUE
 custLabsTested <- c(advi_empiricalAlpha="ADVI / \u03b1",
                     advi_empiricalPos="ADVI / +\u03bc",
                     allRand_empiricalAlpha="Random / \u03b1",
                     allRand_empiricalPos="Random / +\u03bc",
                     StdSumScore_empiricalAlpha="Std. Sum Score / \u03b1",
                     StdSumScore_empiricalPos="Std. Sum Score / +\u03bc"
-                    )
+)
 
 if(model == "bifactor"){
   whichModel = "Bifactor"
@@ -35,7 +37,7 @@ emp <- tested$empir
 combo <- paste0(starting, "_", emp)
 tested$combo <- combo
 
-p.count_control <- ggplot(data=tested, aes(x=isThresh))+
+p.count <- ggplot(data=tested, aes(x=isThresh))+
   geom_bar(aes(fill=combo),color="black", position="dodge")+
   scale_fill_manual(values=Palette, labels=custLabsTested)+
   xlab(expression(hat(R)[lambda]))+
@@ -45,7 +47,7 @@ p.count_control <- ggplot(data=tested, aes(x=isThresh))+
   theme_apa(legend.pos="right", legend.use.title = TRUE)
 
 
-p.point_control <- ggplot(data=tested, aes(x=true, y=mean))+
+p.point <- ggplot(data=tested, aes(x=true, y=mean))+
   geom_point(alpha=.25)+
   stat_function(fun=function(x)x, aes(color="EAP / True = 1"))+
   stat_function(fun=function(x)-x, aes(color="EAP / True = -1"))+
@@ -58,7 +60,14 @@ p.point_control <- ggplot(data=tested, aes(x=true, y=mean))+
   scale_color_manual(values=c("red", "green"))+
   theme_apa(legend.pos="bottom")
 
-CairoPDF(file=paste0(model, "_", sampleSize, "_TESTED.pdf"), height=8, width=11)
-print(p.count_control)
-print(p.point_control)
-dev.off()
+if(PDF){
+  CairoPDF(file=paste0(model, "_", sampleSize, "_TESTED.pdf"), height=8, width=11)
+  print(p.count_control)
+  print(p.point_control)
+  dev.off()
+}
+
+if(PNG){
+  ggsave(filename=paste0(model, "_", sampleSize, "_count_TESTED.png"), plot=p.count, height=8, width=8)
+  ggsave(filename=paste0(model, "_", sampleSize, "_point_TESTED.png"), plot=p.point, height=8, width=8)
+}
