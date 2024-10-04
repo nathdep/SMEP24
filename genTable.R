@@ -23,3 +23,4 @@ compiled <- as.data.frame(cbind(bind_rows(dfs), bind_rows(extraCols)))
 
 compiled[which(compiled$empir == "NA"),14] <- NA
 
+fwrite(compiled, file="C:\\Users\\nathd\\Downloads\\SMEP24\\fullCompiled.csv")
