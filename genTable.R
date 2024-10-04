@@ -1,6 +1,6 @@
 library(SMEP24)
 
-dirs <- as.list(paste0("D:\\SMEP_0\\", c("Reduc_Control", "Reduc_Tested"), "\\"))
+dirs <- as.list(paste0(c("Reduc_Control", "Reduc_Tested"), "/"))
 
 files <- lapply(dirs, function(x) {
   setwd(x)
@@ -23,5 +23,4 @@ compiled <- as.data.frame(cbind(bind_rows(dfs), bind_rows(extraCols)))
 
 compiled[which(compiled$empir == "NA"),14] <- NA
 
-tmp <- tempFile(fileext = ".parquet")
-write_parquet(compiled, tmp)
+write_parquet(compiled, "fullComp.parquet")

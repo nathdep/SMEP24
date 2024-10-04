@@ -7,3 +7,4 @@ Stan/bifactor_advi.exe
 Stan/bifactor_advi.exe
 *.exe
 *.csv
+*.parquet
