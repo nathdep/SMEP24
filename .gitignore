@@ -9,3 +9,4 @@ Stan/bifactor_advi.exe
 *.csv
 *.parquet
 qr_paper.png
+*.pdf
