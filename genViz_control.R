@@ -2,8 +2,8 @@ library(SMEP24)
 library(Cairo)
 
 Palette <- c("black", "#FFCD00")
-sampleSize=500
-model <- "bifactor"
+sampleSize=2000
+model <- "twopl"
 custLabsControl <- c(ALLPOS="All Positive True/Inits", CONTROL = "Random True/Inits")
 PDF=FALSE
 PNG=TRUE
@@ -45,7 +45,7 @@ control <- selected[which(is.na(selected$empir)),]
 p.count <- ggplot(data=control, aes(x=isThresh))+
   geom_bar(aes(fill=start),color="black", position="dodge")+
   scale_fill_manual(values=Palette, labels=custLabsControl)+
-  xlab(expression(hat(R)[lambda]))+
+  xlab(bquote(hat(R)[.(as.name(whichSymbol))])) +
   ylab("Count")+
   labs(title = paste0(whichModel, " ", whichSymbol, " Convergence Counts: ", sampleSize, " Examinees (No Emp. Methods)"))+
   theme_apa(legend.pos="bottom")
@@ -55,8 +55,8 @@ p.point <- ggplot(data=control, aes(x=true, y=mean))+
   stat_function(fun=function(x)x, aes(color="EAP / True = 1"), linewidth=1.05)+
   stat_function(fun=function(x)-x, aes(color="EAP / True = -1"), linewidth=1.05)+
   facet_wrap(~start, labeller=as_labeller(custLabsControl))+
-  xlab(expression(True[lambda]))+
-  ylab(expression(EAP[lambda]))+
+  xlab(bquote(True[.(as.name(whichSymbol))]))+
+  ylab(bquote(EAP[.(as.name(whichSymbol))]))+
   labs(title=paste0(whichModel, " Recovery: EAP ", whichSymbol, " vs. True ", whichSymbol," ", sampleSize, " Examinees (No Emp. Methods)"))+
   scale_color_manual(values=c("#FFCD00", "#e234fd"))+
   theme_apa(legend.pos="bottom")

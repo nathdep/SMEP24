@@ -1,11 +1,11 @@
 library(SMEP24)
 
 Palette <- c("#FF8200", "#8134DF", "#bd472a", "#00664f", "#63666a", "#00558c")
-sampleSize=500
-model <- "bifactor"
+sampleSize=2000
+model <- "twopl"
 PDF=FALSE
 PNG=TRUE
-whichParam="lambda"
+whichParam="theta"
 
 if(whichParam == "lambda"){
   whichSymbol <- "\u03bb"
@@ -74,7 +74,7 @@ write.csv(round(dfPostProc, digits=3), file=paste0("C:\\Users\\nathd\\Downloads\
 p.count <- ggplot(data=tested, aes(x=isThresh))+
   geom_bar(aes(fill=combo),color="black", position="dodge")+
   scale_fill_manual(values=Palette, labels=custLabsTested)+
-  xlab(expression(hat(R)[lambda]))+
+  xlab(bquote(hat(R)[.(as.name(whichSymbol))])) +
   ylab("Count")+
   labs(title = paste0(whichModel, " ",whichSymbol, " Convergence Counts: ", sampleSize, " Examinees"))+
   guides(fill=guide_legend(title="Init./Emp."))+
@@ -86,8 +86,8 @@ p.point <- ggplot(data=tested, aes(x=true, y=mean))+
   stat_function(fun=function(x)x, aes(color="EAP / True = 1"))+
   stat_function(fun=function(x)-x, aes(color="EAP / True = -1"))+
   facet_wrap(~combo, labeller=as_labeller(custLabsTested))+
-  xlab(expression(True[lambda]))+
-  ylab(expression(EAP[lambda]))+
+  xlab(bquote(True[.(as.name(whichSymbol))]))+
+  ylab(bquote(EAP[.(as.name(whichSymbol))]))+
   labs(title=paste0(whichModel, " Recovery: EAP ", whichSymbol, " vs. True ", whichSymbol, ", ", sampleSize, " Examinees (Init./Emp.)"))+
   scale_color_manual(values=c("#FFCD00", "#e234fd"))+
   theme_apa(legend.pos="bottom")
