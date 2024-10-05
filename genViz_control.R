@@ -2,7 +2,7 @@ library(SMEP24)
 library(Cairo)
 
 Palette <- c("black", "#FFCD00")
-sampleSize=2000
+sampleSize=500
 model <- "twopl"
 custLabsControl <- c(ALLPOS="All Positive True/Inits", CONTROL = "Random True/Inits")
 PDF=FALSE
@@ -57,20 +57,55 @@ p.point <- ggplot(data=control, aes(x=true, y=mean))+
   facet_wrap(~start, labeller=as_labeller(custLabsControl))+
   xlab(bquote(True[.(as.name(whichSymbol))]))+
   ylab(bquote(EAP[.(as.name(whichSymbol))]))+
-  labs(title=paste0(whichModel, " Recovery: EAP ", whichSymbol, " vs. True ", whichSymbol," ", sampleSize, " Examinees (No Emp. Methods)"))+
   scale_color_manual(values=c("#FFCD00", "#e234fd"))+
   theme_apa(legend.pos="bottom")
+
+if(whichParam == "lambdag"){
+
+  p.count <- p.count +
+    xlab(bquote(R[.(as.name(whichSymbol))][g]))+
+    labs(title = bquote(
+      bold(.(whichModel)) ~
+        bold(.(as.name(whichSymbol))[g]) ~
+        bold("Convergence Counts:") ~
+        bold(.(as.character(sampleSize))) ~
+        bold("Examinees")
+    ))
+
+
+  p.point <- p.point +
+    xlim(-3,3)+
+    ylim(-6,6)+
+    xlab(bquote(True[.(as.name(whichSymbol))][g]))+
+    ylab(bquote(EAP[.(as.name(whichSymbol))][g]))+
+    labs(title = bquote(bold(.(whichModel) ~ "Recovery: EAP" ~
+                               .(as.name(whichSymbol))[g] ~ "vs. True" ~
+                               .(as.name(whichSymbol))[g] * "," ~
+                               bold(.(as.character(sampleSize))) ~
+                               "Examinees (No Emp. Methods)")))
+
+}
+
+if(whichParam == "lambda"){
+
+  p.point <- p.point +
+    xlim(-3,3)+
+    ylim(-6,6)+
+    xlab(bquote(True[.(as.name(whichSymbol))]))+
+    ylab(bquote(EAP[.(as.name(whichSymbol))]))+
+    labs(title=paste0(whichModel, " Recovery: EAP ", whichSymbol, " vs. True ", whichSymbol, ", ", sampleSize, " Examinees (No Emp. Methods)"))
+
+
+  p.count <- p.count +
+    xlab(bquote(hat(R)[.(as.name(whichSymbol))]))+
+    labs(title = paste0(whichModel, " ",whichSymbol, " Convergence Counts: ", sampleSize, " Examinees"))
+
+}
 
 if(whichParam == "theta" | whichParam == "tau"){
   p.point <- p.point +
   xlim(-6,6)+
   ylim(-6,6)
-}
-
-if(whichParam == "lambda" | whichParam == "lambdag"){
-  p.point <- p.point +
-    xlim(-3,3)+
-    ylim(-6,6)
 }
 
 if(PDF){

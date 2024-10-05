@@ -1,11 +1,11 @@
 library(SMEP24)
 
 Palette <- c("#FF8200", "#8134DF", "#bd472a", "#00664f", "#63666a", "#00558c")
-sampleSize=2000
+sampleSize=500
 model <- "twopl"
 PDF=FALSE
 PNG=TRUE
-whichParam="theta"
+whichParam="lambda"
 
 if(whichParam == "lambda"){
   whichSymbol <- "\u03bb"
@@ -74,9 +74,7 @@ write.csv(round(dfPostProc, digits=3), file=paste0("C:\\Users\\nathd\\Downloads\
 p.count <- ggplot(data=tested, aes(x=isThresh))+
   geom_bar(aes(fill=combo),color="black", position="dodge")+
   scale_fill_manual(values=Palette, labels=custLabsTested)+
-  xlab(bquote(hat(R)[.(as.name(whichSymbol))])) +
   ylab("Count")+
-  labs(title = paste0(whichModel, " ",whichSymbol, " Convergence Counts: ", sampleSize, " Examinees"))+
   guides(fill=guide_legend(title="Init./Emp."))+
   theme_apa(legend.pos="right", legend.use.title = TRUE)
 
@@ -86,22 +84,66 @@ p.point <- ggplot(data=tested, aes(x=true, y=mean))+
   stat_function(fun=function(x)x, aes(color="EAP / True = 1"))+
   stat_function(fun=function(x)-x, aes(color="EAP / True = -1"))+
   facet_wrap(~combo, labeller=as_labeller(custLabsTested))+
-  xlab(bquote(True[.(as.name(whichSymbol))]))+
-  ylab(bquote(EAP[.(as.name(whichSymbol))]))+
-  labs(title=paste0(whichModel, " Recovery: EAP ", whichSymbol, " vs. True ", whichSymbol, ", ", sampleSize, " Examinees (Init./Emp.)"))+
   scale_color_manual(values=c("#FFCD00", "#e234fd"))+
   theme_apa(legend.pos="bottom")
 
-if(whichParam == "theta" | whichParam == "tau"){
-  p.point <- p.point +
-    xlim(-6,6)+
-    ylim(-6,6)
-}
 
-if(whichParam == "lambda" | whichParam == "lambdag"){
+if(whichParam == "lambdag"){
+
+  p.count <- p.count +
+    xlab(bquote(R[.(as.name(whichSymbol))][g]))+
+    labs(title = bquote(
+      bold(.(whichModel)) ~
+        bold(.(as.name(whichSymbol))[g]) ~
+        bold("Convergence Counts:") ~
+        bold(.(as.character(sampleSize))) ~
+        bold("Examinees")
+    ))
+
+
   p.point <- p.point +
     xlim(-3,3)+
-    ylim(-6,6)
+    ylim(-6,6)+
+    xlab(bquote(True[.(as.name(whichSymbol))][g]))+
+    ylab(bquote(EAP[.(as.name(whichSymbol))][g]))+
+    labs(title = bquote(bold(.(whichModel) ~ "Recovery: EAP" ~
+                               .(as.name(whichSymbol))[g] ~ "vs. True" ~
+                               .(as.name(whichSymbol))[g] * "," ~
+                               bold(.(as.character(sampleSize))) ~
+                               "Examinees (Init./Emp.)")))
+}
+
+if(whichParam == "lambda"){
+
+  p.point <- p.point +
+    xlim(-3,3)+
+    ylim(-6,6)+
+    xlab(bquote(True[.(as.name(whichSymbol))]))+
+    ylab(bquote(EAP[.(as.name(whichSymbol))]))+
+    labs(title=paste0(whichModel, " Recovery: EAP ", whichSymbol, " vs. True ", whichSymbol, ", ", sampleSize, " Examinees (Init./Emp.)"))
+
+
+  p.count <- p.count +
+    xlab(bquote(hat(R)[.(as.name(whichSymbol))]))+
+    labs(title = paste0(whichModel, " ",whichSymbol, " Convergence Counts: ", sampleSize, " Examinees"))
+
+
+}
+
+if(whichParam == "theta" | whichParam == "tau"){
+
+  p.point <- p.point +
+    xlim(-6,6)+
+    ylim(-6,6)+
+    xlab(bquote(True[.(as.name(whichSymbol))]))+
+    ylab(bquote(EAP[.(as.name(whichSymbol))]))+
+    labs(title=paste0(whichModel, " Recovery: EAP ", whichSymbol, " vs. True ", whichSymbol, ", ", sampleSize, " Examinees (Init./Emp.)"))
+
+
+  p.count <- p.count +
+    xlab(bquote(hat(R)[.(as.name(whichSymbol))]))+
+    labs(title = paste0(whichModel, " ",whichSymbol, " Convergence Counts: ", sampleSize, " Examinees"))
+
 }
 
 if(PDF){
