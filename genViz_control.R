@@ -79,8 +79,8 @@ if(whichParam == "lambdag"){
     xlab(bquote(True[.(as.name(whichSymbol))][g]))+
     ylab(bquote(EAP[.(as.name(whichSymbol))][g]))+
     labs(title = bquote(bold(.(whichModel) ~ "Recovery: EAP" ~
-                               .(as.name(whichSymbol))[g] ~ "vs. True" ~
-                               .(as.name(whichSymbol))[g] * "," ~
+                               .(as.name(whichSymbol))[italic(g)] ~ "vs. True" ~
+                               .(as.name(whichSymbol))[italic(g)] * "," ~
                                bold(.(as.character(sampleSize))) ~
                                "Examinees (No Emp. Methods)")))
 
