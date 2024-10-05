@@ -2,7 +2,7 @@ library(SMEP24)
 library(Cairo)
 
 Palette <- c("black", "#FFCD00")
-sampleSize=500
+sampleSize=2000
 model <- "twopl"
 custLabsControl <- c(ALLPOS="All Positive True/Inits", CONTROL = "Random True/Inits")
 PDF=FALSE
@@ -16,7 +16,13 @@ if(model == "twopl"){
   whichModel = "2PL"
 }
 
-whichParam <- "lambda"
+if(model=="twopl"){
+  whichParam <- "lambda"
+}
+
+if(model=="bifactor"){
+  whichParam="lambdag"
+}
 
 if(!("df" %in% ls(envir=.GlobalEnv))){
   df <- read_parquet("C:\\Users\\nathd\\Downloads\\SMEP24\\fullComp.parquet")
@@ -37,15 +43,15 @@ p.count <- ggplot(data=control, aes(x=isThresh))+
 
 p.point <- ggplot(data=control, aes(x=true, y=mean))+
   geom_point(alpha=.25)+
-  stat_function(fun=function(x)x, aes(color="Correct Mode"))+
-  stat_function(fun=function(x)-x, aes(color="Switched Mode"))+
+  stat_function(fun=function(x)x, aes(color="EAP / True = 1"), linewidth=1.05)+
+  stat_function(fun=function(x)-x, aes(color="EAP / True = -1"), linewidth=1.05)+
   facet_wrap(~start, labeller=as_labeller(custLabsControl))+
   xlab(expression(True[lambda]))+
   ylab(expression(EAP[lambda]))+
   xlim(-3,3)+
   ylim(-6,6)+
   labs(title=paste0(whichModel, " Recovery: EAP \u03bb vs. True \u03bb, ", sampleSize, " Examinees (No Emp. Methods)"))+
-  scale_color_manual(values=c("green", "red"))+
+  scale_color_manual(values=c("#FF8200", "#24e0ff"))+
   theme_apa(legend.pos="bottom")
 
 if(PDF){
@@ -56,6 +62,6 @@ if(PDF){
 }
 
 if(PNG){
-  ggsave(filename=paste0(model, "_", sampleSize, "_count_CONTROL.png"), plot=p.count, height=8, width=8)
-  ggsave(filename=paste0(model, "_", sampleSize, "_point_CONTROL.png"), plot=p.point, height=8, width=8)
+  ggsave(filename=paste0("C:\\Users\\nathd\\Downloads\\SMEP24\\Visualizations\\",model, "_", sampleSize, "_count_CONTROL.png"), plot=p.count, height=8, width=8)
+  ggsave(filename=paste0("C:\\Users\\nathd\\Downloads\\SMEP24\\Visualizations\\",model, "_", sampleSize, "_point_CONTROL.png"), plot=p.point, height=8, width=8)
 }

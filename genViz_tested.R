@@ -5,6 +5,7 @@ sampleSize=500
 model <- "twopl"
 PDF=FALSE
 PNG=TRUE
+
 custLabsTested <- c(advi_empiricalAlpha="ADVI / \u03b1",
                     advi_empiricalPos="ADVI / +\u03bc",
                     allRand_empiricalAlpha="Random / \u03b1",
@@ -21,7 +22,13 @@ if(model == "twopl"){
   whichModel = "2PL"
 }
 
-whichParam <- "lambda"
+if(model=="twopl"){
+  whichParam <- "lambda"
+}
+
+if(model=="bifactor"){
+  whichParam="lambdag"
+}
 
 if(!("df" %in% ls(envir=.GlobalEnv))){
   df <- read_parquet("D:\\SMEP_0\\fullComp.parquet")
@@ -36,6 +43,24 @@ starting <- tested$start
 emp <- tested$empir
 combo <- paste0(starting, "_", emp)
 tested$combo <- combo
+
+diff <- selected$mean - selected$true
+bias <- tapply(diff, selected$combo, mean)
+rmse <- tapply(diff, selected$combo, function(x) sqrt(mean(x^2)))
+rhat <- tapply(selected, selected$combo, function(x) countRhat(x))
+dfPostProc <- cbind(bias, rmse, rhat)
+
+for(i in 1:nrow(dfPostProc)){
+  for(j in 1:length(custLabsTested)){
+    if(row.names(dfPostProc)[i] == names(custLabsTested)[j]){
+      row.names(dfPostProc)[i] <- custLabsTested[[j]]
+    }
+  }
+}
+
+colnames(dfPostProc) <- c("bias", "RMSE", "rhat")
+
+write.csv(round(dfPostProc, digits=3), file=paste0("C:\\Users\\nathd\\Downloads\\SMEP24\\PostProcDFs\\", model, "_", sampleSize, "_PostProcDF.csv"), row.names=TRUE)
 
 p.count <- ggplot(data=tested, aes(x=isThresh))+
   geom_bar(aes(fill=combo),color="black", position="dodge")+
@@ -57,7 +82,7 @@ p.point <- ggplot(data=tested, aes(x=true, y=mean))+
   xlim(-3,3)+
   ylim(-6,6)+
   labs(title=paste0(whichModel, " Recovery: EAP \u03bb vs. True \u03bb, ", sampleSize, " Examinees (Init./Emp.)"))+
-  scale_color_manual(values=c("red", "green"))+
+  scale_color_manual(values=c("#FFCD00", "#e234fd"))+
   theme_apa(legend.pos="bottom")
 
 if(PDF){
@@ -68,6 +93,6 @@ if(PDF){
 }
 
 if(PNG){
-  ggsave(filename=paste0(model, "_", sampleSize, "_count_TESTED.png"), plot=p.count, height=8, width=8)
-  ggsave(filename=paste0(model, "_", sampleSize, "_point_TESTED.png"), plot=p.point, height=8, width=8)
+  ggsave(filename=paste0("C:\\Users\\nathd\\Downloads\\SMEP24\\Visualizations\\", model, "_", sampleSize, "_count_TESTED.png"), plot=p.count, height=8, width=8)
+  ggsave(filename=paste0("C:\\Users\\nathd\\Downloads\\SMEP24\\Visualizations\\",model, "_", sampleSize, "_point_TESTED.png"), plot=p.point, height=8, width=8)
 }
