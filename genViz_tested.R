@@ -120,7 +120,11 @@ if(whichParam == "lambda"){
     ylim(-6,6)+
     xlab(bquote(True[.(as.name(whichSymbol))]))+
     ylab(bquote(EAP[.(as.name(whichSymbol))]))+
-    labs(title=paste0(whichModel, " Recovery: EAP ", whichSymbol, " vs. True ", whichSymbol, ", ", sampleSize, " Examinees (Init./Emp.)"))
+    labs(title = bquote(bold(.(whichModel) ~ "Recovery: EAP" ~
+                               .(as.name(whichSymbol))[""] ~ "vs. True" ~
+                               .(as.name(whichSymbol))[""] * "," ~
+                               bold(.(as.character(sampleSize))) ~
+                               "Examinees (Init./Emp.)")))
 
 
   p.count <- p.count +
