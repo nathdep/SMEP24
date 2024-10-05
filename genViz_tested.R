@@ -2,8 +2,8 @@ library(SMEP24)
 
 Palette <- c("#FF8200", "#8134DF", "#bd472a", "#00664f", "#63666a", "#00558c")
 sampleSize=500
-model <- "twopl"
-PDF=TRUE
+model <- "bifactor"
+PDF=FALSE
 PNG=TRUE
 whichParam="lambda"
 
@@ -88,7 +88,7 @@ p.point <- ggplot(data=tested, aes(x=true, y=mean))+
   facet_wrap(~combo, labeller=as_labeller(custLabsTested))+
   xlab(expression(True[lambda]))+
   ylab(expression(EAP[lambda]))+
-  labs(title=paste0(whichModel, " Recovery: EAP \u03bb vs. True \u03bb, ", sampleSize, " Examinees (Init./Emp.)"))+
+  labs(title=paste0(whichModel, " Recovery: EAP ", whichSymbol, " vs. True ", whichSymbol, ", ", sampleSize, " Examinees (Init./Emp.)"))+
   scale_color_manual(values=c("#FFCD00", "#e234fd"))+
   theme_apa(legend.pos="bottom")
 

@@ -2,12 +2,12 @@ library(SMEP24)
 library(Cairo)
 
 Palette <- c("black", "#FFCD00")
-sampleSize=2000
+sampleSize=500
 model <- "bifactor"
 custLabsControl <- c(ALLPOS="All Positive True/Inits", CONTROL = "Random True/Inits")
-PDF=TRUE
+PDF=FALSE
 PNG=TRUE
-whichParam="theta"
+whichParam="lambda"
 
 if(whichParam == "lambda"){
   whichSymbol <- "\u03bb"
