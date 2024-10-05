@@ -22,11 +22,7 @@ if(model == "twopl"){
   whichModel = "2PL"
 }
 
-if(model=="twopl"){
-  whichParam <- "lambda"
-}
-
-if(model=="bifactor"){
+if(model=="bifactor" & whichParam == "lambda"){
   whichParam="lambdag"
 }
 

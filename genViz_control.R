@@ -7,6 +7,7 @@ model <- "twopl"
 custLabsControl <- c(ALLPOS="All Positive True/Inits", CONTROL = "Random True/Inits")
 PDF=FALSE
 PNG=TRUE
+whichParam="theta"
 
 if(model == "bifactor"){
   whichModel = "Bifactor"
@@ -16,11 +17,7 @@ if(model == "twopl"){
   whichModel = "2PL"
 }
 
-if(model=="twopl"){
-  whichParam <- "lambda"
-}
-
-if(model=="bifactor"){
+if(model=="bifactor" & whichParam=="lambda"){
   whichParam="lambdag"
 }
 
@@ -51,7 +48,7 @@ p.point <- ggplot(data=control, aes(x=true, y=mean))+
   xlim(-3,3)+
   ylim(-6,6)+
   labs(title=paste0(whichModel, " Recovery: EAP \u03bb vs. True \u03bb, ", sampleSize, " Examinees (No Emp. Methods)"))+
-  scale_color_manual(values=c("#FF8200", "#24e0ff"))+
+  scale_color_manual(values=c("#FFCD00", "#e234fd"))+
   theme_apa(legend.pos="bottom")
 
 if(PDF){
