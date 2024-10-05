@@ -10,8 +10,8 @@ devtools::install_github("nathdep/SMEP24")
 ***
 # Research
 
-Click[**here**](https://github.com/nathdep/SMEP24/blob/main/SMEP_2024.pdf) to view the poster presented at SMEP 2024.
-Click [**here**](https://github.com/nathdep/SMEP24/blob/main/SMEP_2024_article.pdf) to view the SMEP 2024 research proposal related to this project.
+- Click [**here**](https://github.com/nathdep/SMEP24/blob/main/SMEP_2024.pdf) to view the poster presented at SMEP 2024.
+- Click [**here**](https://github.com/nathdep/SMEP24/blob/main/SMEP_2024_article.pdf) to view the SMEP 2024 research proposal related to this project.
 
 ***
 # Function Index
