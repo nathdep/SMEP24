@@ -64,6 +64,11 @@ Click [**here**](https://github.com/nathdep/SMEP24/blob/main/Supp_R/compile.R) t
 
 Click [**here**](https://github.com/nathdep/SMEP24/blob/main/Supp_R/postproc.R) to access the `postproc.R` script. NOTE: make sure to run this file from *within the directory containing the `Findings` directory*.
 ***
+# Findings
+
+Click [**here**](https://github.com/nathdep/SMEP24/tree/main/Visualizations) to view visualizations of model results.
+
+***
 # Description of Control/Tested Methods
 ```r
 # EMPIRICAL METHODS
