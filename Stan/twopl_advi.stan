@@ -20,7 +20,6 @@ parameters{
   row_vector[I] lambda;
 }
 model{
-  StdSumScore ~ std_normal();
   tau ~ normal(tauMeanHyper, coefHyper);
   lambda ~ normal(lambdaMeanHyper, coefHyper);
   for(i in 1:I){
